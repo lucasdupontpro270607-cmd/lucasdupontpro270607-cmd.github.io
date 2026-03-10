@@ -3,190 +3,105 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Workout Tracker Gaming</title>
+  <title>Workout Tracker V2</title>
   <style>
     :root{
-      --bg:#0b0f17;
-      --panel:#151b27;
-      --panel2:#1b2231;
-      --line:#2b3447;
-      --text:#f4f7fb;
-      --muted:#98a6bd;
-      --gold1:#ffd54a;
-      --gold2:#ff9f1a;
-      --green:#31d17c;
-      --red:#ff6464;
-      --blue:#63adff;
-      --purple:#9a74ff;
-      --shadow:0 16px 36px rgba(0,0,0,.35);
-      --radius:18px;
+      --bg:#0b0f17; --panel:#151b27; --panel2:#1b2231; --line:#2b3447; --text:#f4f7fb; --muted:#98a6bd;
+      --gold1:#ffd54a; --gold2:#ff9f1a; --green:#31d17c; --red:#ff6464; --blue:#63adff; --purple:#9a74ff;
+      --shadow:0 16px 36px rgba(0,0,0,.35); --radius:18px;
     }
     *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter,Arial,sans-serif;
-      background:
-        radial-gradient(circle at top left,rgba(255,213,74,.08),transparent 25%),
-        radial-gradient(circle at top right,rgba(99,173,255,.08),transparent 25%),
-        linear-gradient(180deg,#090c12,#0f141f 45%,#0b0f17);
-      color:var(--text)
-    }
-    .shell{max-width:1400px;margin:auto;padding:14px}
+    body{margin:0;font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at top left,rgba(255,213,74,.08),transparent 25%),radial-gradient(circle at top right,rgba(99,173,255,.08),transparent 25%),linear-gradient(180deg,#090c12,#0f141f 45%,#0b0f17);color:var(--text)}
+    body.theme-blue{--gold1:#76b9ff;--gold2:#438fff;--purple:#6e9fff}
+    body.theme-red{--gold1:#ff8f8f;--gold2:#ff5050;--purple:#ff7d98}
+    body.theme-green{--gold1:#78e8b1;--gold2:#29cf7e;--purple:#63adff}
+    .shell{max-width:1450px;margin:auto;padding:14px}
     .topbar{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
-    .brand{display:flex;gap:12px;align-items:center;min-width:0}
-    .logo{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--gold1),var(--gold2));display:grid;place-items:center;font-size:26px;color:#111;font-weight:900;box-shadow:var(--shadow)}
-    h1{margin:0;font-size:28px}
-    .sub{color:var(--muted);font-size:13px;margin-top:4px}
-    .card,.panel,.mini,.friend-card,.quest-card,.shop-card,.exercise,.auth,.sync-box{
-      background:linear-gradient(180deg,var(--panel),var(--panel2));
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow)
-    }
-    .auth{max-width:520px;margin:60px auto 0;padding:22px}
-    .sync-box{margin-top:14px;padding:16px}
-    .panel,.card{padding:16px}
-    .mini{padding:14px}
-    .k{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-    .v{font-size:22px;font-weight:900;word-break:break-word}
-    .row{display:flex;gap:12px;flex-wrap:wrap}
-    .col{flex:1;min-width:220px}
+    .brand{display:flex;gap:12px;align-items:center;min-width:0}.logo{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--gold1),var(--gold2));display:grid;place-items:center;font-size:26px;color:#111;font-weight:900;box-shadow:var(--shadow)}
+    h1{margin:0;font-size:28px}.sub{color:var(--muted);font-size:13px;margin-top:4px}
+    .card,.panel,.mini,.friend-card,.quest-card,.shop-card,.exercise,.auth,.leader-card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .auth{max-width:460px;margin:60px auto 0;padding:22px}.panel,.card{padding:16px}.mini{padding:14px}
+    .k{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}.v{font-size:22px;font-weight:900;word-break:break-word}
+    .row{display:flex;gap:12px;flex-wrap:wrap}.col{flex:1;min-width:220px}
     label{display:block;color:var(--muted);font-size:13px;font-weight:700;margin:12px 0 7px}
-    input,select,textarea{
-      width:100%;
-      background:#0d1320;
-      color:var(--text);
-      border:1px solid #33405a;
-      border-radius:12px;
-      padding:12px 14px;
-      outline:none;
-      font-size:14px
-    }
+    input,select,textarea{width:100%;background:#0d1320;color:var(--text);border:1px solid #33405a;border-radius:12px;padding:12px 14px;outline:none;font-size:14px}
     input:focus,select:focus,textarea:focus{border-color:var(--gold1);box-shadow:0 0 0 3px rgba(255,213,74,.11)}
     textarea{resize:vertical;min-height:88px}
     button{border:none;border-radius:12px;padding:12px 15px;font-weight:800;cursor:pointer;transition:.15s;font-size:14px}
-    button:hover{transform:translateY(-1px)}
-    button:active{transform:none}
-    .btn-p{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111}
-    .btn-s{background:#222b3d;border:1px solid var(--line);color:var(--text)}
-    .btn-g{background:linear-gradient(135deg,#4fe08e,#20b96f);color:#08120c}
-    .btn-d{background:linear-gradient(135deg,#ff7a7a,#ff4343);color:#fff}
-    .btn-b{background:linear-gradient(135deg,#76b9ff,#438fff);color:#08111d}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-    .tab-btn{background:#1a2130;border:1px solid var(--line);color:#fff;min-width:120px}
-    .tab-btn.active{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111;border-color:transparent}
-    .grid{display:grid;grid-template-columns:1.2fr .95fr;gap:16px}
-    .stack{display:flex;flex-direction:column;gap:16px}
-    .mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .title{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
-    .title h2{margin:0;font-size:20px}
-    .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#0f1521;border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:700}
-    .xpbar{height:16px;border-radius:999px;overflow:hidden;background:#0c111b;border:1px solid var(--line)}
-    .xpfill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold1),var(--gold2));box-shadow:0 0 20px rgba(255,213,74,.35)}
-    .friendfill{background:linear-gradient(90deg,var(--blue),var(--purple));box-shadow:0 0 20px rgba(99,173,255,.35)}
-    .meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:8px}
-    .avatar-wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-    .avatar{width:88px;height:88px;border-radius:20px;border:1px solid var(--line);background:#0e1320;object-fit:cover}
-    .bio-preview{padding:14px;border-radius:14px;font-weight:800;margin-top:10px;border:1px solid rgba(255,255,255,.06)}
-    .bio-default{background:#111722;color:#f4f7fb}
-    .bio-gold{background:linear-gradient(90deg,#524100,#d4a500);color:#fff4c7}
-    .bio-blue{background:linear-gradient(90deg,#0f2d52,#2d93ff);color:#def1ff}
-    .bio-purple{background:linear-gradient(90deg,#2d1749,#a468ff);color:#f3e6ff}
-    .bio-red{background:linear-gradient(90deg,#47131b,#ff5063);color:#ffe7eb}
-    .bio-green{background:linear-gradient(90deg,#13331f,#29cf7e);color:#e3fff0}
-    .exercise-list{display:flex;flex-direction:column;gap:10px}
-    .exercise{padding:12px}
-    .exercise-top{display:grid;grid-template-columns:2.1fr .9fr .9fr auto;gap:10px;align-items:end}
-    .exercise-bottom{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:8px}
-    .friends,.quests,.shop,.coop-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
-    .friend-card,.quest-card,.shop-card{padding:15px}
-    .friend-card h4,.quest-name,.shop-name{margin:0 0 10px;font-size:18px;font-weight:900}
-    .friend-card{cursor:pointer}
-    .friend-essential{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-    .box{background:#0f1521;border:1px solid var(--line);border-radius:12px;padding:10px}
-    .box .smallk{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px}
-    .box .smallv{font-size:16px;font-weight:800}
-    .list-item{padding:8px 10px;background:#101725;border:1px solid #2a3344;border-radius:10px;margin-bottom:8px;font-size:13px}
-    .table-wrap{overflow:auto;border-radius:14px;border:1px solid var(--line)}
-    table{width:100%;border-collapse:collapse;min-width:980px;background:#101722}
-    th,td{padding:12px 10px;border-bottom:1px solid #293143;text-align:left;font-size:14px}
-    th{position:sticky;top:0;background:#151d2a}
-    .modal{position:fixed;inset:0;background:rgba(2,5,10,.72);display:none;align-items:center;justify-content:center;padding:14px;z-index:1000}
-    .modal.show{display:flex}
-    .modal-box{max-width:760px;width:100%;max-height:90vh;overflow:auto;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:18px}
-    .toast{position:fixed;right:18px;bottom:18px;background:#161d2b;border:1px solid var(--line);padding:14px 16px;border-radius:14px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);pointer-events:none;transition:.24s;z-index:2000;max-width:320px}
-    .toast.show{opacity:1;transform:translateY(0)}
-    .hidden{display:none}
-    .hl-good{color:var(--green);font-weight:800}
-    .hl-bad{color:var(--red);font-weight:800}
-    .hl-neutral{color:var(--blue);font-weight:800}
-    .note-box{padding:12px;border-radius:12px;border:1px solid var(--line);background:#0f1521;color:var(--muted);font-size:13px}
-    @media (max-width:1100px){
-      .grid{grid-template-columns:1fr}
-      .mini-grid{grid-template-columns:repeat(2,1fr)}
-    }
-    @media (max-width:760px){
-      .shell{padding:10px}
-      .tabs{display:grid;grid-template-columns:repeat(2,1fr)}
-      .tab-btn{width:100%;min-width:0}
-      .mini-grid{grid-template-columns:1fr}
-      .exercise-top{grid-template-columns:1fr}
-      .row{flex-direction:column}
-      .col{min-width:0}
-      .actions button{width:100%}
-      .avatar{width:72px;height:72px}
-      .title h2{font-size:18px}
-      .toast{left:12px;right:12px;max-width:none}
-      .auth{margin-top:22px;padding:18px}
-      h1{font-size:22px}
-    }
+    button:hover{transform:translateY(-1px)} button:active{transform:none}
+    .btn-p{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111}.btn-s{background:#222b3d;border:1px solid var(--line);color:var(--text)}.btn-g{background:linear-gradient(135deg,#4fe08e,#20b96f);color:#08120c}.btn-d{background:linear-gradient(135deg,#ff7a7a,#ff4343);color:#fff}.btn-b{background:linear-gradient(135deg,#76b9ff,#438fff);color:#08111d}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+    .mobile-topbar{display:none;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+    .drawer-btn{background:#1a2130;border:1px solid var(--line);color:#fff;width:48px;height:48px;border-radius:14px;font-size:20px}
+    .mobile-title{font-weight:900;font-size:16px}
+    .drawer-overlay{position:fixed;inset:0;background:rgba(3,7,13,.6);display:none;z-index:1200}
+    .drawer-overlay.show{display:block}
+    .side-drawer{position:fixed;top:0;left:0;height:100vh;width:min(82vw,320px);background:linear-gradient(180deg,var(--panel),var(--panel2));border-right:1px solid var(--line);box-shadow:var(--shadow);transform:translateX(-105%);transition:.22s ease;z-index:1300;padding:16px;overflow:auto}
+    .side-drawer.open{transform:translateX(0)}
+    .drawer-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+    .drawer-nav{display:flex;flex-direction:column;gap:10px}
+    .drawer-nav button{width:100%;text-align:left}
+    .update-box{background:#111827;border:1px dashed var(--line);border-radius:14px;padding:12px;margin-top:10px}
+    .update-log{max-height:180px;overflow:auto;margin-top:10px}.tab-btn{background:#1a2130;border:1px solid var(--line);color:#fff;min-width:120px}.tab-btn.active{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111;border-color:transparent}
+    .grid{display:grid;grid-template-columns:1.2fr .95fr;gap:16px}.stack{display:flex;flex-direction:column;gap:16px}.mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .title{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.title h2{margin:0;font-size:20px}.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#0f1521;border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:700}
+    .xpbar{height:16px;border-radius:999px;overflow:hidden;background:#0c111b;border:1px solid var(--line)}.xpfill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold1),var(--gold2));box-shadow:0 0 20px rgba(255,213,74,.35)}.friendfill{background:linear-gradient(90deg,var(--blue),var(--purple));box-shadow:0 0 20px rgba(99,173,255,.35)}
+    .meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:8px}.avatar-wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap}.avatar{width:88px;height:88px;border-radius:20px;border:1px solid var(--line);background:#0e1320;object-fit:cover}
+    .bio-preview{padding:14px;border-radius:14px;font-weight:800;margin-top:10px;border:1px solid rgba(255,255,255,.06)}.bio-default{background:#111722;color:#f4f7fb}.bio-gold{background:linear-gradient(90deg,#524100,#d4a500);color:#fff4c7}.bio-blue{background:linear-gradient(90deg,#0f2d52,#2d93ff);color:#def1ff}.bio-purple{background:linear-gradient(90deg,#2d1749,#a468ff);color:#f3e6ff}.bio-red{background:linear-gradient(90deg,#47131b,#ff5063);color:#ffe7eb}.bio-green{background:linear-gradient(90deg,#13331f,#29cf7e);color:#e3fff0}
+    .exercise-list{display:flex;flex-direction:column;gap:10px}.exercise{padding:12px}.exercise-top{display:grid;grid-template-columns:2.1fr .9fr .9fr auto;gap:10px;align-items:end}.exercise-bottom{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:8px}
+    .friends,.quests,.shop,.coop-list,.leaders{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}.friend-card,.quest-card,.shop-card,.leader-card{padding:15px}.friend-card h4,.quest-name,.shop-name,.leader-name{margin:0 0 10px;font-size:18px;font-weight:900}.friend-card{cursor:pointer}
+    .friend-essential{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.box{background:#0f1521;border:1px solid var(--line);border-radius:12px;padding:10px}.box .smallk{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px}.box .smallv{font-size:16px;font-weight:800}
+    .list-item{padding:8px 10px;background:#101725;border:1px solid #2a3344;border-radius:10px;margin-bottom:8px;font-size:13px}.table-wrap{overflow:auto;border-radius:14px;border:1px solid var(--line)} table{width:100%;border-collapse:collapse;min-width:980px;background:#101722} th,td{padding:12px 10px;border-bottom:1px solid #293143;text-align:left;font-size:14px} th{position:sticky;top:0;background:#151d2a}
+    .modal{position:fixed;inset:0;background:rgba(2,5,10,.72);display:none;align-items:center;justify-content:center;padding:14px;z-index:1000}.modal.show{display:flex}.modal-box{max-width:760px;width:100%;max-height:90vh;overflow:auto;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:18px}
+    .toast{position:fixed;right:18px;bottom:18px;background:#161d2b;border:1px solid var(--line);padding:14px 16px;border-radius:14px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);pointer-events:none;transition:.24s;z-index:2000;max-width:320px}.toast.show{opacity:1;transform:translateY(0)}
+    .hidden{display:none}.hl-good{color:var(--green);font-weight:800}.hl-bad{color:var(--red);font-weight:800}.hl-neutral{color:var(--blue);font-weight:800}
+    @media (max-width:1100px){.grid{grid-template-columns:1fr}.mini-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:760px){.shell{padding:10px}.topbar{display:none}.mobile-topbar{display:flex}.tabs{display:none}.tab-btn{width:100%;min-width:0}.mini-grid{grid-template-columns:1fr}.exercise-top{grid-template-columns:1fr}.row{flex-direction:column}.col{min-width:0}.actions button{width:100%}.avatar{width:72px;height:72px}.title h2{font-size:18px}.toast{left:12px;right:12px;max-width:none}.auth{margin-top:22px;padding:18px}h1{font-size:22px}.panel,.card,.friend-card,.quest-card,.shop-card,.leader-card{padding:14px}.friend-essential{grid-template-columns:1fr}.box .smallv{font-size:15px}}
+    @media (min-width:761px){.drawer-overlay,.side-drawer,.mobile-topbar{display:none !important}}
   </style>
 </head>
 <body>
   <div class="shell">
     <div class="topbar">
-      <div class="brand">
-        <div class="logo">💪</div>
-        <div>
-          <h1>Workout Tracker Gaming</h1>
-          <div class="sub">Responsive • Coop • Duel • Quêtes • Boutique • Amis</div>
-        </div>
-      </div>
+      <div class="brand"><div class="logo">💪</div><div><h1>Workout Tracker V2</h1><div class="sub">Responsive • Coop • Duel ranked • Quêtes • Boutique • Thèmes • Titres</div></div></div>
       <div id="topBadge" class="badge hidden">👤 Non connecté</div>
     </div>
 
     <div id="auth" class="auth">
       <h2 style="margin:0 0 8px">🔐 Connexion / Inscription</h2>
       <div class="sub">Tout est enregistré localement dans ton navigateur.</div>
-
-      <label>Nom d'utilisateur</label>
-      <input id="authUser" placeholder="Ex: LucasFit">
-
-      <label>Mot de passe</label>
-      <input id="authPass" type="password" placeholder="••••••••">
-
-      <div class="actions">
-        <button class="btn-p" onclick="registerUser()">✨ Créer le compte</button>
-        <button class="btn-s" onclick="loginUser()">🚀 Connexion</button>
-      </div>
-
-      <div class="sync-box">
-        <div class="title"><h2 style="font-size:18px">🔄 Synchroniser un compte</h2><div class="badge">Hors ligne</div></div>
-        <div class="sub">Colle un code de sauvegarde généré depuis un autre appareil pour recréer ton profil localement.</div>
-        <label>Nouveau nom de compte local</label>
-        <input id="syncLocalUser" placeholder="Ex: LucasPhone">
-        <label>Mot de passe pour ce nouvel appareil</label>
-        <input id="syncLocalPass" type="password" placeholder="Choisis un mot de passe local">
-        <label>Code de synchronisation</label>
-        <textarea id="syncCodeInput" placeholder="Colle ici ton code de sauvegarde"></textarea>
-        <div class="actions">
-          <button class="btn-g" onclick="importSyncCode()">📥 Synchroniser le compte</button>
-        </div>
-      </div>
+      <label>Nom d'utilisateur</label><input id="authUser" placeholder="Ex: LucasFit">
+      <label>Mot de passe</label><input id="authPass" type="password" placeholder="••••••••">
+      <div class="actions"><button class="btn-p" onclick="registerUser()">✨ Créer le compte</button><button class="btn-s" onclick="loginUser()">🚀 Connexion</button></div>
     </div>
 
     <div id="app" class="hidden">
+      <div class="mobile-topbar">
+        <button class="drawer-btn" onclick="openDrawer()">☰</button>
+        <div class="mobile-title" id="mobileCurrentTitle">Dashboard</div>
+        <div class="badge" id="mobileRankMini">🥉 Bronze</div>
+      </div>
+
+      <div id="drawerOverlay" class="drawer-overlay" onclick="closeDrawer()"></div>
+      <aside id="sideDrawer" class="side-drawer">
+        <div class="drawer-header">
+          <div>
+            <div style="font-weight:900">📱 Menu</div>
+            <div class="sub">Navigation mobile</div>
+          </div>
+          <button class="btn-s" onclick="closeDrawer()">Fermer</button>
+        </div>
+        <div class="drawer-nav">
+          <button class="tab-btn active" data-tab="dashboard" onclick="showTab('dashboard', this);closeDrawer()">🏠 Dashboard</button>
+          <button class="tab-btn" data-tab="workout" onclick="showTab('workout', this);closeDrawer()">💪 Séance</button>
+          <button class="tab-btn" data-tab="duel" onclick="showTab('duel', this);closeDrawer()">⚔️ Duel</button>
+          <button class="tab-btn" data-tab="quests" onclick="showTab('quests', this);closeDrawer()">🗺️ Quêtes</button>
+          <button class="tab-btn" data-tab="shop" onclick="showTab('shop', this);closeDrawer()">🛒 Boutique</button>
+          <button class="tab-btn" data-tab="friends" onclick="showTab('friends', this);closeDrawer()">👥 Amis</button>
+          <button class="tab-btn" data-tab="history" onclick="showTab('history', this);closeDrawer()">📜 Historique</button>
+          <button class="tab-btn" data-tab="settings" onclick="showTab('settings', this);closeDrawer()">⚙️ Paramètres</button>
+        </div>
+      </aside>
       <div class="tabs">
         <button class="tab-btn active" data-tab="dashboard" onclick="showTab('dashboard', this)">🏠 Dashboard</button>
         <button class="tab-btn" data-tab="workout" onclick="showTab('workout', this)">💪 Séance</button>
@@ -203,13 +118,7 @@
           <div class="stack">
             <div class="panel">
               <div class="title"><h2>👤 Profil</h2><div id="rankBadge" class="badge">🥉 Bronze</div></div>
-              <div class="avatar-wrap">
-                <img id="dashAvatar" class="avatar" alt="avatar">
-                <div style="flex:1;min-width:0">
-                  <div class="sub">Photo de profil</div>
-                  <div id="dashBio" class="bio-preview bio-default">🏋️ Rookie du grind</div>
-                </div>
-              </div>
+              <div class="avatar-wrap"><img id="dashAvatar" class="avatar" alt="avatar"><div style="flex:1;min-width:0"><div class="sub">Photo de profil</div><div id="dashBio" class="bio-preview bio-default">🏋️ Rookie du grind</div><div class="meta"><span id="dashTitle">Titre : Rookie</span><span id="dashTheme">Thème : Gold</span></div></div></div>
               <div class="mini-grid" style="margin-top:14px">
                 <div class="mini"><div class="k">Pseudo</div><div class="v" id="dashName">-</div></div>
                 <div class="mini"><div class="k">Niveau</div><div class="v" id="dashLevel">1</div></div>
@@ -219,7 +128,6 @@
               <div style="margin-top:14px" class="xpbar"><div id="xpFill" class="xpfill"></div></div>
               <div class="meta"><span id="xpText">0 / 2000 XP</span><span id="goalText">🎯 Objectif poids : -</span></div>
             </div>
-
             <div class="panel">
               <div class="title"><h2>📈 Résumé</h2><div class="badge">Auto</div></div>
               <div class="mini-grid">
@@ -230,16 +138,9 @@
               </div>
             </div>
           </div>
-
           <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>🤝 Coop & amitié</h2><div class="badge">Bonus coop uniquement</div></div>
-              <div id="coopSummary" class="coop-list"></div>
-            </div>
-            <div class="panel">
-              <div class="title"><h2>🎖️ Succès</h2><div class="badge">Débloqués</div></div>
-              <div id="achievements"></div>
-            </div>
+            <div class="panel"><div class="title"><h2>🏆 Classement amis</h2><div class="badge">XP</div></div><div id="leaderboard" class="leaders"></div></div>
+            <div class="panel"><div class="title"><h2>🎖️ Succès</h2><div class="badge">Débloqués</div></div><div id="achievements"></div></div>
           </div>
         </div>
       </section>
@@ -259,12 +160,8 @@
                 <div class="col"><label>Ami coop</label><select id="coopFriendSelect"></select></div>
                 <div class="col"><label>Boost amitié actif</label><input id="coopBoostPreview" disabled value="x1.00"></div>
               </div>
-              <label>Notes</label>
-              <textarea id="sessionNotes" placeholder="Ex: bon pump, rappel triceps, propre sur la forme..."></textarea>
-              <div class="actions">
-                <button class="btn-p" onclick="addExercise()">➕ Ajouter un exercice</button>
-                <button class="btn-s" onclick="resetWorkout()">🧹 Reset la séance</button>
-              </div>
+              <label>Notes</label><textarea id="sessionNotes" placeholder="Ex: bon pump, rappel triceps, propre sur la forme..."></textarea>
+              <div class="actions"><button class="btn-p" onclick="addExercise()">➕ Ajouter un exercice</button><button class="btn-s" onclick="resetWorkout()">🧹 Reset la séance</button></div>
               <div id="exerciseList" class="exercise-list" style="margin-top:12px"></div>
               <div class="mini-grid" style="margin-top:14px">
                 <div class="mini"><div class="k">Exercices</div><div class="v" id="liveCount">0</div></div>
@@ -275,22 +172,9 @@
               <div class="actions"><button class="btn-g" onclick="saveWorkout()">💾 Sauvegarder la séance</button></div>
             </div>
           </div>
-
           <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>📦 Presets</h2><div class="badge">Réutilisables</div></div>
-              <label>Nom du preset</label><input id="presetName" placeholder="Ex: Pecs + bras">
-              <div class="actions">
-                <select id="presetSelect"></select>
-                <button class="btn-b" onclick="loadPreset()">📥 Charger</button>
-                <button class="btn-s" onclick="savePreset()">💾 Sauver</button>
-                <button class="btn-d" onclick="deletePreset()">🗑️ Supprimer</button>
-              </div>
-            </div>
-            <div class="panel">
-              <div class="title"><h2>🧠 Conseils</h2><div class="badge">Auto</div></div>
-              <div id="tips" class="sub">Ajoute des exercices pour voir la projection XP et volume.</div>
-            </div>
+            <div class="panel"><div class="title"><h2>📦 Presets</h2><div class="badge">Réutilisables</div></div><label>Nom du preset</label><input id="presetName" placeholder="Ex: Pecs + bras"><div class="row"><div class="col"><select id="presetSelect"></select></div><div class="col"><button class="btn-b" onclick="loadPreset()">📥 Charger</button></div><div class="col"><button class="btn-s" onclick="savePreset()">💾 Sauver</button></div><div class="col"><button class="btn-d" onclick="deletePreset()">🗑️ Supprimer</button></div></div></div>
+            <div class="panel"><div class="title"><h2>🤝 Coop & amitié</h2><div class="badge">Bonus coop uniquement</div></div><div id="coopSummary" class="coop-list"></div></div>
           </div>
         </div>
       </section>
@@ -299,7 +183,7 @@
         <div class="grid">
           <div class="stack">
             <div class="panel">
-              <div class="title"><h2>⚔️ Duel avec un ami</h2><div class="badge">Le plus de reps gagne</div></div>
+              <div class="title"><h2>⚔️ Duel ranked</h2><div class="badge">ELO + streak</div></div>
               <div class="row">
                 <div class="col"><label>Ami</label><select id="duelFriendSelect"></select></div>
                 <div class="col"><label>Exercice</label><input id="duelExercise" placeholder="Ex: Développé couché"></div>
@@ -310,164 +194,32 @@
                 <div class="col"><label>Reps de ton ami</label><input id="duelFriendReps" type="number" min="0" placeholder="Ex: 8"></div>
                 <div class="col"><label>Résultat</label><input id="duelPreview" disabled value="En attente"></div>
               </div>
-              <label>Notes duel</label>
-              <textarea id="duelNotes" placeholder="Ex: exécution propre, pause bench, dernière rep validée..."></textarea>
-              <div class="actions">
-                <button class="btn-p" onclick="previewDuel()">👀 Voir le résultat</button>
-                <button class="btn-g" onclick="saveDuel()">💾 Sauvegarder le duel</button>
-                <button class="btn-s" onclick="resetDuel()">🧹 Reset duel</button>
-              </div>
+              <label>Notes duel</label><textarea id="duelNotes" placeholder="Ex: exécution propre, pause bench, dernière rep validée..."></textarea>
+              <div class="actions"><button class="btn-p" onclick="previewDuel()">👀 Voir le résultat</button><button class="btn-g" onclick="saveDuel()">💾 Sauvegarder le duel</button><button class="btn-s" onclick="resetDuel()">🧹 Reset duel</button></div>
             </div>
           </div>
-
           <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>🏆 Stats duel</h2><div class="badge">Win streak</div></div>
-              <div class="mini-grid">
-                <div class="mini"><div class="k">Duels</div><div class="v" id="duelTotal">0</div></div>
-                <div class="mini"><div class="k">Victoires</div><div class="v" id="duelWins">0</div></div>
-                <div class="mini"><div class="k">Défaites</div><div class="v" id="duelLosses">0</div></div>
-                <div class="mini"><div class="k">Égalités</div><div class="v" id="duelDraws">0</div></div>
-              </div>
-              <div class="mini-grid" style="margin-top:12px">
-                <div class="mini"><div class="k">Streak</div><div class="v" id="duelStreak">0</div></div>
-                <div class="mini"><div class="k">Best streak</div><div class="v" id="duelBest">0</div></div>
-                <div class="mini"><div class="k">Win rate</div><div class="v" id="duelRate">0%</div></div>
-                <div class="mini"><div class="k">Dernier</div><div class="v" id="duelLast">-</div></div>
-              </div>
-            </div>
-            <div class="panel">
-              <div class="title"><h2>📜 Derniers duels</h2><div class="badge">Historique</div></div>
-              <div id="duelHistory"></div>
-            </div>
+            <div class="panel"><div class="title"><h2>🏆 Stats duel</h2><div class="badge">Ranked</div></div><div class="mini-grid"><div class="mini"><div class="k">Duels</div><div class="v" id="duelTotal">0</div></div><div class="mini"><div class="k">Victoires</div><div class="v" id="duelWins">0</div></div><div class="mini"><div class="k">Défaites</div><div class="v" id="duelLosses">0</div></div><div class="mini"><div class="k">Égalités</div><div class="v" id="duelDraws">0</div></div></div><div class="mini-grid" style="margin-top:12px"><div class="mini"><div class="k">Streak</div><div class="v" id="duelStreak">0</div></div><div class="mini"><div class="k">Best streak</div><div class="v" id="duelBest">0</div></div><div class="mini"><div class="k">Win rate</div><div class="v" id="duelRate">0%</div></div><div class="mini"><div class="k">ELO duel</div><div class="v" id="duelElo">1000</div></div></div></div>
+            <div class="panel"><div class="title"><h2>📜 Derniers duels</h2><div class="badge">Historique</div></div><div id="duelHistory"></div></div>
           </div>
         </div>
       </section>
 
-      <section id="quests" class="tab-panel hidden">
-        <div class="panel">
-          <div class="title"><h2>🗺️ Toutes les quêtes</h2><div class="badge" id="questSummary">0 / 0</div></div>
-          <div id="questList" class="quests"></div>
-        </div>
-      </section>
-
-      <section id="shop" class="tab-panel hidden">
-        <div class="grid">
-          <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>🛒 Boutique</h2><div class="badge">🪙 <span id="shopCoins">0</span> pièces</div></div>
-              <div id="shopList" class="shop"></div>
-            </div>
-          </div>
-          <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>🎨 Bios colorées</h2><div class="badge">Style salle</div></div>
-              <div id="ownedBios"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="friends" class="tab-panel hidden">
-        <div class="grid">
-          <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>👥 Ajouter des amis</h2><div class="badge">Code profil</div></div>
-              <label>Ton code profil</label>
-              <textarea id="myCode" readonly placeholder="Clique sur générer."></textarea>
-              <div class="actions"><button class="btn-p" onclick="generateCode()">📋 Générer mon code</button><button class="btn-s" onclick="copyMyCode()">📎 Copier</button></div>
-              <label>Ajouter / mettre à jour un ami</label>
-              <textarea id="friendCode" placeholder="Colle ici le code de ton ami"></textarea>
-              <div class="actions"><button class="btn-g" onclick="addFriend()">➕ Ajouter ou mettre à jour</button></div>
-            </div>
-          </div>
-          <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>📜 Liste d'amis</h2><div class="badge" id="friendCount">0 ami</div></div>
-              <div id="friendsList" class="friends"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="history" class="tab-panel hidden">
-        <div class="panel">
-          <div class="title"><h2>📜 Historique complet</h2><div class="actions" style="margin:0"><button class="btn-s" onclick="exportData()">📤 Exporter</button><button class="btn-d" onclick="clearHistory()">🗑️ Vider</button></div></div>
-          <div class="table-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Mode</th><th>Ami</th><th>Exercice</th><th>Reps</th><th>Poids</th><th>Volume</th><th>XP</th><th>Durée</th><th>Notes</th></tr></thead><tbody id="historyBody"></tbody></table></div>
-        </div>
-      </section>
-
-      <section id="settings" class="tab-panel hidden">
-        <div class="grid">
-          <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>⚙️ Paramètres du profil</h2><div class="badge">Personnalisable</div></div>
-              <div class="avatar-wrap">
-                <img id="settingsAvatar" class="avatar" alt="avatar">
-                <div style="flex:1;min-width:0"><label>Ajouter / changer la photo</label><input id="avatarInput" type="file" accept="image/*"></div>
-              </div>
-              <div class="row">
-                <div class="col"><label>Pseudo</label><input id="profileName"></div>
-                <div class="col"><label>Mail</label><input id="profileMail" type="email"></div>
-              </div>
-              <div class="row">
-                <div class="col"><label>Téléphone</label><input id="profilePhone"></div>
-                <div class="col"><label>Objectif poids (kg)</label><input id="goalWeight" type="number" step="0.1" min="0"></div>
-              </div>
-              <div class="row">
-                <div class="col"><label>Profil visible aux amis</label><select id="profilePublic"><option value="true">Oui, profil public</option><option value="false">Non, profil limité</option></select></div>
-              </div>
-              <div class="actions"><button class="btn-p" onclick="saveProfile()">💾 Sauvegarder</button></div>
-            </div>
-          </div>
-
-          <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>🔄 Sauvegarde multi-appareil</h2><div class="badge">PC / Téléphone</div></div>
-              <div class="note-box">Ce système fonctionne sans serveur. Il crée un gros code de sauvegarde que tu peux coller sur un autre appareil.</div>
-              <label>Code de synchronisation de ton profil</label>
-              <textarea id="syncExportCode" readonly placeholder="Clique sur générer pour créer une sauvegarde transférable."></textarea>
-              <div class="actions">
-                <button class="btn-p" onclick="generateSyncCode()">🧬 Générer le code</button>
-                <button class="btn-s" onclick="copySyncCode()">📎 Copier le code</button>
-              </div>
-            </div>
-
-            <div class="panel">
-              <div class="title"><h2>✨ Bonus ajoutés</h2><div class="badge">Nouveautés</div></div>
-              <div class="list-item">📱 Design responsive téléphone / PC</div>
-              <div class="list-item">👀 Profil ami condensé + page détaillée au clic</div>
-              <div class="list-item">🔒 Mode profil privé dans le code ami</div>
-              <div class="list-item">🤝 Coop avec bonus d'amitié</div>
-              <div class="list-item">⚔️ Duel avec streak</div>
-              <div class="list-item">🔄 Synchronisation manuelle par code de sauvegarde</div>
-            </div>
-
-            <div class="panel" style="border-style:dashed;background:rgba(255,95,95,.05)">
-              <div class="title"><h2>🚨 Zone sensible</h2><div class="badge">Attention</div></div>
-              <div class="actions"><button class="btn-d" onclick="deleteAccount()">❌ Supprimer le compte</button><button class="btn-s" onclick="logout()">🔓 Déconnexion</button></div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section id="quests" class="tab-panel hidden"><div class="panel"><div class="title"><h2>🗺️ Toutes les quêtes</h2><div class="badge" id="questSummary">0 / 0</div></div><div id="questList" class="quests"></div></div></section>
+      <section id="shop" class="tab-panel hidden"><div class="grid"><div class="stack"><div class="panel"><div class="title"><h2>🛒 Boutique</h2><div class="badge">🪙 <span id="shopCoins">0</span> pièces</div></div><div id="shopList" class="shop"></div></div></div><div class="stack"><div class="panel"><div class="title"><h2>🎨 Bios colorées</h2><div class="badge">Style salle</div></div><div id="ownedBios"></div></div></div></div></section>
+      <section id="friends" class="tab-panel hidden"><div class="grid"><div class="stack"><div class="panel"><div class="title"><h2>👥 Ajouter des amis</h2><div class="badge">Code profil</div></div><label>Ton code profil</label><textarea id="myCode" readonly placeholder="Clique sur générer."></textarea><div class="actions"><button class="btn-p" onclick="generateCode()">📋 Générer mon code</button><button class="btn-s" onclick="copyMyCode()">📎 Copier</button></div><label>Ajouter / mettre à jour un ami</label><textarea id="friendCode" placeholder="Colle ici le code de ton ami"></textarea><div class="actions"><button class="btn-g" onclick="addFriend()">➕ Ajouter ou mettre à jour</button></div></div></div><div class="stack"><div class="panel"><div class="title"><h2>📜 Liste d'amis</h2><div class="badge" id="friendCount">0 ami</div></div><div id="friendsList" class="friends"></div></div></div></div></section>
+      <section id="history" class="tab-panel hidden"><div class="panel"><div class="title"><h2>📜 Historique complet</h2><div class="actions" style="margin:0"><button class="btn-s" onclick="exportData()">📤 Exporter</button><button class="btn-d" onclick="clearHistory()">🗑️ Vider</button></div></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Mode</th><th>Ami</th><th>Exercice</th><th>Reps</th><th>Poids</th><th>Volume</th><th>XP</th><th>Durée</th><th>Notes</th></tr></thead><tbody id="historyBody"></tbody></table></div></div></section>
+      <section id="settings" class="tab-panel hidden"><div class="grid"><div class="stack"><div class="panel"><div class="title"><h2>⚙️ Paramètres du profil</h2><div class="badge">Personnalisable</div></div><div class="avatar-wrap"><img id="settingsAvatar" class="avatar" alt="avatar"><div style="flex:1;min-width:0"><label>Ajouter / changer la photo</label><input id="avatarInput" type="file" accept="image/*"></div></div><div class="row"><div class="col"><label>Pseudo</label><input id="profileName"></div><div class="col"><label>Mail</label><input id="profileMail" type="email"></div></div><div class="row"><div class="col"><label>Téléphone</label><input id="profilePhone"></div><div class="col"><label>Objectif poids (kg)</label><input id="goalWeight" type="number" step="0.1" min="0"></div></div><div class="row"><div class="col"><label>Profil visible aux amis</label><select id="profilePublic"><option value="true">Oui, profil public</option><option value="false">Non, profil limité</option></select></div><div class="col"><label>Thème</label><select id="themeSelect"><option value="gold">Gold</option><option value="blue">Blue</option><option value="red">Red</option><option value="green">Green</option></select></div></div><div class="row"><div class="col"><label>Titre rare équipé</label><select id="titleSelect"></select></div></div><div class="actions"><button class="btn-p" onclick="saveProfile()">💾 Sauvegarder</button></div></div><div class="panel"><div class="title"><h2>🛠️ Update</h2><div class="badge">Champ de mise à jour</div></div><div class="sub">Tu peux écrire ici les idées de modifications esthétiques ou fonctionnelles à appliquer plus tard. Elles seront gardées dans l'application.</div><div class="update-box"><label>Nouvelle demande d'update</label><textarea id="updateInput" placeholder="Ex: rendre la page duel plus agressive, agrandir les cartes mobile, ajouter plus d'animations..."></textarea><div class="actions"><button class="btn-b" onclick="saveUpdateNote()">➕ Enregistrer l'update</button><button class="btn-s" onclick="clearUpdateNotes()">🧹 Vider la liste</button></div></div><div class="update-log" id="updateLog"></div></div></div><div class="stack"><div class="panel"><div class="title"><h2>✨ V2 propre</h2><div class="badge">Nouveautés</div></div><div class="list-item">📱 Interface mobile avec menu tiroir latéral</div><div class="list-item">🏆 Classement des amis par XP</div><div class="list-item">⚔️ Duel ranked avec ELO</div><div class="list-item">🎨 Thèmes Gold / Blue / Red / Green</div><div class="list-item">👑 Titres rares déblocables</div><div class="list-item">🔒 Profil public / privé</div></div><div class="panel" style="border-style:dashed;background:rgba(255,95,95,.05)"><div class="title"><h2>🚨 Zone sensible</h2><div class="badge">Attention</div></div><div class="actions"><button class="btn-d" onclick="deleteAccount()">❌ Supprimer le compte</button><button class="btn-s" onclick="logout()">🔓 Déconnexion</button></div></div></div></div></section>
     </div>
   </div>
 
-  <div id="friendModal" class="modal">
-    <div class="modal-box">
-      <div class="title"><h2>👤 Profil ami</h2><button class="btn-s" onclick="closeFriendProfile()">Fermer</button></div>
-      <div id="friendProfileContent"></div>
-    </div>
-  </div>
-
+  <div id="friendModal" class="modal"><div class="modal-box"><div class="title"><h2>👤 Profil ami</h2><button class="btn-s" onclick="closeFriendProfile()">Fermer</button></div><div id="friendProfileContent"></div></div></div>
   <div id="toast" class="toast"></div>
 
   <script>
     let currentUser = null;
-
     const ranks = ["🥉 Bronze","🥈 Argent","⚙️ Iron","🥇 Gold","💎 Platinum","🏆 Champion","👑 Master","🔱 Legend"];
     const friendshipThresholds = [0,100,250,500,900,1500,2300,3400];
-
     const shopItems = [
       { id:"boost_10", type:"boost", name:"⚡ Boost XP x1.1", price:120, desc:"Augmente l'XP gagnée de 10% en permanence.", value:1.1 },
       { id:"boost_25", type:"boost", name:"🚀 Boost XP x1.25", price:300, desc:"Augmente l'XP gagnée de 25% en permanence.", value:1.25 },
@@ -478,1056 +230,102 @@
       { id:"bio_red", type:"bio", name:"❤️ Bio Red", price:110, desc:"Bio rouge agressive.", className:"bio-red", text:"❤️ Rage contrôlée • intensité maximale" },
       { id:"bio_green", type:"bio", name:"💚 Bio Green", price:110, desc:"Bio verte clean et athlétique.", className:"bio-green", text:"💚 Constance, volume, progression" }
     ];
-
-    function $(id){ return document.getElementById(id); }
-
-    function toast(msg){
-      const t = $('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 2400);
-    }
-
-    function today(){
-      return new Date().toLocaleDateString('fr-FR');
-    }
-
-    function rankFromXP(xp){
-      return ranks[Math.min(Math.floor((xp || 0) / 5000), ranks.length - 1)];
-    }
-
-    function levelFromXP(xp){
-      return Math.floor((xp || 0) / 2000) + 1;
-    }
-
-    function xpLevelFill(xp){
-      return Math.max(0, Math.min(100, ((xp || 0) % 2000) / 20));
-    }
-
-    function sessionKeyFromWorkout(w){
-      return `${w.date}|${w.sessionType}|${w.duration}|${w.notes}|${w.mode || 'solo'}|${w.coopFriend || ''}`;
-    }
-
-    function sessionKeys(arr){
-      return [...new Set((arr || []).map(sessionKeyFromWorkout))];
-    }
-
-    function calculateXP(reps, weight){
-      const r = Number(reps) || 0;
-      const w = Number(weight) || 0;
-      return (r * w) / 9;
-    }
-
-    function defaultUser(password){
-      return {
-        password,
-        name:'',
-        mail:'',
-        phone:'',
-        weight:'',
-        goalWeight:'',
-        avatar:'',
-        profilePublic:true,
-        xp:0,
-        coins:0,
-        xpMultiplier:1,
-        activeBio:'bio-default',
-        activeBioText:'🏋️ Rookie du grind',
-        ownedBios:['bio-default'],
-        presets:[],
-        workouts:[],
-        friends:[],
-        questClaims:{},
-        purchasedItems:[],
-        duels:[],
-        duelStats:{wins:0,losses:0,draws:0,streak:0,bestStreak:0}
-      };
-    }
-
-    function getUser(){
-      return JSON.parse(localStorage.getItem(currentUser));
-    }
-
-    function saveUser(data){
-      localStorage.setItem(currentUser, JSON.stringify(data));
-    }
-
-    function ensureFriend(friend){
-      if(friend.friendshipPoints == null) friend.friendshipPoints = 0;
-      if(friend.coopSessions == null) friend.coopSessions = 0;
-      return friend;
-    }
-
-    function friendshipLevel(points){
-      let lvl = 1;
-      friendshipThresholds.forEach((v, i) => {
-        if((points || 0) >= v) lvl = i + 1;
-      });
-      return lvl;
-    }
-
-    function friendshipBoost(level){
-      if(level <= 1) return 1;
-      return Number((1 + ((level - 1) * 0.35)).toFixed(2));
-    }
-
-    function friendshipProgress(points){
-      const lvl = friendshipLevel(points);
-      const currentMin = friendshipThresholds[lvl - 1] ?? 0;
-      const next = friendshipThresholds[lvl] ?? null;
-      if(next === null) return { lvl, percent:100 };
-      return {
-        lvl,
-        percent: Math.max(0, Math.min(100, ((points - currentMin) / (next - currentMin)) * 100))
-      };
-    }
-
-    function renderAvatar(src){
-      return src || `data:image/svg+xml;utf8,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='100%' height='100%' rx='24' fill='#111722'/><text x='50%' y='56%' text-anchor='middle' font-size='46' fill='#ffd54a'>👤</text></svg>")}`;
-    }
-
-    function sanitizeImportedData(data){
-      return {
-        password:'',
-        name:data.name || '',
-        mail:data.mail || '',
-        phone:data.phone || '',
-        weight:data.weight || '',
-        goalWeight:data.goalWeight || '',
-        avatar:data.avatar || '',
-        profilePublic:data.profilePublic !== false,
-        xp:Number(data.xp) || 0,
-        coins:Number(data.coins) || 0,
-        xpMultiplier:Number(data.xpMultiplier) || 1,
-        activeBio:data.activeBio || 'bio-default',
-        activeBioText:data.activeBioText || '🏋️ Rookie du grind',
-        ownedBios:Array.isArray(data.ownedBios) && data.ownedBios.length ? data.ownedBios : ['bio-default'],
-        presets:Array.isArray(data.presets) ? data.presets : [],
-        workouts:Array.isArray(data.workouts) ? data.workouts : [],
-        friends:Array.isArray(data.friends) ? data.friends.map(ensureFriend) : [],
-        questClaims:data.questClaims && typeof data.questClaims === 'object' ? data.questClaims : {},
-        purchasedItems:Array.isArray(data.purchasedItems) ? data.purchasedItems : [],
-        duels:Array.isArray(data.duels) ? data.duels : [],
-        duelStats:data.duelStats && typeof data.duelStats === 'object' ? {
-          wins:Number(data.duelStats.wins) || 0,
-          losses:Number(data.duelStats.losses) || 0,
-          draws:Number(data.duelStats.draws) || 0,
-          streak:Number(data.duelStats.streak) || 0,
-          bestStreak:Number(data.duelStats.bestStreak) || 0
-        } : {wins:0,losses:0,draws:0,streak:0,bestStreak:0}
-      };
-    }
-
-    function encodePayload(obj){
-      return btoa(unescape(encodeURIComponent(JSON.stringify(obj))));
-    }
-
-    function decodePayload(str){
-      return JSON.parse(decodeURIComponent(escape(atob(str))));
-    }
-
-    function registerUser(){
-      const u = $('authUser').value.trim();
-      const p = $('authPass').value.trim();
-      if(!u || !p) return toast('Remplis le nom et le mot de passe.');
-      if(localStorage.getItem(u)) return toast('Ce compte existe déjà.');
-      localStorage.setItem(u, JSON.stringify(defaultUser(p)));
-      toast('Compte créé avec succès ✨');
-    }
-
-    function loginUser(){
-      const u = $('authUser').value.trim();
-      const p = $('authPass').value.trim();
-      const raw = localStorage.getItem(u);
-      if(!raw) return toast('Compte introuvable.');
-      const data = JSON.parse(raw);
-      if(data.password !== p) return toast('Mot de passe incorrect.');
-      currentUser = u;
-      $('auth').classList.add('hidden');
-      $('app').classList.remove('hidden');
-      $('topBadge').classList.remove('hidden');
-      $('topBadge').textContent = `👤 ${data.name || currentUser}`;
-      $('todayBadge').textContent = `📅 ${today()}`;
-      loadAll();
-      toast('Connexion réussie 🚀');
-    }
-
-    function importSyncCode(){
-      const localUser = $('syncLocalUser').value.trim();
-      const localPass = $('syncLocalPass').value.trim();
-      const code = $('syncCodeInput').value.trim();
-      if(!localUser) return toast('Choisis un nom de compte local.');
-      if(!localPass) return toast('Choisis un mot de passe local.');
-      if(!code) return toast('Colle un code de synchronisation.');
-      if(localStorage.getItem(localUser)) return toast('Ce nom de compte local existe déjà.');
-
-      try{
-        const decoded = decodePayload(code);
-        if(decoded.type !== 'workout_tracker_sync' || !decoded.data) return toast('Code de synchronisation invalide.');
-        const imported = sanitizeImportedData(decoded.data);
-        imported.password = localPass;
-        localStorage.setItem(localUser, JSON.stringify(imported));
-        $('syncCodeInput').value = '';
-        $('syncLocalPass').value = '';
-        $('authUser').value = localUser;
-        $('authPass').value = localPass;
-        toast('Compte synchronisé sur cet appareil ✅');
-      }catch(e){
-        toast('Code de synchronisation invalide.');
-      }
-    }
-
-    function logout(){
-      currentUser = null;
-      $('app').classList.add('hidden');
-      $('auth').classList.remove('hidden');
-      $('topBadge').classList.add('hidden');
-      $('authUser').value = '';
-      $('authPass').value = '';
-      toast('Déconnecté.');
-    }
-
-    function deleteAccount(){
-      if(!currentUser) return;
-      if(!confirm('Supprimer définitivement ce compte ?')) return;
-      localStorage.removeItem(currentUser);
-      logout();
-    }
-
-    function showTab(id, btn){
-      document.querySelectorAll('.tab-panel').forEach(x => x.classList.add('hidden'));
-      $(id).classList.remove('hidden');
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      if(btn) btn.classList.add('active');
-    }
-
-    function generateCode(){
-      const data = getUser();
-      const payload = data.profilePublic === false
-        ? {
-            name:data.name || currentUser,
-            level:levelFromXP(data.xp),
-            rank:rankFromXP(data.xp),
-            avatar:data.avatar || '',
-            public:false,
-            summary:{
-              sessions: sessionKeys(data.workouts).length,
-              bestXP: Math.floor(Math.max(0, ...(data.workouts || []).map(w => w.xp || 0)))
-            }
-          }
-        : {
-            name:data.name || currentUser,
-            xp:data.xp,
-            level:levelFromXP(data.xp),
-            rank:rankFromXP(data.xp),
-            weight:data.weight || '',
-            avatar:data.avatar || '',
-            public:true,
-            workouts:(data.workouts || []).slice(-20),
-            bioText:data.activeBioText || '🏋️ Rookie du grind'
-          };
-      $('myCode').value = encodePayload(payload);
-      toast('Code profil généré.');
-    }
-
-    function copyMyCode(){
-      if(!$('myCode').value) return toast('Génère d’abord ton code.');
-      navigator.clipboard.writeText($('myCode').value)
-        .then(() => toast('Code copié 📎'))
-        .catch(() => toast('Copie impossible.'));
-    }
-
-    function generateSyncCode(){
-      const data = getUser();
-      const payload = {
-        type:'workout_tracker_sync',
-        version:1,
-        createdAt:new Date().toISOString(),
-        data: sanitizeImportedData(data)
-      };
-      $('syncExportCode').value = encodePayload(payload);
-      toast('Code de synchronisation généré 🧬');
-    }
-
-    function copySyncCode(){
-      if(!$('syncExportCode').value) return toast('Génère d’abord le code.');
-      navigator.clipboard.writeText($('syncExportCode').value)
-        .then(() => toast('Code de synchronisation copié 📎'))
-        .catch(() => toast('Copie impossible.'));
-    }
-
-    function addFriend(){
-      const code = $('friendCode').value.trim();
-      if(!code) return toast('Colle un code ami.');
-      try{
-        const incoming = decodePayload(code);
-        if(!incoming.name) return toast('Code ami invalide.');
-        const data = getUser();
-        const idx = data.friends.findIndex(f => f.name === incoming.name);
-        const merged = idx >= 0
-          ? { ...incoming, friendshipPoints:data.friends[idx].friendshipPoints || 0, coopSessions:data.friends[idx].coopSessions || 0 }
-          : { ...incoming, friendshipPoints:0, coopSessions:0 };
-        if(idx >= 0) data.friends[idx] = merged;
-        else data.friends.push(merged);
-        saveUser(data);
-        $('friendCode').value = '';
-        loadAll();
-        toast(`Ami ${idx >= 0 ? 'mis à jour' : 'ajouté'} : ${incoming.name}`);
-      }catch(e){
-        toast('Code ami invalide.');
-      }
-    }
-
-    function removeFriend(index){
-      const data = getUser();
-      const name = data.friends[index]?.name;
-      if(name == null) return;
-      data.friends.splice(index, 1);
-      saveUser(data);
-      loadAll();
-      toast(`Ami supprimé : ${name}`);
-    }
-
-    function loadFriendSelects(){
-      const data = getUser();
-      const friends = (data.friends || []).map(ensureFriend);
-      $('coopFriendSelect').innerHTML = '';
-      $('duelFriendSelect').innerHTML = '';
-      if(!friends.length){
-        $('coopFriendSelect').innerHTML = '<option value="">Aucun ami disponible</option>';
-        $('duelFriendSelect').innerHTML = '<option value="">Aucun ami disponible</option>';
-        $('coopBoostPreview').value = 'x1.00';
-        return;
-      }
-      friends.forEach((f, i) => {
-        const opt1 = document.createElement('option');
-        opt1.value = i;
-        opt1.textContent = `${f.name} • Amitié niv ${friendshipLevel(f.friendshipPoints)}`;
-        $('coopFriendSelect').appendChild(opt1);
-
-        const opt2 = document.createElement('option');
-        opt2.value = i;
-        opt2.textContent = f.name;
-        $('duelFriendSelect').appendChild(opt2);
-      });
-      updateCoopUI();
-    }
-
-    function updateCoopUI(){
-      const data = getUser();
-      const isCoop = $('sessionMode').value === 'coop';
-      $('coopFriendSelect').disabled = !isCoop;
-      if(!isCoop || !(data.friends || []).length){
-        $('coopBoostPreview').value = 'x1.00';
-        updateWorkoutPreview();
-        return;
-      }
-      const friend = ensureFriend(data.friends[Number($('coopFriendSelect').value) || 0]);
-      const boost = friendshipBoost(friendshipLevel(friend.friendshipPoints));
-      $('coopBoostPreview').value = `x${boost.toFixed(2)}`;
-      updateWorkoutPreview();
-    }
-
-    function addExercise(ex = '', reps = '', weight = ''){
-      const node = document.createElement('div');
-      node.className = 'exercise';
-      node.innerHTML = `
-        <div class="exercise-top">
-          <div>
-            <label>Exercice</label>
-            <input class="ex-name" value="${String(ex).replace(/"/g, '&quot;')}" placeholder="Ex: Squat">
-          </div>
-          <div>
-            <label>Reps</label>
-            <input class="ex-reps" type="number" min="0" value="${reps}">
-          </div>
-          <div>
-            <label>Poids (lbs)</label>
-            <input class="ex-weight" type="number" min="0" step="0.1" value="${weight}">
-          </div>
-          <div>
-            <label>Action</label>
-            <button class="btn-d ex-del">🗑️</button>
-          </div>
-        </div>
-        <div class="exercise-bottom">
-          <div>✨ XP : <span class="ex-xp">0</span></div>
-          <div>📦 Volume : <span class="ex-vol">0</span></div>
-          <div>🕘 Dernière fois : <span class="ex-last">Aucune donnée</span></div>
-        </div>
-      `;
-
-      const refresh = () => {
-        const n = node.querySelector('.ex-name').value.trim();
-        const r = Number(node.querySelector('.ex-reps').value) || 0;
-        const w = Number(node.querySelector('.ex-weight').value) || 0;
-        node.querySelector('.ex-xp').textContent = Math.floor(calculateXP(r, w));
-        node.querySelector('.ex-vol').textContent = Math.floor(r * w);
-        node.querySelector('.ex-last').innerHTML = lastPerformance(n, r, w);
-        updateWorkoutPreview();
-      };
-
-      node.querySelectorAll('input').forEach(i => i.addEventListener('input', refresh));
-      node.querySelector('.ex-del').addEventListener('click', () => {
-        node.remove();
-        updateWorkoutPreview();
-      });
-      $('exerciseList').appendChild(node);
-      refresh();
-    }
-
-    function resetWorkout(){
-      $('exerciseList').innerHTML = '';
-      $('sessionType').value = '';
-      $('sessionDuration').value = '';
-      $('sessionNotes').value = '';
-      $('sessionMode').value = 'solo';
-      updateCoopUI();
-      updateWorkoutPreview();
-    }
-
-    function currentExercises(){
-      return [...document.querySelectorAll('#exerciseList .exercise')]
-        .map(node => ({
-          ex: node.querySelector('.ex-name').value.trim(),
-          reps: Number(node.querySelector('.ex-reps').value) || 0,
-          weight: Number(node.querySelector('.ex-weight').value) || 0
-        }))
-        .filter(x => x.ex);
-    }
-
-    function lastPerformance(name, reps, weight){
-      if(!name) return 'Aucune donnée';
-      const data = getUser();
-      const found = [...(data.workouts || [])].reverse().find(w => (w.name || '').trim().toLowerCase() === name.trim().toLowerCase());
-      if(!found) return 'Aucune donnée';
-      const diff = (reps * weight) - ((found.reps || 0) * (found.weight || 0));
-      const txt = diff > 0
-        ? `<span class="hl-good">+${Math.floor(diff)} volume</span>`
-        : diff < 0
-          ? `<span class="hl-bad">${Math.floor(diff)} volume</span>`
-          : `<span class="hl-neutral">égal</span>`;
-      return `${found.reps}×${found.weight} • ${txt}`;
-    }
-
-    function updateWorkoutPreview(){
-      const data = currentUser ? getUser() : null;
-      const exs = currentExercises();
-      let totalXP = 0;
-      let totalVol = 0;
-      let mode = 'Solo';
-      let coopMult = 1;
-
-      if(data && $('sessionMode').value === 'coop' && (data.friends || []).length){
-        const friend = ensureFriend(data.friends[Number($('coopFriendSelect').value) || 0]);
-        coopMult = friendshipBoost(friendshipLevel(friend.friendshipPoints));
-        mode = `Coop x${coopMult.toFixed(2)}`;
-      }
-
-      exs.forEach(x => {
-        let xp = calculateXP(x.reps, x.weight);
-        if(data) xp *= (data.xpMultiplier || 1);
-        if($('sessionMode').value === 'coop') xp *= coopMult;
-        totalXP += xp;
-        totalVol += x.reps * x.weight;
-      });
-
-      $('liveCount').textContent = exs.length;
-      $('liveVolume').textContent = Math.floor(totalVol);
-      $('liveXP').textContent = Math.floor(totalXP);
-      $('liveMode').textContent = mode;
-
-      const tipsArr = [];
-      if(!exs.length) tipsArr.push('Ajoute des exercices pour démarrer.');
-      else tipsArr.push(`Tu as ${exs.length} exercice(s) dans la séance.`);
-      if($('sessionType').value.includes(',')) tipsArr.push('Séance multi-muscles détectée ✅');
-      if($('sessionMode').value === 'coop') tipsArr.push(`Boost amitié actif : ${mode}`);
-      if(totalXP >= 1000) tipsArr.push('Très bonne séance détectée 🔥');
-      $('tips').innerHTML = tipsArr.join('<br>');
-    }
-
-    function saveWorkout(){
-      const data = getUser();
-      const type = $('sessionType').value.trim();
-      const duration = $('sessionDuration').value || '';
-      const notes = $('sessionNotes').value.trim();
-      const mode = $('sessionMode').value;
-      const list = currentExercises();
-
-      if(!type) return toast('Indique les muscles travaillés.');
-      if(!list.length) return toast('Ajoute au moins un exercice.');
-
-      let coopFriendName = '';
-      let coopMult = 1;
-      let friendIdx = -1;
-
-      if(mode === 'coop'){
-        if(!(data.friends || []).length) return toast('Ajoute d’abord un ami.');
-        friendIdx = Number($('coopFriendSelect').value) || 0;
-        const f = ensureFriend(data.friends[friendIdx]);
-        coopFriendName = f.name;
-        coopMult = friendshipBoost(friendshipLevel(f.friendshipPoints));
-      }
-
-      let totalXP = 0;
-      list.forEach(x => {
-        const base = calculateXP(x.reps, x.weight);
-        const solo = base * (data.xpMultiplier || 1);
-        const finalXP = mode === 'coop' ? solo * coopMult : solo;
-        totalXP += finalXP;
-        data.workouts.push({
-          date:today(),
-          sessionType:type,
-          duration,
-          notes,
-          mode,
-          coopFriend:coopFriendName,
-          coopBoost:coopMult,
-          name:x.ex,
-          reps:x.reps,
-          weight:x.weight,
-          volume:x.reps * x.weight,
-          xp:finalXP
-        });
-      });
-
-      const coins = Math.max(5, Math.floor(totalXP / 120));
-      data.xp += totalXP;
-      data.coins += coins;
-      data.weight = $('bodyWeight').value || data.weight;
-
-      if(mode === 'coop' && friendIdx >= 0){
-        const f = ensureFriend(data.friends[friendIdx]);
-        f.friendshipPoints += 35 + (list.length * 10);
-        f.coopSessions += 1;
-        data.friends[friendIdx] = f;
-      }
-
-      saveUser(data);
-      resetWorkout();
-      loadAll();
-      toast(`Séance sauvegardée : +${Math.floor(totalXP)} XP • +${coins} 🪙`);
-    }
-
-    function savePreset(){
-      const data = getUser();
-      const name = $('presetName').value.trim();
-      const exercises = currentExercises();
-      if(!name) return toast('Donne un nom au preset.');
-      if(!exercises.length) return toast('Ajoute des exercices avant de sauver le preset.');
-      const payload = { name, sessionType:$('sessionType').value.trim(), exercises };
-      const idx = data.presets.findIndex(p => p.name.toLowerCase() === name.toLowerCase());
-      if(idx >= 0) data.presets[idx] = payload;
-      else data.presets.push(payload);
-      saveUser(data);
-      loadPresets();
-      $('presetName').value = '';
-      toast('Preset sauvegardé 📦');
-    }
-
-    function loadPresets(){
-      const data = getUser();
-      $('presetSelect').innerHTML = '';
-      if(!data.presets.length){
-        $('presetSelect').innerHTML = '<option value="">Aucun preset</option>';
-        return;
-      }
-      data.presets.forEach((p, i) => {
-        const o = document.createElement('option');
-        o.value = i;
-        o.textContent = p.name;
-        $('presetSelect').appendChild(o);
-      });
-    }
-
-    function loadPreset(){
-      const data = getUser();
-      const idx = $('presetSelect').value;
-      if(idx === '' || data.presets[idx] == null) return toast('Choisis un preset valide.');
-      const p = data.presets[idx];
-      $('exerciseList').innerHTML = '';
-      $('sessionType').value = p.sessionType || '';
-      (p.exercises || []).forEach(e => addExercise(e.ex, e.reps, e.weight));
-      $('presetName').value = p.name;
-      updateWorkoutPreview();
-      toast(`Preset chargé : ${p.name}`);
-    }
-
-    function deletePreset(){
-      const data = getUser();
-      const idx = $('presetSelect').value;
-      if(idx === '' || data.presets[idx] == null) return toast('Aucun preset sélectionné.');
-      const name = data.presets[idx].name;
-      data.presets.splice(idx, 1);
-      saveUser(data);
-      loadPresets();
-      toast(`Preset supprimé : ${name}`);
-    }
-
-    function previewDuel(){
-      const mine = Number($('duelMyReps').value) || 0;
-      const him = Number($('duelFriendReps').value) || 0;
-      $('duelPreview').value = mine > him ? 'Victoire 🏆' : mine < him ? 'Défaite ❌' : 'Égalité 🤝';
-    }
-
-    function resetDuel(){
-      $('duelExercise').value = '';
-      $('duelWeight').value = '';
-      $('duelMyReps').value = '';
-      $('duelFriendReps').value = '';
-      $('duelNotes').value = '';
-      $('duelPreview').value = 'En attente';
-    }
-
-    function saveDuel(){
-      const data = getUser();
-      if(!(data.friends || []).length) return toast('Ajoute d’abord un ami.');
-      const idx = Number($('duelFriendSelect').value);
-      const friend = data.friends[idx];
-      if(!friend) return toast('Choisis un ami.');
-      const exercise = $('duelExercise').value.trim();
-      const weight = Number($('duelWeight').value) || 0;
-      const mine = Number($('duelMyReps').value) || 0;
-      const him = Number($('duelFriendReps').value) || 0;
-      const notes = $('duelNotes').value.trim();
-      if(!exercise) return toast('Choisis un exercice.');
-      if(weight <= 0) return toast('Indique un poids valide.');
-
-      let result = 'draw';
-      if(mine > him) result = 'win';
-      else if(mine < him) result = 'loss';
-
-      data.duels.push({ date:today(), friend:friend.name, exercise, weight, myReps:mine, friendReps:him, result, notes });
-
-      if(result === 'win'){
-        data.duelStats.wins++;
-        data.duelStats.streak++;
-        data.duelStats.bestStreak = Math.max(data.duelStats.bestStreak, data.duelStats.streak);
-        data.xp += 180;
-        data.coins += 30;
-      }else if(result === 'loss'){
-        data.duelStats.losses++;
-        data.duelStats.streak = 0;
-        data.coins += 10;
-      }else{
-        data.duelStats.draws++;
-        data.coins += 15;
-      }
-
-      saveUser(data);
-      resetDuel();
-      loadAll();
-      toast(result === 'win' ? 'Victoire 🏆 • Duel enregistré' : result === 'loss' ? 'Défaite ❌ • Duel enregistré' : 'Égalité 🤝 • Duel enregistré');
-    }
-
-    function questDefs(data){
-      const workouts = data.workouts || [];
-      const sessions = sessionKeys(workouts).length;
-      const multi = new Set(workouts.filter(w => (w.sessionType || '').includes(',')).map(w => `${w.date}|${w.sessionType}|${w.duration}|${w.notes}`)).size;
-      const reminder = new Set(workouts.filter(w => (w.sessionType || '').toLowerCase().includes('rappel')).map(w => `${w.date}|${w.sessionType}|${w.duration}|${w.notes}`)).size;
-      const maxWeight = Math.max(0, ...workouts.map(w => Number(w.weight) || 0));
-      const maxVolume = Math.max(0, ...workouts.map(w => Number(w.volume) || 0));
-      const uniqueExercises = new Set(workouts.map(w => (w.name || '').toLowerCase())).size;
-      const coopSessions = new Set(workouts.filter(w => w.mode === 'coop').map(w => `${w.date}|${w.coopFriend || ''}|${w.notes || ''}`)).size;
-      const soloSessions = new Set(workouts.filter(w => w.mode !== 'coop').map(w => `${w.date}|${w.sessionType}|${w.duration}|${w.notes}`)).size;
-      const totalCoopPoints = (data.friends || []).reduce((s, f) => s + (f.friendshipPoints || 0), 0);
-      const bestFriendLvl = Math.max(1, ...(data.friends || []).map(f => friendshipLevel(f.friendshipPoints || 0)));
-      const duelWins = data.duelStats?.wins || 0;
-      const duelStreak = data.duelStats?.bestStreak || 0;
-      const duelCount = (data.duels || []).length;
-
-      return [
-        {id:'q1',title:'💪 Début du grind',desc:'Faire 3 séances',current:sessions,goal:3,xpReward:300,coinReward:40},
-        {id:'q2',title:'🧩 Split hybride',desc:'Faire 2 séances multi-muscles',current:multi,goal:2,xpReward:400,coinReward:55},
-        {id:'q3',title:'🎯 Rappel ciblé',desc:'Faire 2 séances avec rappel',current:reminder,goal:2,xpReward:350,coinReward:50},
-        {id:'q4',title:'🏋️ Charge lourde',desc:'Atteindre 250 lbs',current:maxWeight,goal:250,xpReward:500,coinReward:80},
-        {id:'q5',title:'🔥 XP Hunter',desc:'Atteindre 10000 XP',current:Math.floor(data.xp),goal:10000,xpReward:700,coinReward:120},
-        {id:'q6',title:'📈 Gros volume',desc:'Atteindre 2000 de volume',current:maxVolume,goal:2000,xpReward:450,coinReward:65},
-        {id:'q7',title:'📚 Variété',desc:'Enregistrer 10 exos différents',current:uniqueExercises,goal:10,xpReward:380,coinReward:55},
-        {id:'q8',title:'🤝 Premier duo',desc:'Faire 1 séance coop',current:coopSessions,goal:1,xpReward:250,coinReward:45},
-        {id:'q9',title:'👬 Team player',desc:'Faire 5 séances coop',current:coopSessions,goal:5,xpReward:600,coinReward:100},
-        {id:'q10',title:'🧍 Lone wolf',desc:'Faire 5 séances solo',current:soloSessions,goal:5,xpReward:300,coinReward:50},
-        {id:'q11',title:'🪙 Collectionneur',desc:'Avoir 1000 pièces',current:Math.floor(data.coins),goal:1000,xpReward:500,coinReward:150},
-        {id:'q12',title:'🛒 Premier achat',desc:'Acheter un objet',current:(data.purchasedItems || []).length,goal:1,xpReward:200,coinReward:25},
-        {id:'q13',title:'🎨 Style unique',desc:'Acheter 3 bios',current:(data.ownedBios || []).filter(x => x !== 'bio-default').length,goal:3,xpReward:350,coinReward:60},
-        {id:'q14',title:'⚡ Machine à XP',desc:'Obtenir x1.25 solo',current:data.xpMultiplier || 1,goal:1.25,xpReward:320,coinReward:50},
-        {id:'q15',title:'🤗 Cercle social',desc:'Ajouter 3 amis',current:(data.friends || []).length,goal:3,xpReward:300,coinReward:60},
-        {id:'q16',title:'💞 Lien naissant',desc:'Atteindre 100 points d’amitié',current:totalCoopPoints,goal:100,xpReward:350,coinReward:70},
-        {id:'q17',title:'💙 Duo fusionnel',desc:'Atteindre niveau 3 avec un ami',current:bestFriendLvl,goal:3,xpReward:500,coinReward:90},
-        {id:'q18',title:'⚔️ Premier sang',desc:'Faire 1 duel',current:duelCount,goal:1,xpReward:180,coinReward:30},
-        {id:'q19',title:'🏅 Challenger',desc:'Gagner 3 duels',current:duelWins,goal:3,xpReward:420,coinReward:70},
-        {id:'q20',title:'🔥 Série de feu',desc:'Atteindre 3 de win streak',current:duelStreak,goal:3,xpReward:500,coinReward:80}
-      ];
-    }
-
-    function claimQuest(id){
-      const data = getUser();
-      const q = questDefs(data).find(x => x.id === id);
-      if(!q) return;
-      if((data.questClaims || {})[id]) return toast('Quête déjà récupérée.');
-      if(q.current < q.goal) return toast('Quête pas encore terminée.');
-      data.questClaims[id] = true;
-      data.xp += q.xpReward;
-      data.coins += q.coinReward;
-      saveUser(data);
-      loadAll();
-      toast(`Quête validée : +${q.xpReward} XP • +${q.coinReward} 🪙`);
-    }
-
-    function loadDashboard(){
-      const data = getUser();
-      $('topBadge').textContent = `👤 ${data.name || currentUser}`;
-      $('dashName').textContent = data.name || currentUser;
-      $('dashLevel').textContent = levelFromXP(data.xp);
-      $('dashXP').textContent = Math.floor(data.xp);
-      $('dashCoins').textContent = Math.floor(data.coins || 0);
-      $('rankBadge').textContent = rankFromXP(data.xp);
-      $('xpFill').style.width = `${xpLevelFill(data.xp)}%`;
-      $('xpText').textContent = `${Math.floor((data.xp || 0) % 2000)} / 2000 XP vers le niveau ${levelFromXP(data.xp) + 1}`;
-      $('goalText').textContent = data.goalWeight ? `🎯 Objectif poids : ${data.goalWeight} kg` : '🎯 Objectif poids : -';
-      $('soloBoostText').textContent = `x${Number(data.xpMultiplier || 1).toFixed(2)}`;
-      const sessions = sessionKeys(data.workouts).length;
-      $('statSessions').textContent = sessions;
-      $('statExercises').textContent = (data.workouts || []).length;
-      $('statAvgXP').textContent = sessions ? Math.floor((data.xp || 0) / sessions) : 0;
-      const avatar = renderAvatar(data.avatar);
-      $('dashAvatar').src = avatar;
-      $('settingsAvatar').src = avatar;
-      $('dashBio').className = `bio-preview ${data.activeBio || 'bio-default'}`;
-      $('dashBio').textContent = data.activeBioText || '🏋️ Rookie du grind';
-    }
-
-    function loadCoopSummary(){
-      const data = getUser();
-      const friends = (data.friends || []).map(ensureFriend);
-      if(!friends.length){
-        $('coopSummary').innerHTML = '<div class="sub">Ajoute un ami pour débloquer la coop.</div>';
-        return;
-      }
-      $('coopSummary').innerHTML = friends.map(f => {
-        const prog = friendshipProgress(f.friendshipPoints || 0);
-        const boost = friendshipBoost(prog.lvl);
-        return `
-          <div class="friend-card">
-            <div class="quest-name">🤝 ${f.name}</div>
-            <div class="sub">Niveau d'amitié ${prog.lvl} • ${f.coopSessions || 0} séance(s) coop</div>
-            <div class="xpbar" style="margin-top:10px"><div class="xpfill friendfill" style="width:${prog.percent}%"></div></div>
-            <div class="meta"><span>${f.friendshipPoints || 0} pts</span><span>Boost coop : x${boost.toFixed(2)}</span></div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function loadAchievements(){
-      const data = getUser();
-      const workouts = data.workouts || [];
-      const coop = new Set(workouts.filter(w => w.mode === 'coop').map(w => `${w.date}|${w.coopFriend || ''}|${w.notes || ''}`)).size;
-      const duelWins = data.duelStats?.wins || 0;
-      const bestStreak = data.duelStats?.bestStreak || 0;
-      const bestFriendLvl = Math.max(1, ...(data.friends || []).map(f => friendshipLevel(f.friendshipPoints || 0)));
-      const items = [];
-      if(workouts.length >= 1) items.push('🎉 Première séance enregistrée');
-      if(sessionKeys(workouts).length >= 5) items.push('📅 5 séances complètes');
-      if(data.xp >= 2000) items.push('⭐ Niveau 2 atteint');
-      if(data.xp >= 9000) items.push('🥇 Gold débloqué');
-      if(coop >= 1) items.push('🤝 Première séance coop');
-      if(bestFriendLvl >= 3) items.push('💙 Amitié niveau 3 atteinte');
-      if((data.duels || []).length >= 1) items.push('⚔️ Premier duel');
-      if(duelWins >= 3) items.push('🏅 3 victoires en duel');
-      if(bestStreak >= 3) items.push('🔥 Win streak 3 atteinte');
-      $('achievements').innerHTML = items.length ? items.map(x => `<div class="list-item">${x}</div>`).join('') : '<div class="sub">Aucun succès débloqué.</div>';
-    }
-
-    function loadQuests(){
-      const data = getUser();
-      const qs = questDefs(data);
-      const done = qs.filter(q => (data.questClaims || {})[q.id]).length;
-      $('questSummary').textContent = `${done} / ${qs.length}`;
-      $('questList').innerHTML = qs.map(q => {
-        const ok = q.current >= q.goal;
-        const claimed = !!(data.questClaims || {})[q.id];
-        return `
-          <div class="quest-card">
-            <div class="quest-name">${q.title}</div>
-            <div class="sub">${q.desc}</div>
-            <div class="xpbar" style="margin:10px 0"><div class="xpfill" style="width:${Math.min(100, (q.current / q.goal) * 100)}%"></div></div>
-            <div class="sub">Récompense : +${q.xpReward} XP • +${q.coinReward} 🪙</div>
-            <div class="actions">
-              <button class="${ok && !claimed ? 'btn-g' : 'btn-s'}" ${ok && !claimed ? `onclick="claimQuest('${q.id}')"` : 'disabled'}>
-                ${claimed ? 'Déjà récupérée' : ok ? 'Récupérer' : `${Math.floor(q.current)} / ${q.goal}`}
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function loadShop(){
-      const data = getUser();
-      $('shopCoins').textContent = Math.floor(data.coins || 0);
-      $('shopList').innerHTML = shopItems.map(item => {
-        const owned = item.type === 'bio' ? data.ownedBios.includes(item.className) : (data.xpMultiplier >= item.value);
-        return `
-          <div class="shop-card">
-            <div class="shop-name">${item.name}</div>
-            <div class="sub">${item.desc}</div>
-            <div class="badge" style="margin-top:10px">💰 ${item.price} pièces</div>
-            <div class="actions"><button class="${owned ? 'btn-s' : 'btn-p'}" onclick="buyItem('${item.id}')">${owned ? 'Déjà obtenu' : 'Acheter'}</button></div>
-            ${item.type === 'bio' ? `<div class="bio-preview ${item.className}">${item.text}</div>` : ''}
-          </div>
-        `;
-      }).join('');
-
-      const owned = [
-        {className:'bio-default', text:'🏋️ Rookie du grind', owned:true},
-        ...shopItems.filter(i => i.type === 'bio').map(i => ({ className:i.className, text:i.text, owned:data.ownedBios.includes(i.className) }))
-      ];
-
-      $('ownedBios').innerHTML = owned.map(b => `
-        <div style="margin-top:12px">
-          <div class="bio-preview ${b.className}">${b.text}</div>
-          <div class="actions"><button class="${b.owned ? 'btn-g' : 'btn-s'}" ${b.owned ? `onclick="equipBio('${b.className}')"` : 'disabled'}>${b.owned ? 'Équiper' : 'Non possédée'}</button></div>
-        </div>
-      `).join('');
-    }
-
-    function buyItem(id){
-      const data = getUser();
-      const item = shopItems.find(x => x.id === id);
-      if(!item) return;
-      if((data.coins || 0) < item.price) return toast('Pas assez de pièces.');
-
-      if(item.type === 'boost'){
-        if((data.xpMultiplier || 1) >= item.value) return toast('Tu as déjà un boost égal ou supérieur.');
-        data.coins -= item.price;
-        data.xpMultiplier = item.value;
-        data.purchasedItems.push(item.id);
-        saveUser(data);
-        loadAll();
-        return toast(`Achat réussi : ${item.name}`);
-      }
-
-      if(item.type === 'bio'){
-        if(data.ownedBios.includes(item.className)) return toast('Tu possèdes déjà cette bio.');
-        data.coins -= item.price;
-        data.ownedBios.push(item.className);
-        data.purchasedItems.push(item.id);
-        saveUser(data);
-        loadAll();
-        return toast(`Bio achetée : ${item.name}`);
-      }
-    }
-
-    function equipBio(className){
-      const data = getUser();
-      const item = shopItems.find(i => i.className === className);
-      if(className !== 'bio-default' && !data.ownedBios.includes(className)) return toast('Tu ne possèdes pas cette bio.');
-      data.activeBio = className;
-      data.activeBioText = className === 'bio-default' ? '🏋️ Rookie du grind' : item.text;
-      saveUser(data);
-      loadAll();
-      toast('Bio équipée ✅');
-    }
-
-    function loadFriends(){
-      const data = getUser();
-      const friends = (data.friends || []).map(ensureFriend);
-      $('friendCount').textContent = `${friends.length} ${friends.length > 1 ? 'amis' : 'ami'}`;
-      if(!friends.length){
-        $('friendsList').innerHTML = '<div class="sub">Aucun ami ajouté pour le moment.</div>';
-        return;
-      }
-      $('friendsList').innerHTML = friends.map((f, i) => {
-        const lvl = friendshipLevel(f.friendshipPoints || 0);
-        return `
-          <div class="friend-card" onclick="openFriendProfile(${i})">
-            <h4>👤 ${f.name}</h4>
-            <div class="friend-essential">
-              <div class="box"><div class="smallk">Niveau</div><div class="smallv">${f.level || levelFromXP(f.xp || 0)}</div></div>
-              <div class="box"><div class="smallk">Rank</div><div class="smallv">${f.rank || rankFromXP(f.xp || 0)}</div></div>
-              <div class="box"><div class="smallk">Amitié</div><div class="smallv">Niv ${lvl}</div></div>
-              <div class="box"><div class="smallk">Boost coop</div><div class="smallv">x${friendshipBoost(lvl).toFixed(2)}</div></div>
-            </div>
-            <div class="actions">
-              <button class="btn-s" onclick="event.stopPropagation();openFriendProfile(${i})">Voir profil</button>
-              <button class="btn-d" onclick="event.stopPropagation();removeFriend(${i})">Supprimer</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function openFriendProfile(index){
-      const data = getUser();
-      const friend = data.friends[index];
-      if(!friend) return;
-      const lvl = friendshipLevel(friend.friendshipPoints || 0);
-      const boost = friendshipBoost(lvl);
-      const avatar = renderAvatar(friend.avatar);
-      const publicView = friend.public !== false;
-      const workouts = publicView ? (friend.workouts || []) : [];
-      $('friendProfileContent').innerHTML = `
-        <div class="avatar-wrap">
-          <img src="${avatar}" class="avatar">
-          <div style="flex:1">
-            <div class="v" style="font-size:24px">${friend.name}</div>
-            <div class="sub">${friend.rank || rankFromXP(friend.xp || 0)} • Niveau ${friend.level || levelFromXP(friend.xp || 0)}</div>
-            ${publicView && friend.bioText ? `<div class="bio-preview bio-default">${friend.bioText}</div>` : `<div class="bio-preview bio-default">🔒 Profil privé : version limitée visible</div>`}
-          </div>
-        </div>
-        <div class="mini-grid" style="margin-top:14px">
-          <div class="mini"><div class="k">Amitié</div><div class="v">Niv ${lvl}</div></div>
-          <div class="mini"><div class="k">Boost coop</div><div class="v">x${boost.toFixed(2)}</div></div>
-          <div class="mini"><div class="k">XP</div><div class="v">${publicView ? Math.floor(friend.xp || 0) : 'Caché'}</div></div>
-          <div class="mini"><div class="k">Poids</div><div class="v">${publicView ? (friend.weight ? friend.weight + ' kg' : '-') : 'Caché'}</div></div>
-        </div>
-        <div class="title" style="margin-top:18px"><h2>📜 Aperçu de ses séances</h2><div class="badge">${publicView ? 'Visible' : 'Privé'}</div></div>
-        ${publicView ? ((workouts.slice(-8).reverse().map(w => `<div class="list-item"><strong>${w.name || '-'}</strong><br>${w.date || ''} • ${w.reps || 0} reps × ${w.weight || 0} lbs • XP ${Math.floor(w.xp || 0)}</div>`).join('')) || '<div class="sub">Aucune séance visible.</div>') : '<div class="sub">Ce profil a activé le mode privé. Seules les infos essentielles sont visibles.</div>'}
-      `;
-      $('friendModal').classList.add('show');
-    }
-
-    function closeFriendProfile(){
-      $('friendModal').classList.remove('show');
-    }
-
-    function loadHistory(){
-      const data = getUser();
-      $('historyBody').innerHTML = '';
-      [...(data.workouts || [])].reverse().forEach(w => {
-        $('historyBody').innerHTML += `
-          <tr>
-            <td>${w.date || ''}</td>
-            <td>${w.sessionType || '-'}</td>
-            <td>${w.mode || 'solo'}</td>
-            <td>${w.coopFriend || '-'}</td>
-            <td>${w.name || ''}</td>
-            <td>${w.reps || 0}</td>
-            <td>${w.weight || 0}</td>
-            <td>${Math.floor(w.volume || 0)}</td>
-            <td>${Math.floor(w.xp || 0)}</td>
-            <td>${w.duration || '-'}</td>
-            <td>${w.notes || '-'}</td>
-          </tr>
-        `;
-      });
-    }
-
-    function loadDuelStats(){
-      const data = getUser();
-      const s = data.duelStats || {wins:0,losses:0,draws:0,streak:0,bestStreak:0};
-      const total = (s.wins || 0) + (s.losses || 0) + (s.draws || 0);
-      $('duelTotal').textContent = total;
-      $('duelWins').textContent = s.wins || 0;
-      $('duelLosses').textContent = s.losses || 0;
-      $('duelDraws').textContent = s.draws || 0;
-      $('duelStreak').textContent = s.streak || 0;
-      $('duelBest').textContent = s.bestStreak || 0;
-      $('duelRate').textContent = `${total ? Math.round((s.wins / total) * 100) : 0}%`;
-      const last = (data.duels || []).slice(-1)[0];
-      $('duelLast').textContent = !last ? '-' : (last.result === 'win' ? 'Victoire' : last.result === 'loss' ? 'Défaite' : 'Égalité');
-      $('duelHistory').innerHTML = (data.duels || []).slice(-8).reverse().map(d => `
-        <div class="list-item">
-          <strong>${d.exercise}</strong><br>
-          ${d.date} • vs ${d.friend} • ${d.weight} lbs<br>
-          Toi: ${d.myReps} reps • Lui: ${d.friendReps} reps<br>
-          Résultat: ${d.result === 'win' ? 'Victoire 🏆' : d.result === 'loss' ? 'Défaite ❌' : 'Égalité 🤝'}
-        </div>
-      `).join('') || '<div class="sub">Aucun duel enregistré.</div>';
-    }
-
-    function saveProfile(){
-      const data = getUser();
-      data.name = $('profileName').value.trim();
-      data.mail = $('profileMail').value.trim();
-      data.phone = $('profilePhone').value.trim();
-      data.goalWeight = $('goalWeight').value.trim();
-      data.weight = $('bodyWeight').value.trim() || data.weight;
-      data.profilePublic = $('profilePublic').value === 'true';
-      saveUser(data);
-      loadAll();
-      toast('Profil sauvegardé ✅');
-    }
-
-    function loadSettings(){
-      const data = getUser();
-      $('profileName').value = data.name || '';
-      $('profileMail').value = data.mail || '';
-      $('profilePhone').value = data.phone || '';
-      $('goalWeight').value = data.goalWeight || '';
-      $('profilePublic').value = String(data.profilePublic !== false);
-      $('bodyWeight').value = data.weight || $('bodyWeight').value || '';
-      $('syncExportCode').value = '';
-    }
-
-    function exportData(){
-      const data = getUser();
-      const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `${currentUser || 'workout'}_backup.json`;
-      a.click();
-      URL.revokeObjectURL(a.href);
-      toast('Export effectué 📤');
-    }
-
-    function clearHistory(){
-      if(!confirm('Vider tout l’historique ?')) return;
-      const data = getUser();
-      data.workouts = [];
-      data.xp = 0;
-      data.coins = 0;
-      data.questClaims = {};
-      data.duels = [];
-      data.duelStats = {wins:0,losses:0,draws:0,streak:0,bestStreak:0};
-      data.friends = (data.friends || []).map(f => ({ ...f, friendshipPoints:0, coopSessions:0 }));
-      saveUser(data);
-      loadAll();
-      toast('Historique vidé.');
-    }
-
-    function loadAll(){
-      const data = getUser();
-      if(!data) return;
-      (data.friends || []).forEach(ensureFriend);
-      if(!data.duelStats) data.duelStats = {wins:0,losses:0,draws:0,streak:0,bestStreak:0};
-      if(!Array.isArray(data.duels)) data.duels = [];
-      saveUser(data);
-      $('topBadge').textContent = `👤 ${data.name || currentUser}`;
-      loadDashboard();
-      loadSettings();
-      loadCoopSummary();
-      loadAchievements();
-      loadQuests();
-      loadShop();
-      loadFriends();
-      loadHistory();
-      loadPresets();
-      loadFriendSelects();
-      loadDuelStats();
-      updateWorkoutPreview();
-    }
-
-    $('avatarInput').addEventListener('change', e => {
-      const file = e.target.files[0];
-      if(!file) return;
-      const reader = new FileReader();
-      reader.onload = ev => {
-        const data = getUser();
-        data.avatar = ev.target.result;
-        saveUser(data);
-        loadAll();
-        toast('Photo de profil ajoutée 🖼️');
-      };
-      reader.readAsDataURL(file);
-    });
-
-    $('coopFriendSelect').addEventListener('change', updateCoopUI);
-    $('duelMyReps').addEventListener('input', previewDuel);
-    $('duelFriendReps').addEventListener('input', previewDuel);
-    $('friendModal').addEventListener('click', e => {
-      if(e.target === $('friendModal')) closeFriendProfile();
-    });
+    const rareTitles = [
+      {id:'rookie', name:'Rookie', req:()=>true},
+      {id:'iron_soul', name:'Iron Soul', req:d=>d.xp>=5000},
+      {id:'golden_grinder', name:'Golden Grinder', req:d=>d.xp>=9000},
+      {id:'duel_lord', name:'Duel Lord', req:d=>(d.duelStats?.wins||0)>=10},
+      {id:'team_beast', name:'Team Beast', req:d=>(d.friends||[]).some(f=>(f.coopSessions||0)>=5)},
+      {id:'legendary_pump', name:'Legendary Pump', req:d=>Object.keys(d.questClaims||{}).length>=10}
+    ];
+
+    function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
+    function today(){ return new Date().toLocaleDateString('fr-FR'); }
+    function rankFromXP(xp){ return ranks[Math.min(Math.floor((xp||0)/5000), ranks.length-1)]; }
+    function levelFromXP(xp){ return Math.floor((xp||0)/2000)+1; }
+    function xpLevelFill(xp){ return Math.max(0, Math.min(100, ((xp||0)%2000)/20)); }
+    function sessionKeys(arr){ return [...new Set((arr||[]).map(w => `${w.date}|${w.sessionType}|${w.duration}|${w.notes}|${w.mode||'solo'}|${w.coopFriend||''}`))]; }
+    function calculateXP(reps,weight){ const r=Number(reps)||0; const w=Number(weight)||0; return (r*w)/9; }
+    function safeEncode(obj){ return btoa(encodeURIComponent(JSON.stringify(obj))); }
+    function safeDecode(str){ return JSON.parse(decodeURIComponent(atob(str))); }
+    function renderAvatar(src){ return src || `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='100%' height='100%' rx='24' fill='#111722'/><text x='50%' y='56%' text-anchor='middle' font-size='46' fill='#ffd54a'>👤</text></svg>`)}`; }
+    function applyTheme(theme){ document.body.classList.remove('theme-blue','theme-red','theme-green'); if(theme==='blue') document.body.classList.add('theme-blue'); if(theme==='red') document.body.classList.add('theme-red'); if(theme==='green') document.body.classList.add('theme-green'); }
+
+    function defaultUser(password){ return { updateNotes:[], password, name:'', mail:'', phone:'', weight:'', goalWeight:'', avatar:'', profilePublic:true, xp:0, coins:0, xpMultiplier:1, activeBio:'bio-default', activeBioText:'🏋️ Rookie du grind', ownedBios:['bio-default'], theme:'gold', activeTitle:'rookie', presets:[], workouts:[], friends:[], questClaims:{}, purchasedItems:[], duels:[], duelElo:1000, duelStats:{wins:0,losses:0,draws:0,streak:0,bestStreak:0} }; }
+    function getUser(){ return JSON.parse(localStorage.getItem(currentUser)); }
+    function saveUser(data){ localStorage.setItem(currentUser, JSON.stringify(data)); }
+    function ensureFriend(friend){ if(friend.friendshipPoints==null) friend.friendshipPoints=0; if(friend.coopSessions==null) friend.coopSessions=0; return friend; }
+    function friendshipLevel(points){ let lvl=1; friendshipThresholds.forEach((v,i)=>{ if((points||0)>=v) lvl=i+1; }); return lvl; }
+    function friendshipBoost(level){ if(level<=1) return 1; return Number((1 + ((level-1)*0.35)).toFixed(2)); }
+    function friendshipProgress(points){ const lvl=friendshipLevel(points); const currentMin=friendshipThresholds[lvl-1]??0; const next=friendshipThresholds[lvl]??null; if(next===null) return {lvl,percent:100}; return {lvl,percent:Math.max(0,Math.min(100,((points-currentMin)/(next-currentMin))*100))}; }
+
+    function registerUser(){ const u=authUser.value.trim(); const p=authPass.value.trim(); if(!u||!p) return toast('Remplis le nom et le mot de passe.'); if(localStorage.getItem(u)) return toast('Ce compte existe déjà.'); localStorage.setItem(u, JSON.stringify(defaultUser(p))); toast('Compte créé avec succès ✨'); }
+    function loginUser(){ const u=authUser.value.trim(); const p=authPass.value.trim(); const raw=localStorage.getItem(u); if(!raw) return toast('Compte introuvable.'); const data=JSON.parse(raw); if(data.password!==p) return toast('Mot de passe incorrect.'); currentUser=u; auth.classList.add('hidden'); app.classList.remove('hidden'); topBadge.classList.remove('hidden'); loadAll(); toast('Connexion réussie 🚀'); }
+    function logout(){ currentUser=null; app.classList.add('hidden'); auth.classList.remove('hidden'); topBadge.classList.add('hidden'); authUser.value=''; authPass.value=''; toast('Déconnecté.'); }
+    function deleteAccount(){ if(!currentUser) return; if(!confirm('Supprimer définitivement ce compte ?')) return; localStorage.removeItem(currentUser); logout(); }
+    function showTab(id, btn){ document.querySelectorAll('.tab-panel').forEach(x=>x.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.querySelectorAll('.drawer-nav .tab-btn').forEach(b=>b.classList.remove('active')); if(btn) btn.classList.add('active'); document.querySelectorAll(`.tab-btn[data-tab="${id}"]`).forEach(b=>b.classList.add('active')); const titleMap={dashboard:'Dashboard',workout:'Séance',duel:'Duel',quests:'Quêtes',shop:'Boutique',friends:'Amis',history:'Historique',settings:'Paramètres'}; const mobileTitle=document.getElementById('mobileCurrentTitle'); if(mobileTitle) mobileTitle.textContent=titleMap[id]||id; }
+
+    function generateCode(){ const data=getUser(); const payload = data.profilePublic===false ? { name:data.name||currentUser, level:levelFromXP(data.xp), rank:rankFromXP(data.xp), avatar:data.avatar||'', public:false, summary:{ sessions:sessionKeys(data.workouts).length, bestXP:Math.floor(Math.max(0,...(data.workouts||[]).map(w=>w.xp||0))) } } : { name:data.name||currentUser, xp:data.xp, level:levelFromXP(data.xp), rank:rankFromXP(data.xp), weight:data.weight||'', avatar:data.avatar||'', public:true, workouts:(data.workouts||[]).slice(-20), bioText:data.activeBioText||'🏋️ Rookie du grind', title:data.activeTitle||'rookie', duelElo:data.duelElo||1000 }; myCode.value = safeEncode(payload); toast('Code profil généré.'); }
+    function copyMyCode(){ if(!myCode.value) return toast('Génère d’abord ton code.'); navigator.clipboard.writeText(myCode.value).then(()=>toast('Code copié 📎')).catch(()=>toast('Copie impossible.')); }
+    function addFriend(){ const code=friendCode.value.trim(); if(!code) return toast('Colle un code ami.'); try{ const incoming=safeDecode(code); if(!incoming.name) return toast('Code ami invalide.'); const data=getUser(); const idx=data.friends.findIndex(f=>f.name===incoming.name); const merged=idx>=0 ? {...incoming, friendshipPoints:data.friends[idx].friendshipPoints||0, coopSessions:data.friends[idx].coopSessions||0 } : {...incoming, friendshipPoints:0, coopSessions:0}; if(idx>=0) data.friends[idx]=merged; else data.friends.push(merged); saveUser(data); friendCode.value=''; loadAll(); toast(`Ami ${idx>=0?'mis à jour':'ajouté'} : ${incoming.name}`); }catch(e){ toast('Code ami invalide.'); } }
+    function removeFriend(index){ const data=getUser(); const name=data.friends[index]?.name; if(name==null) return; data.friends.splice(index,1); saveUser(data); loadAll(); toast(`Ami supprimé : ${name}`); }
+
+    function loadFriendSelects(){ const data=getUser(); const friends=(data.friends||[]).map(ensureFriend); coopFriendSelect.innerHTML=''; duelFriendSelect.innerHTML=''; if(!friends.length){ coopFriendSelect.innerHTML='<option value="">Aucun ami disponible</option>'; duelFriendSelect.innerHTML='<option value="">Aucun ami disponible</option>'; coopBoostPreview.value='x1.00'; return; } friends.forEach((f,i)=>{ const o1=document.createElement('option'); o1.value=i; o1.textContent=`${f.name} • Amitié niv ${friendshipLevel(f.friendshipPoints)}`; coopFriendSelect.appendChild(o1); const o2=document.createElement('option'); o2.value=i; o2.textContent=f.name; duelFriendSelect.appendChild(o2); }); updateCoopUI(); }
+    function updateCoopUI(){ const data=getUser(); const isCoop=sessionMode.value==='coop'; coopFriendSelect.disabled=!isCoop; if(!isCoop || !(data.friends||[]).length){ coopBoostPreview.value='x1.00'; updateWorkoutPreview(); return; } const friend=ensureFriend(data.friends[Number(coopFriendSelect.value)||0]); const boost=friendshipBoost(friendshipLevel(friend.friendshipPoints)); coopBoostPreview.value=`x${boost.toFixed(2)}`; updateWorkoutPreview(); }
+
+    function addExercise(ex='', reps='', weight=''){ const node=document.createElement('div'); node.className='exercise'; node.innerHTML=`<div class="exercise-top"><div><label>Exercice</label><input class="ex-name" value="${ex}" placeholder="Ex: Squat"></div><div><label>Reps</label><input class="ex-reps" type="number" min="0" value="${reps}"></div><div><label>Poids (lbs)</label><input class="ex-weight" type="number" min="0" step="0.1" value="${weight}"></div><div><label>Action</label><button class="btn-d ex-del">🗑️</button></div></div><div class="exercise-bottom"><div>✨ XP : <span class="ex-xp">0</span></div><div>📦 Volume : <span class="ex-vol">0</span></div><div>🕘 Dernière fois : <span class="ex-last">Aucune donnée</span></div></div>`; const refresh=()=>{ const n=node.querySelector('.ex-name').value.trim(); const r=Number(node.querySelector('.ex-reps').value)||0; const w=Number(node.querySelector('.ex-weight').value)||0; node.querySelector('.ex-xp').textContent=Math.floor(calculateXP(r,w)); node.querySelector('.ex-vol').textContent=Math.floor(r*w); node.querySelector('.ex-last').innerHTML=lastPerformance(n,r,w); updateWorkoutPreview(); }; node.querySelectorAll('input').forEach(i=>i.addEventListener('input',refresh)); node.querySelector('.ex-del').addEventListener('click',()=>{ node.remove(); updateWorkoutPreview(); }); exerciseList.appendChild(node); refresh(); }
+    function resetWorkout(){ exerciseList.innerHTML=''; sessionType.value=''; sessionDuration.value=''; sessionNotes.value=''; sessionMode.value='solo'; updateCoopUI(); updateWorkoutPreview(); }
+    function currentExercises(){ return [...document.querySelectorAll('#exerciseList .exercise')].map(node=>({ ex:node.querySelector('.ex-name').value.trim(), reps:Number(node.querySelector('.ex-reps').value)||0, weight:Number(node.querySelector('.ex-weight').value)||0 })).filter(x=>x.ex); }
+    function lastPerformance(name,reps,weight){ if(!name) return 'Aucune donnée'; const data=getUser(); const found=[...(data.workouts||[])].reverse().find(w=>(w.name||'').trim().toLowerCase()===name.trim().toLowerCase()); if(!found) return 'Aucune donnée'; const diff=(reps*weight)-((found.reps||0)*(found.weight||0)); const txt=diff>0?`<span class="hl-good">+${Math.floor(diff)} volume</span>`:diff<0?`<span class="hl-bad">${Math.floor(diff)} volume</span>`:`<span class="hl-neutral">égal</span>`; return `${found.reps}×${found.weight} • ${txt}`; }
+    function updateWorkoutPreview(){ const data=currentUser?getUser():null; const exs=currentExercises(); let totalXP=0,totalVol=0,mode='Solo',coopMult=1; if(data && sessionMode.value==='coop' && (data.friends||[]).length){ const friend=ensureFriend(data.friends[Number(coopFriendSelect.value)||0]); coopMult=friendshipBoost(friendshipLevel(friend.friendshipPoints)); mode=`Coop x${coopMult.toFixed(2)}`; } exs.forEach(x=>{ let xp=calculateXP(x.reps,x.weight); if(data) xp*= (data.xpMultiplier||1); if(sessionMode.value==='coop') xp*=coopMult; totalXP+=xp; totalVol+=x.reps*x.weight; }); liveCount.textContent=exs.length; liveVolume.textContent=Math.floor(totalVol); liveXP.textContent=Math.floor(totalXP); liveMode.textContent=mode; }
+    function saveWorkout(){ const data=getUser(); const type=sessionType.value.trim(); const duration=sessionDuration.value||''; const notes=sessionNotes.value.trim(); const mode=sessionMode.value; const list=currentExercises(); if(!type) return toast('Indique les muscles travaillés.'); if(!list.length) return toast('Ajoute au moins un exercice.'); let coopFriendName='', coopMult=1, friendIdx=-1; if(mode==='coop'){ if(!(data.friends||[]).length) return toast('Ajoute d’abord un ami.'); friendIdx=Number(coopFriendSelect.value)||0; const f=ensureFriend(data.friends[friendIdx]); coopFriendName=f.name; coopMult=friendshipBoost(friendshipLevel(f.friendshipPoints)); } let totalXP=0; list.forEach(x=>{ const base=calculateXP(x.reps,x.weight); const solo=base*(data.xpMultiplier||1); const finalXP=mode==='coop'? solo*coopMult : solo; totalXP+=finalXP; data.workouts.push({ date:today(), sessionType:type, duration, notes, mode, coopFriend:coopFriendName, coopBoost:coopMult, name:x.ex, reps:x.reps, weight:x.weight, volume:x.reps*x.weight, xp:finalXP }); }); const coins=Math.max(5,Math.floor(totalXP/120)); data.xp+=totalXP; data.coins+=coins; data.weight=bodyWeight.value||data.weight; if(mode==='coop' && friendIdx>=0){ const f=ensureFriend(data.friends[friendIdx]); f.friendshipPoints += 35 + (list.length*10); f.coopSessions += 1; data.friends[friendIdx]=f; } saveUser(data); resetWorkout(); loadAll(); toast(`Séance sauvegardée : +${Math.floor(totalXP)} XP • +${coins} 🪙`); }
+
+    function savePreset(){ const data=getUser(); const name=presetName.value.trim(); const exercises=currentExercises(); if(!name) return toast('Donne un nom au preset.'); if(!exercises.length) return toast('Ajoute des exercices avant de sauver le preset.'); const payload={name, sessionType:sessionType.value.trim(), exercises}; const idx=data.presets.findIndex(p=>p.name.toLowerCase()===name.toLowerCase()); if(idx>=0) data.presets[idx]=payload; else data.presets.push(payload); saveUser(data); loadPresets(); presetName.value=''; toast('Preset sauvegardé 📦'); }
+    function loadPresets(){ const data=getUser(); presetSelect.innerHTML=''; if(!data.presets.length){ presetSelect.innerHTML='<option value="">Aucun preset</option>'; return; } data.presets.forEach((p,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=p.name; presetSelect.appendChild(o); }); }
+    function loadPreset(){ const data=getUser(); const idx=presetSelect.value; if(idx==='' || data.presets[idx]==null) return toast('Choisis un preset valide.'); const p=data.presets[idx]; exerciseList.innerHTML=''; sessionType.value=p.sessionType||''; (p.exercises||[]).forEach(e=>addExercise(e.ex,e.reps,e.weight)); presetName.value=p.name; updateWorkoutPreview(); toast(`Preset chargé : ${p.name}`); }
+    function deletePreset(){ const data=getUser(); const idx=presetSelect.value; if(idx==='' || data.presets[idx]==null) return toast('Aucun preset sélectionné.'); const name=data.presets[idx].name; data.presets.splice(idx,1); saveUser(data); loadPresets(); toast(`Preset supprimé : ${name}`); }
+
+    function previewDuel(){ const mine=Number(duelMyReps.value)||0; const him=Number(duelFriendReps.value)||0; duelPreview.value = mine>him ? 'Victoire 🏆' : mine<him ? 'Défaite ❌' : 'Égalité 🤝'; }
+    function resetDuel(){ duelExercise.value=''; duelWeight.value=''; duelMyReps.value=''; duelFriendReps.value=''; duelNotes.value=''; duelPreview.value='En attente'; }
+    function saveDuel(){ const data=getUser(); if(!(data.friends||[]).length) return toast('Ajoute d’abord un ami.'); const idx=Number(duelFriendSelect.value); const friend=data.friends[idx]; if(!friend) return toast('Choisis un ami.'); const exercise=duelExercise.value.trim(); const weight=Number(duelWeight.value)||0; const mine=Number(duelMyReps.value)||0; const him=Number(duelFriendReps.value)||0; const notes=duelNotes.value.trim(); if(!exercise) return toast('Choisis un exercice.'); if(weight<=0) return toast('Indique un poids valide.'); let result='draw'; if(mine>him) result='win'; else if(mine<him) result='loss'; data.duels.push({ date:today(), friend:friend.name, exercise, weight, myReps:mine, friendReps:him, result, notes }); if(result==='win'){ data.duelStats.wins++; data.duelStats.streak++; data.duelStats.bestStreak=Math.max(data.duelStats.bestStreak,data.duelStats.streak); data.duelElo += 25; data.xp += 180; data.coins += 30; } else if(result==='loss'){ data.duelStats.losses++; data.duelStats.streak=0; data.duelElo = Math.max(0,(data.duelElo||1000)-20); data.coins += 10; } else { data.duelStats.draws++; data.duelElo += 5; data.coins += 15; } saveUser(data); resetDuel(); loadAll(); toast(result==='win' ? 'Victoire 🏆 • Duel enregistré' : result==='loss' ? 'Défaite ❌ • Duel enregistré' : 'Égalité 🤝 • Duel enregistré'); }
+
+    function questDefs(data){ const workouts=data.workouts||[]; const sessions=sessionKeys(workouts).length; const multi=new Set(workouts.filter(w=>(w.sessionType||'').includes(',')).map(w=>`${w.date}|${w.sessionType}|${w.duration}|${w.notes}`)).size; const reminder=new Set(workouts.filter(w=>(w.sessionType||'').toLowerCase().includes('rappel')).map(w=>`${w.date}|${w.sessionType}|${w.duration}|${w.notes}`)).size; const maxWeight=Math.max(0,...workouts.map(w=>Number(w.weight)||0)); const maxVolume=Math.max(0,...workouts.map(w=>Number(w.volume)||0)); const uniqueExercises=new Set(workouts.map(w=>(w.name||'').toLowerCase())).size; const coopSessions=new Set(workouts.filter(w=>w.mode==='coop').map(w=>`${w.date}|${w.coopFriend||''}|${w.notes||''}`)).size; const soloSessions=new Set(workouts.filter(w=>w.mode!=='coop').map(w=>`${w.date}|${w.sessionType}|${w.duration}|${w.notes}`)).size; const totalCoopPoints=(data.friends||[]).reduce((s,f)=>s+(f.friendshipPoints||0),0); const bestFriendLvl=Math.max(1,...(data.friends||[]).map(f=>friendshipLevel(f.friendshipPoints||0))); const duelWins=data.duelStats?.wins||0; const duelStreak=data.duelStats?.bestStreak||0; const duelCount=(data.duels||[]).length; return [ {id:'q1',title:'💪 Début du grind',desc:'Faire 3 séances',current:sessions,goal:3,xpReward:300,coinReward:40}, {id:'q2',title:'🧩 Split hybride',desc:'Faire 2 séances multi-muscles',current:multi,goal:2,xpReward:400,coinReward:55}, {id:'q3',title:'🎯 Rappel ciblé',desc:'Faire 2 séances avec rappel',current:reminder,goal:2,xpReward:350,coinReward:50}, {id:'q4',title:'🏋️ Charge lourde',desc:'Atteindre 250 lbs',current:maxWeight,goal:250,xpReward:500,coinReward:80}, {id:'q5',title:'🔥 XP Hunter',desc:'Atteindre 10000 XP',current:Math.floor(data.xp),goal:10000,xpReward:700,coinReward:120}, {id:'q6',title:'📈 Gros volume',desc:'Atteindre 2000 de volume',current:maxVolume,goal:2000,xpReward:450,coinReward:65}, {id:'q7',title:'📚 Variété',desc:'Enregistrer 10 exos différents',current:uniqueExercises,goal:10,xpReward:380,coinReward:55}, {id:'q8',title:'🤝 Premier duo',desc:'Faire 1 séance coop',current:coopSessions,goal:1,xpReward:250,coinReward:45}, {id:'q9',title:'👬 Team player',desc:'Faire 5 séances coop',current:coopSessions,goal:5,xpReward:600,coinReward:100}, {id:'q10',title:'🧍 Lone wolf',desc:'Faire 5 séances solo',current:soloSessions,goal:5,xpReward:300,coinReward:50}, {id:'q11',title:'🪙 Collectionneur',desc:'Avoir 1000 pièces',current:Math.floor(data.coins),goal:1000,xpReward:500,coinReward:150}, {id:'q12',title:'🛒 Premier achat',desc:'Acheter un objet',current:(data.purchasedItems||[]).length,goal:1,xpReward:200,coinReward:25}, {id:'q13',title:'🎨 Style unique',desc:'Acheter 3 bios',current:(data.ownedBios||[]).filter(x=>x!=='bio-default').length,goal:3,xpReward:350,coinReward:60}, {id:'q14',title:'⚡ Machine à XP',desc:'Obtenir x1.25 solo',current:data.xpMultiplier||1,goal:1.25,xpReward:320,coinReward:50}, {id:'q15',title:'🤗 Cercle social',desc:'Ajouter 3 amis',current:(data.friends||[]).length,goal:3,xpReward:300,coinReward:60}, {id:'q16',title:'💞 Lien naissant',desc:'Atteindre 100 points d’amitié',current:totalCoopPoints,goal:100,xpReward:350,coinReward:70}, {id:'q17',title:'💙 Duo fusionnel',desc:'Atteindre niveau 3 avec un ami',current:bestFriendLvl,goal:3,xpReward:500,coinReward:90}, {id:'q18',title:'⚔️ Premier sang',desc:'Faire 1 duel',current:duelCount,goal:1,xpReward:180,coinReward:30}, {id:'q19',title:'🏅 Challenger',desc:'Gagner 3 duels',current:duelWins,goal:3,xpReward:420,coinReward:70}, {id:'q20',title:'🔥 Série de feu',desc:'Atteindre 3 de win streak',current:duelStreak,goal:3,xpReward:500,coinReward:80} ]; }
+    function claimQuest(id){ const data=getUser(); const q=questDefs(data).find(x=>x.id===id); if(!q) return; if((data.questClaims||{})[id]) return toast('Quête déjà récupérée.'); if(q.current < q.goal) return toast('Quête pas encore terminée.'); data.questClaims[id]=true; data.xp += q.xpReward; data.coins += q.coinReward; saveUser(data); loadAll(); toast(`Quête validée : +${q.xpReward} XP • +${q.coinReward} 🪙`); }
+
+    function unlockedTitles(data){ return rareTitles.filter(t=>t.req(data)); }
+    function loadTitles(){ const data=getUser(); const titles=unlockedTitles(data); titleSelect.innerHTML=''; titles.forEach(t=>{ const o=document.createElement('option'); o.value=t.id; o.textContent=t.name; titleSelect.appendChild(o); }); if(!titles.some(t=>t.id===data.activeTitle)) data.activeTitle=titles[0].id; titleSelect.value=data.activeTitle; }
+    function titleName(id){ return (rareTitles.find(t=>t.id===id)||{name:'Rookie'}).name; }
+
+    function loadDashboard(){ const data=getUser(); topBadge.textContent=`👤 ${data.name || currentUser}`; dashName.textContent=data.name||currentUser; dashLevel.textContent=levelFromXP(data.xp); dashXP.textContent=Math.floor(data.xp); dashCoins.textContent=Math.floor(data.coins||0); rankBadge.textContent=rankFromXP(data.xp); xpFill.style.width=`${xpLevelFill(data.xp)}%`; xpText.textContent=`${Math.floor((data.xp||0)%2000)} / 2000 XP vers le niveau ${levelFromXP(data.xp)+1}`; goalText.textContent=data.goalWeight ? `🎯 Objectif poids : ${data.goalWeight} kg` : '🎯 Objectif poids : -'; soloBoostText.textContent=`x${Number(data.xpMultiplier||1).toFixed(2)}`; const sessions=sessionKeys(data.workouts).length; statSessions.textContent=sessions; statExercises.textContent=(data.workouts||[]).length; statAvgXP.textContent=sessions?Math.floor((data.xp||0)/sessions):0; const avatar=renderAvatar(data.avatar); dashAvatar.src=avatar; settingsAvatar.src=avatar; dashBio.className=`bio-preview ${data.activeBio||'bio-default'}`; dashBio.textContent=data.activeBioText || '🏋️ Rookie du grind'; dashTitle.textContent=`Titre : ${titleName(data.activeTitle)}`; dashTheme.textContent=`Thème : ${(data.theme||'gold').toUpperCase()}`; applyTheme(data.theme||'gold'); const mobileRank=document.getElementById('mobileRankMini'); if(mobileRank) mobileRank.textContent=rankFromXP(data.xp); }
+    function loadLeaderboard(){ const data=getUser(); const list=[{name:data.name||currentUser,xp:data.xp,duelElo:data.duelElo||1000,me:true}, ...(data.friends||[]).map(f=>({name:f.name,xp:f.xp||0,duelElo:f.duelElo||1000,me:false}))].sort((a,b)=>b.xp-a.xp).slice(0,10); leaderboard.innerHTML=list.map((p,i)=>`<div class="leader-card"><div class="leader-name">#${i+1} ${p.me?'👑 ':''}${p.name}</div><div class="meta"><span>XP ${Math.floor(p.xp||0)}</span><span>ELO ${Math.floor(p.duelElo||1000)}</span></div></div>`).join(''); }
+    function loadCoopSummary(){ const data=getUser(); const friends=(data.friends||[]).map(ensureFriend); if(!friends.length){ coopSummary.innerHTML='<div class="sub">Ajoute un ami pour débloquer la coop.</div>'; return; } coopSummary.innerHTML=friends.map(f=>{ const prog=friendshipProgress(f.friendshipPoints||0); const boost=friendshipBoost(prog.lvl); return `<div class="friend-card"><div class="quest-name">🤝 ${f.name}</div><div class="sub">Niveau d'amitié ${prog.lvl} • ${f.coopSessions||0} séance(s) coop</div><div class="xpbar" style="margin-top:10px"><div class="xpfill friendfill" style="width:${prog.percent}%"></div></div><div class="meta"><span>${f.friendshipPoints||0} pts</span><span>Boost coop : x${boost.toFixed(2)}</span></div></div>`; }).join(''); }
+    function loadAchievements(){ const data=getUser(); const workouts=data.workouts||[]; const coop=new Set(workouts.filter(w=>w.mode==='coop').map(w=>`${w.date}|${w.coopFriend||''}|${w.notes||''}`)).size; const duelWins=data.duelStats?.wins||0; const bestStreak=data.duelStats?.bestStreak||0; const bestFriendLvl=Math.max(1,...(data.friends||[]).map(f=>friendshipLevel(f.friendshipPoints||0))); const items=[]; if(workouts.length>=1) items.push('🎉 Première séance enregistrée'); if(sessionKeys(workouts).length>=5) items.push('📅 5 séances complètes'); if(data.xp>=2000) items.push('⭐ Niveau 2 atteint'); if(data.xp>=9000) items.push('🥇 Gold débloqué'); if(coop>=1) items.push('🤝 Première séance coop'); if(bestFriendLvl>=3) items.push('💙 Amitié niveau 3 atteinte'); if((data.duels||[]).length>=1) items.push('⚔️ Premier duel'); if(duelWins>=3) items.push('🏅 3 victoires en duel'); if(bestStreak>=3) items.push('🔥 Win streak 3 atteinte'); achievements.innerHTML=items.length?items.map(x=>`<div class="list-item">${x}</div>`).join(''):'<div class="sub">Aucun succès débloqué.</div>'; }
+    function loadQuests(){ const data=getUser(); const qs=questDefs(data); const done=qs.filter(q=>(data.questClaims||{})[q.id]).length; questSummary.textContent=`${done} / ${qs.length}`; questList.innerHTML=qs.map(q=>{ const ok=q.current>=q.goal; const claimed=!!(data.questClaims||{})[q.id]; return `<div class="quest-card"><div class="quest-name">${q.title}</div><div class="sub">${q.desc}</div><div class="xpbar" style="margin:10px 0"><div class="xpfill" style="width:${Math.min(100,(q.current/q.goal)*100)}%"></div></div><div class="sub">Récompense : +${q.xpReward} XP • +${q.coinReward} 🪙</div><div class="actions"><button class="${ok && !claimed ? 'btn-g':'btn-s'}" ${ok && !claimed ? `onclick="claimQuest('${q.id}')"` : 'disabled'}>${claimed ? 'Déjà récupérée' : ok ? 'Récupérer' : `${Math.floor(q.current)} / ${q.goal}`}</button></div></div>`; }).join(''); }
+    function loadShop(){ const data=getUser(); shopCoins.textContent=Math.floor(data.coins||0); shopList.innerHTML=shopItems.map(item=>{ const owned=item.type==='bio'?data.ownedBios.includes(item.className):(data.xpMultiplier>=item.value); return `<div class="shop-card"><div class="shop-name">${item.name}</div><div class="sub">${item.desc}</div><div class="badge" style="margin-top:10px">💰 ${item.price} pièces</div><div class="actions"><button class="${owned?'btn-s':'btn-p'}" onclick="buyItem('${item.id}')">${owned?'Déjà obtenu':'Acheter'}</button></div>${item.type==='bio' ? `<div class="bio-preview ${item.className}">${item.text}</div>`:''}</div>`; }).join(''); const owned=[{className:'bio-default',text:'🏋️ Rookie du grind',owned:true},...shopItems.filter(i=>i.type==='bio').map(i=>({className:i.className,text:i.text,owned:data.ownedBios.includes(i.className)}))]; ownedBios.innerHTML=owned.map(b=>`<div style="margin-top:12px"><div class="bio-preview ${b.className}">${b.text}</div><div class="actions"><button class="${b.owned?'btn-g':'btn-s'}" ${b.owned?`onclick="equipBio('${b.className}')"`:'disabled'}>${b.owned?'Équiper':'Non possédée'}</button></div></div>`).join(''); }
+    function buyItem(id){ const data=getUser(); const item=shopItems.find(x=>x.id===id); if(!item) return; if((data.coins||0)<item.price) return toast('Pas assez de pièces.'); if(item.type==='boost'){ if((data.xpMultiplier||1)>=item.value) return toast('Tu as déjà un boost égal ou supérieur.'); data.coins -= item.price; data.xpMultiplier=item.value; data.purchasedItems.push(item.id); saveUser(data); loadAll(); return toast(`Achat réussi : ${item.name}`); } if(item.type==='bio'){ if(data.ownedBios.includes(item.className)) return toast('Tu possèdes déjà cette bio.'); data.coins -= item.price; data.ownedBios.push(item.className); data.purchasedItems.push(item.id); saveUser(data); loadAll(); return toast(`Bio achetée : ${item.name}`); } }
+    function equipBio(className){ const data=getUser(); const item=shopItems.find(i=>i.className===className); if(className!=='bio-default' && !data.ownedBios.includes(className)) return toast('Tu ne possèdes pas cette bio.'); data.activeBio=className; data.activeBioText=className==='bio-default' ? '🏋️ Rookie du grind' : item.text; saveUser(data); loadAll(); toast('Bio équipée ✅'); }
+
+    function loadFriends(){ const data=getUser(); const friends=(data.friends||[]).map(ensureFriend); friendCount.textContent=`${friends.length} ${friends.length>1?'amis':'ami'}`; if(!friends.length){ friendsList.innerHTML='<div class="sub">Aucun ami ajouté pour le moment.</div>'; return; } friendsList.innerHTML=friends.map((f,i)=>{ const lvl=friendshipLevel(f.friendshipPoints||0); return `<div class="friend-card" onclick="openFriendProfile(${i})"><h4>👤 ${f.name}</h4><div class="friend-essential"><div class="box"><div class="smallk">Niveau</div><div class="smallv">${f.level || levelFromXP(f.xp||0)}</div></div><div class="box"><div class="smallk">Rank</div><div class="smallv">${f.rank || rankFromXP(f.xp||0)}</div></div><div class="box"><div class="smallk">Amitié</div><div class="smallv">Niv ${lvl}</div></div><div class="box"><div class="smallk">Boost coop</div><div class="smallv">x${friendshipBoost(lvl).toFixed(2)}</div></div></div><div class="actions"><button class="btn-s" onclick="event.stopPropagation();openFriendProfile(${i})">Voir profil</button><button class="btn-d" onclick="event.stopPropagation();removeFriend(${i})">Supprimer</button></div></div>`; }).join(''); }
+    function openFriendProfile(index){ const data=getUser(); const friend=data.friends[index]; if(!friend) return; const lvl=friendshipLevel(friend.friendshipPoints||0); const boost=friendshipBoost(lvl); const avatar=renderAvatar(friend.avatar); const publicView=friend.public!==false; const workouts=publicView ? (friend.workouts||[]) : []; friendProfileContent.innerHTML=`<div class="avatar-wrap"><img src="${avatar}" class="avatar"><div style="flex:1"><div class="v" style="font-size:24px">${friend.name}</div><div class="sub">${friend.rank || rankFromXP(friend.xp||0)} • Niveau ${friend.level || levelFromXP(friend.xp||0)}</div>${publicView && friend.bioText ? `<div class="bio-preview bio-default">${friend.bioText}</div>` : `<div class="bio-preview bio-default">🔒 Profil privé : version limitée visible</div>`}</div></div><div class="mini-grid" style="margin-top:14px"><div class="mini"><div class="k">Amitié</div><div class="v">Niv ${lvl}</div></div><div class="mini"><div class="k">Boost coop</div><div class="v">x${boost.toFixed(2)}</div></div><div class="mini"><div class="k">XP</div><div class="v">${publicView ? Math.floor(friend.xp||0) : 'Caché'}</div></div><div class="mini"><div class="k">ELO duel</div><div class="v">${publicView ? Math.floor(friend.duelElo||1000) : 'Caché'}</div></div></div><div class="title" style="margin-top:18px"><h2>📜 Aperçu de ses séances</h2><div class="badge">${publicView ? 'Visible' : 'Privé'}</div></div>${publicView ? (workouts.slice(-8).reverse().map(w=>`<div class="list-item"><strong>${w.name||'-'}</strong><br>${w.date||''} • ${w.reps||0} reps × ${w.weight||0} lbs • XP ${Math.floor(w.xp||0)}</div>`).join('') || '<div class="sub">Aucune séance visible.</div>') : '<div class="sub">Ce profil a activé le mode privé. Seules les infos essentielles sont visibles.</div>'}`; friendModal.classList.add('show'); }
+    function closeFriendProfile(){ friendModal.classList.remove('show'); }
+
+    function loadHistory(){ const data=getUser(); historyBody.innerHTML=''; [...(data.workouts||[])].reverse().forEach(w=>{ historyBody.innerHTML += `<tr><td>${w.date||''}</td><td>${w.sessionType||'-'}</td><td>${w.mode||'solo'}</td><td>${w.coopFriend||'-'}</td><td>${w.name||''}</td><td>${w.reps||0}</td><td>${w.weight||0}</td><td>${Math.floor(w.volume||0)}</td><td>${Math.floor(w.xp||0)}</td><td>${w.duration||'-'}</td><td>${w.notes||'-'}</td></tr>`; }); }
+    function loadDuelStats(){ const data=getUser(); const s=data.duelStats||{wins:0,losses:0,draws:0,streak:0,bestStreak:0}; const total=(s.wins||0)+(s.losses||0)+(s.draws||0); duelTotal.textContent=total; duelWins.textContent=s.wins||0; duelLosses.textContent=s.losses||0; duelDraws.textContent=s.draws||0; duelStreak.textContent=s.streak||0; duelBest.textContent=s.bestStreak||0; duelRate.textContent=`${total?Math.round((s.wins/total)*100):0}%`; duelElo.textContent=Math.floor(data.duelElo||1000); const last=(data.duels||[]).slice(-1)[0]; duelLast.textContent=!last?'-':(last.result==='win'?'Victoire':last.result==='loss'?'Défaite':'Égalité'); duelHistory.innerHTML=(data.duels||[]).slice(-8).reverse().map(d=>`<div class="list-item"><strong>${d.exercise}</strong><br>${d.date} • vs ${d.friend} • ${d.weight} lbs<br>Toi: ${d.myReps} reps • Lui: ${d.friendReps} reps<br>Résultat: ${d.result==='win'?'Victoire 🏆':d.result==='loss'?'Défaite ❌':'Égalité 🤝'}</div>`).join('') || '<div class="sub">Aucun duel enregistré.</div>'; }
+
+    function saveProfile(){ const data=getUser(); data.name=profileName.value.trim(); data.mail=profileMail.value.trim(); data.phone=profilePhone.value.trim(); data.goalWeight=goalWeight.value.trim(); data.weight=bodyWeight.value.trim() || data.weight; data.profilePublic=profilePublic.value==='true'; data.theme=themeSelect.value; data.activeTitle=titleSelect.value || data.activeTitle; saveUser(data); loadAll(); toast('Profil sauvegardé ✅'); }
+    function loadSettings(){ const data=getUser(); profileName.value=data.name||''; profileMail.value=data.mail||''; profilePhone.value=data.phone||''; goalWeight.value=data.goalWeight||''; profilePublic.value=String(data.profilePublic!==false); bodyWeight.value=data.weight||bodyWeight.value||''; themeSelect.value=data.theme||'gold'; loadTitles(); renderUpdateLog(); }
+    function exportData(){ const data=getUser(); const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`${currentUser||'workout'}_backup.json`; a.click(); URL.revokeObjectURL(a.href); toast('Export effectué 📤'); }
+    function clearHistory(){ if(!confirm('Vider tout l’historique ?')) return; const data=getUser(); data.workouts=[]; data.xp=0; data.coins=0; data.questClaims={}; data.duels=[]; data.duelElo=1000; data.duelStats={wins:0,losses:0,draws:0,streak:0,bestStreak:0}; data.friends=(data.friends||[]).map(f=>({...f,friendshipPoints:0,coopSessions:0})); saveUser(data); loadAll(); toast('Historique vidé.'); }
+
+    function openDrawer(){ const d=document.getElementById('sideDrawer'); const o=document.getElementById('drawerOverlay'); if(d) d.classList.add('open'); if(o) o.classList.add('show'); }
+    function closeDrawer(){ const d=document.getElementById('sideDrawer'); const o=document.getElementById('drawerOverlay'); if(d) d.classList.remove('open'); if(o) o.classList.remove('show'); }
+    function saveUpdateNote(){ const data=getUser(); const value=(document.getElementById('updateInput')?.value||'').trim(); if(!value) return toast('Écris une demande d’update.'); if(!Array.isArray(data.updateNotes)) data.updateNotes=[]; data.updateNotes.unshift({text:value,date:today()}); saveUser(data); if(document.getElementById('updateInput')) document.getElementById('updateInput').value=''; renderUpdateLog(); toast('Update enregistrée ✅'); }
+    function clearUpdateNotes(){ const data=getUser(); data.updateNotes=[]; saveUser(data); renderUpdateLog(); toast('Liste des updates vidée.'); }
+    function renderUpdateLog(){ const data=getUser(); const box=document.getElementById('updateLog'); if(!box) return; const notes=data.updateNotes||[]; box.innerHTML = notes.length ? notes.map((n,i)=>`<div class="list-item"><strong>Update ${notes.length-i}</strong><br>${n.text}<br><span class="sub">${n.date||''}</span></div>`).join('') : '<div class="sub">Aucune update enregistrée pour le moment.</div>'; }
+    function loadAll(){ const data=getUser(); if(!data) return; (data.friends||[]).forEach(ensureFriend); if(!data.duelStats) data.duelStats={wins:0,losses:0,draws:0,streak:0,bestStreak:0}; if(!Array.isArray(data.duels)) data.duels=[]; if(!data.duelElo) data.duelElo=1000; if(!data.theme) data.theme='gold'; if(!data.activeTitle) data.activeTitle='rookie'; saveUser(data); loadDashboard(); loadSettings(); loadLeaderboard(); loadCoopSummary(); loadAchievements(); loadQuests(); loadShop(); loadFriends(); loadHistory(); loadPresets(); loadFriendSelects(); loadDuelStats(); updateWorkoutPreview(); }
+
+    avatarInput.addEventListener('change', e=>{ const file=e.target.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=ev=>{ const data=getUser(); data.avatar=ev.target.result; saveUser(data); loadAll(); toast('Photo de profil ajoutée 🖼️'); }; reader.readAsDataURL(file); });
+    coopFriendSelect.addEventListener('change', updateCoopUI); duelMyReps.addEventListener('input', previewDuel); duelFriendReps.addEventListener('input', previewDuel); friendModal.addEventListener('click', e=>{ if(e.target===friendModal) closeFriendProfile(); });
   </script>
 </body>
 </html>
