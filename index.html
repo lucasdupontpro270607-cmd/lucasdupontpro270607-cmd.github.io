@@ -207,7 +207,7 @@
 
       <section id="quests" class="tab-panel hidden"><div class="panel"><div class="title"><h2>🗺️ Toutes les quêtes</h2><div class="badge" id="questSummary">0 / 0</div></div><div id="questList" class="quests"></div></div></section>
       <section id="shop" class="tab-panel hidden"><div class="grid"><div class="stack"><div class="panel"><div class="title"><h2>🛒 Boutique</h2><div class="badge">🪙 <span id="shopCoins">0</span> pièces</div></div><div id="shopList" class="shop"></div></div></div><div class="stack"><div class="panel"><div class="title"><h2>🎨 Bios colorées</h2><div class="badge">Style salle</div></div><div id="ownedBios"></div></div></div></div></section>
-      <section id="friends" class="tab-panel hidden"><div class="grid"><div class="stack"><div class="panel"><div class="title"><h2>👥 Ajouter des amis</h2><div class="badge">Code profil</div></div><label>Ton code profil</label><textarea id="myCode" readonly placeholder="Clique sur générer."></textarea><div class="actions"><button class="btn-p" onclick="generateCode()">📋 Générer mon code</button><button class="btn-s" onclick="copyMyCode()">📎 Copier</button></div><label>Ajouter / mettre à jour un ami</label><textarea id="friendCode" placeholder="Colle ici le code de ton ami"></textarea><div class="actions"><button class="btn-g" onclick="addFriend()">➕ Ajouter ou mettre à jour</button></div></div></div><div class="stack"><div class="panel"><div class="title"><h2>📜 Liste d'amis</h2><div class="badge" id="friendCount">0 ami</div></div><div id="friendsList" class="friends"></div></div></div></div></section>
+      <section id="friends" class="tab-panel hidden"><div class="grid"><div class="stack"><div class="panel"><div class="title"><h2>👥 Ajouter des amis</h2><div class="badge">Codes courts</div></div><label>Code ami court</label><textarea id="myCode" readonly placeholder="Clique sur générer."></textarea><div class="actions"><button class="btn-p" onclick="generateCode()">📋 Générer mon code ami</button><button class="btn-s" onclick="copyMyCode()">📎 Copier</button><button class="btn-b" onclick="exportSyncFile()">💾 Export profil</button></div><div class="sub">Le code ami reste court. Pour une vraie sauvegarde complète, utilise Export profil.</div><label>Ajouter / mettre à jour un ami</label><textarea id="friendCode" placeholder="Colle ici le code ami court"></textarea><div class="actions"><button class="btn-g" onclick="addFriend()">➕ Ajouter ou mettre à jour</button><button class="btn-s" onclick="importSyncFile()">📂 Import profil</button></div></div></div><div class="stack"><div class="panel"><div class="title"><h2>📜 Liste d'amis</h2><div class="badge" id="friendCount">0 ami</div></div><div id="friendsList" class="friends"></div></div></div></div></section>
       <section id="history" class="tab-panel hidden"><div class="panel"><div class="title"><h2>📜 Historique complet</h2><div class="actions" style="margin:0"><button class="btn-s" onclick="exportData()">📤 Exporter</button><button class="btn-d" onclick="clearHistory()">🗑️ Vider</button></div></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Mode</th><th>Ami</th><th>Exercice</th><th>Reps</th><th>Poids</th><th>Volume</th><th>XP</th><th>Durée</th><th>Notes</th></tr></thead><tbody id="historyBody"></tbody></table></div></div></section>
       <section id="settings" class="tab-panel hidden"><div class="grid"><div class="stack"><div class="panel"><div class="title"><h2>⚙️ Paramètres du profil</h2><div class="badge">Personnalisable</div></div><div class="avatar-wrap"><img id="settingsAvatar" class="avatar" alt="avatar"><div style="flex:1;min-width:0"><label>Ajouter / changer la photo</label><input id="avatarInput" type="file" accept="image/*"></div></div><div class="row"><div class="col"><label>Pseudo</label><input id="profileName"></div><div class="col"><label>Mail</label><input id="profileMail" type="email"></div></div><div class="row"><div class="col"><label>Téléphone</label><input id="profilePhone"></div><div class="col"><label>Objectif poids (kg)</label><input id="goalWeight" type="number" step="0.1" min="0"></div></div><div class="row"><div class="col"><label>Profil visible aux amis</label><select id="profilePublic"><option value="true">Oui, profil public</option><option value="false">Non, profil limité</option></select></div><div class="col"><label>Thème</label><select id="themeSelect"><option value="gold">Gold</option><option value="blue">Blue</option><option value="red">Red</option><option value="green">Green</option></select></div></div><div class="row"><div class="col"><label>Titre rare équipé</label><select id="titleSelect"></select></div></div><div class="actions"><button class="btn-p" onclick="saveProfile()">💾 Sauvegarder</button></div></div><div class="panel"><div class="title"><h2>🛠️ Update</h2><div class="badge">Champ de mise à jour</div></div><div class="sub">Tu peux écrire ici les idées de modifications esthétiques ou fonctionnelles à appliquer plus tard. Elles seront gardées dans l'application.</div><div class="update-box"><label>Nouvelle demande d'update</label><textarea id="updateInput" placeholder="Ex: rendre la page duel plus agressive, agrandir les cartes mobile, ajouter plus d'animations..."></textarea><div class="actions"><button class="btn-b" onclick="saveUpdateNote()">➕ Enregistrer l'update</button><button class="btn-s" onclick="clearUpdateNotes()">🧹 Vider la liste</button></div></div><div class="update-log" id="updateLog"></div></div></div><div class="stack"><div class="panel"><div class="title"><h2>✨ V2 propre</h2><div class="badge">Nouveautés</div></div><div class="list-item">📱 Interface mobile avec menu tiroir latéral</div><div class="list-item">🏆 Classement des amis par XP</div><div class="list-item">⚔️ Duel ranked avec ELO</div><div class="list-item">🎨 Thèmes Gold / Blue / Red / Green</div><div class="list-item">👑 Titres rares déblocables</div><div class="list-item">🔒 Profil public / privé</div></div><div class="panel" style="border-style:dashed;background:rgba(255,95,95,.05)"><div class="title"><h2>🚨 Zone sensible</h2><div class="badge">Attention</div></div><div class="actions"><button class="btn-d" onclick="deleteAccount()">❌ Supprimer le compte</button><button class="btn-s" onclick="logout()">🔓 Déconnexion</button></div></div></div></div></section>
     </div>
@@ -265,8 +265,67 @@
     function deleteAccount(){ if(!currentUser) return; if(!confirm('Supprimer définitivement ce compte ?')) return; localStorage.removeItem(currentUser); logout(); }
     function showTab(id, btn){ document.querySelectorAll('.tab-panel').forEach(x=>x.classList.add('hidden')); document.getElementById(id).classList.remove('hidden'); document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.querySelectorAll('.drawer-nav .tab-btn').forEach(b=>b.classList.remove('active')); if(btn) btn.classList.add('active'); document.querySelectorAll(`.tab-btn[data-tab="${id}"]`).forEach(b=>b.classList.add('active')); const titleMap={dashboard:'Dashboard',workout:'Séance',duel:'Duel',quests:'Quêtes',shop:'Boutique',friends:'Amis',history:'Historique',settings:'Paramètres'}; const mobileTitle=document.getElementById('mobileCurrentTitle'); if(mobileTitle) mobileTitle.textContent=titleMap[id]||id; }
 
-    function generateCode(){ const data=getUser(); const payload = data.profilePublic===false ? { name:data.name||currentUser, level:levelFromXP(data.xp), rank:rankFromXP(data.xp), avatar:data.avatar||'', public:false, summary:{ sessions:sessionKeys(data.workouts).length, bestXP:Math.floor(Math.max(0,...(data.workouts||[]).map(w=>w.xp||0))) } } : { name:data.name||currentUser, xp:data.xp, level:levelFromXP(data.xp), rank:rankFromXP(data.xp), weight:data.weight||'', avatar:data.avatar||'', public:true, workouts:(data.workouts||[]).slice(-20), bioText:data.activeBioText||'🏋️ Rookie du grind', title:data.activeTitle||'rookie', duelElo:data.duelElo||1000 }; myCode.value = safeEncode(payload); toast('Code profil généré.'); }
-    function copyMyCode(){ if(!myCode.value) return toast('Génère d’abord ton code.'); navigator.clipboard.writeText(myCode.value).then(()=>toast('Code copié 📎')).catch(()=>toast('Copie impossible.')); }
+    function generateCode(){
+      const data=getUser();
+      const payload={
+        v:2,
+        n:data.name||currentUser,
+        l:levelFromXP(data.xp),
+        r:rankFromXP(data.xp),
+        a:data.avatar||'',
+        p:data.profilePublic!==false,
+        t:data.activeTitle||'rookie',
+        e:Math.floor(data.duelElo||1000),
+        s:{x:Math.floor(data.xp||0),c:Math.floor(data.coins||0)}
+      };
+      myCode.value = safeEncode(payload);
+      toast('Code ami court généré.');
+    }
+
+    function exportSyncFile(){
+      const data=getUser();
+      const safeName=(data.name||currentUser||'profil').split(' ').join('_');
+      const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob);
+      a.download=safeName + '_sync.json';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      toast('Profil exporté en fichier ✅');
+    }
+
+    function importSyncFile(){
+      const input=document.createElement('input');
+      input.type='file';
+      input.accept='.json,application/json';
+      input.onchange=(e)=>{
+        const file=e.target.files && e.target.files[0];
+        if(!file) return;
+        const reader=new FileReader();
+        reader.onload=(ev)=>{
+          try{
+            const imported=JSON.parse(ev.target.result);
+            if(!imported || typeof imported!=='object') return toast('Fichier invalide.');
+            if(!currentUser) return toast('Connecte-toi d’abord.');
+            const existing=getUser();
+            const merged={...existing,...imported,password:existing.password};
+            saveUser(merged);
+            loadAll();
+            toast('Profil importé ✅');
+          }catch(err){
+            toast('Import impossible.');
+          }
+        };
+        reader.readAsText(file);
+      };
+      input.click();
+    }
+
+    function copyMyCode(){
+      if(!myCode.value) return toast('Génère d’abord ton code.');
+      navigator.clipboard.writeText(myCode.value).then(()=>toast('Code copié 📎')).catch(()=>toast('Copie impossible.'));
+    }
+
     function addFriend(){ const code=friendCode.value.trim(); if(!code) return toast('Colle un code ami.'); try{ const incoming=safeDecode(code); if(!incoming.name) return toast('Code ami invalide.'); const data=getUser(); const idx=data.friends.findIndex(f=>f.name===incoming.name); const merged=idx>=0 ? {...incoming, friendshipPoints:data.friends[idx].friendshipPoints||0, coopSessions:data.friends[idx].coopSessions||0 } : {...incoming, friendshipPoints:0, coopSessions:0}; if(idx>=0) data.friends[idx]=merged; else data.friends.push(merged); saveUser(data); friendCode.value=''; loadAll(); toast(`Ami ${idx>=0?'mis à jour':'ajouté'} : ${incoming.name}`); }catch(e){ toast('Code ami invalide.'); } }
     function removeFriend(index){ const data=getUser(); const name=data.friends[index]?.name; if(name==null) return; data.friends.splice(index,1); saveUser(data); loadAll(); toast(`Ami supprimé : ${name}`); }
 
