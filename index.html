@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Workout Tracker V3</title>
+  <title>Workout Tracker V4</title>
   <style>
     :root{
       --bg:#0b0f17; --panel:#151b27; --panel2:#1b2231; --line:#2b3447; --text:#f4f7fb; --muted:#98a6bd;
@@ -11,96 +11,191 @@
       --shadow:0 16px 36px rgba(0,0,0,.35); --radius:18px;
     }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at top left,rgba(255,213,74,.08),transparent 25%),radial-gradient(circle at top right,rgba(99,173,255,.08),transparent 25%),linear-gradient(180deg,#090c12,#0f141f 45%,#0b0f17);color:var(--text)}
+    body{
+      margin:0;
+      font-family:Inter,Arial,sans-serif;
+      background:
+        radial-gradient(circle at top left,rgba(255,213,74,.08),transparent 25%),
+        radial-gradient(circle at top right,rgba(99,173,255,.08),transparent 25%),
+        linear-gradient(180deg,#090c12,#0f141f 45%,#0b0f17);
+      color:var(--text)
+    }
     body.theme-blue{--gold1:#76b9ff;--gold2:#438fff;--purple:#6e9fff}
     body.theme-red{--gold1:#ff8f8f;--gold2:#ff5050;--purple:#ff7d98}
     body.theme-green{--gold1:#78e8b1;--gold2:#29cf7e;--purple:#63adff}
+
     .shell{max-width:1450px;margin:auto;padding:14px}
     .topbar{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
-    .brand{display:flex;gap:12px;align-items:center;min-width:0}.logo{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--gold1),var(--gold2));display:grid;place-items:center;font-size:26px;color:#111;font-weight:900;box-shadow:var(--shadow)}
-    h1{margin:0;font-size:28px}.sub{color:var(--muted);font-size:13px;margin-top:4px}
-    .card,.panel,.mini,.friend-card,.quest-card,.shop-card,.exercise,.auth,.leader-card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .auth{max-width:560px;margin:50px auto 0;padding:22px}.panel,.card{padding:16px}.mini{padding:14px}
-    .k{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}.v{font-size:22px;font-weight:900;word-break:break-word}
-    .row{display:flex;gap:12px;flex-wrap:wrap}.col{flex:1;min-width:220px}
+    .brand{display:flex;gap:12px;align-items:center;min-width:0}
+    .logo{
+      width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--gold1),var(--gold2));
+      display:grid;place-items:center;font-size:26px;color:#111;font-weight:900;box-shadow:var(--shadow)
+    }
+    h1{margin:0;font-size:28px}
+    .sub{color:var(--muted);font-size:13px;margin-top:4px}
+
+    .card,.panel,.mini,.friend-card,.quest-card,.shop-card,.exercise,.auth,.leader-card{
+      background:linear-gradient(180deg,var(--panel),var(--panel2));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow)
+    }
+
+    .auth{max-width:640px;margin:42px auto 0;padding:22px}
+    .panel,.card{padding:16px}
+    .mini{padding:14px}
+    .k{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+    .v{font-size:22px;font-weight:900;word-break:break-word}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .col{flex:1;min-width:220px}
+
     label{display:block;color:var(--muted);font-size:13px;font-weight:700;margin:12px 0 7px}
-    input,select,textarea{width:100%;background:#0d1320;color:var(--text);border:1px solid #33405a;border-radius:12px;padding:12px 14px;outline:none;font-size:14px}
+    input,select,textarea{
+      width:100%;background:#0d1320;color:var(--text);border:1px solid #33405a;border-radius:12px;
+      padding:12px 14px;outline:none;font-size:14px
+    }
     input:focus,select:focus,textarea:focus{border-color:var(--gold1);box-shadow:0 0 0 3px rgba(255,213,74,.11)}
     textarea{resize:vertical;min-height:88px}
-    button{border:none;border-radius:12px;padding:12px 15px;font-weight:800;cursor:pointer;transition:.15s;font-size:14px}
-    button:hover{transform:translateY(-1px)} button:active{transform:none}
-    .btn-p{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111}.btn-s{background:#222b3d;border:1px solid var(--line);color:var(--text)}.btn-g{background:linear-gradient(135deg,#4fe08e,#20b96f);color:#08120c}.btn-d{background:linear-gradient(135deg,#ff7a7a,#ff4343);color:#fff}.btn-b{background:linear-gradient(135deg,#76b9ff,#438fff);color:#08111d}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+
+    button{
+      border:none;border-radius:12px;padding:12px 15px;font-weight:800;cursor:pointer;transition:.15s;font-size:14px
+    }
+    button:hover{transform:translateY(-1px)}
+    button:active{transform:none}
+
+    .btn-p{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111}
+    .btn-s{background:#222b3d;border:1px solid var(--line);color:var(--text)}
+    .btn-g{background:linear-gradient(135deg,#4fe08e,#20b96f);color:#08120c}
+    .btn-d{background:linear-gradient(135deg,#ff7a7a,#ff4343);color:#fff}
+    .btn-b{background:linear-gradient(135deg,#76b9ff,#438fff);color:#08111d}
+
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
     .mobile-topbar{display:none;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
     .drawer-btn{background:#1a2130;border:1px solid var(--line);color:#fff;width:48px;height:48px;border-radius:14px;font-size:20px}
     .mobile-title{font-weight:900;font-size:16px}
+
     .drawer-overlay{position:fixed;inset:0;background:rgba(3,7,13,.6);display:none;z-index:1200}
     .drawer-overlay.show{display:block}
-    .side-drawer{position:fixed;top:0;left:0;height:100vh;width:min(82vw,320px);background:linear-gradient(180deg,var(--panel),var(--panel2));border-right:1px solid var(--line);box-shadow:var(--shadow);transform:translateX(-105%);transition:.22s ease;z-index:1300;padding:16px;overflow:auto}
+    .side-drawer{
+      position:fixed;top:0;left:0;height:100vh;width:min(86vw,330px);
+      background:linear-gradient(180deg,var(--panel),var(--panel2));
+      border-right:1px solid var(--line);box-shadow:var(--shadow);
+      transform:translateX(-105%);transition:.22s ease;z-index:1300;padding:16px;overflow:auto
+    }
     .side-drawer.open{transform:translateX(0)}
     .drawer-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
     .drawer-nav{display:flex;flex-direction:column;gap:10px}
     .drawer-nav button{width:100%;text-align:left}
+
     .update-box{background:#111827;border:1px dashed var(--line);border-radius:14px;padding:12px;margin-top:10px}
-    .update-log{max-height:180px;overflow:auto;margin-top:10px}.tab-btn{background:#1a2130;border:1px solid var(--line);color:#fff;min-width:120px}.tab-btn.active{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111;border-color:transparent}
-    .grid{display:grid;grid-template-columns:1.2fr .95fr;gap:16px}.stack{display:flex;flex-direction:column;gap:16px}.mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .title{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.title h2{margin:0;font-size:20px}.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#0f1521;border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:700}
-    .xpbar{height:16px;border-radius:999px;overflow:hidden;background:#0c111b;border:1px solid var(--line)}.xpfill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold1),var(--gold2));box-shadow:0 0 20px rgba(255,213,74,.35)}.friendfill{background:linear-gradient(90deg,var(--blue),var(--purple));box-shadow:0 0 20px rgba(99,173,255,.35)}
-    .meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:8px}.avatar-wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap}.avatar{width:88px;height:88px;border-radius:20px;border:1px solid var(--line);background:#0e1320;object-fit:cover}
-    .bio-preview{padding:14px;border-radius:14px;font-weight:800;margin-top:10px;border:1px solid rgba(255,255,255,.06)}.bio-default{background:#111722;color:#f4f7fb}.bio-gold{background:linear-gradient(90deg,#524100,#d4a500);color:#fff4c7}.bio-blue{background:linear-gradient(90deg,#0f2d52,#2d93ff);color:#def1ff}.bio-purple{background:linear-gradient(90deg,#2d1749,#a468ff);color:#f3e6ff}.bio-red{background:linear-gradient(90deg,#47131b,#ff5063);color:#ffe7eb}.bio-green{background:linear-gradient(90deg,#13331f,#29cf7e);color:#e3fff0}
-    .exercise-list{display:flex;flex-direction:column;gap:10px}.exercise{padding:12px}.exercise-top{display:grid;grid-template-columns:2.1fr .9fr .9fr auto;gap:10px;align-items:end}.exercise-bottom{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:8px}
-    .friends,.quests,.shop,.coop-list,.leaders{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}.friend-card,.quest-card,.shop-card,.leader-card{padding:15px}.friend-card h4,.quest-name,.shop-name,.leader-name{margin:0 0 10px;font-size:18px;font-weight:900}.friend-card{cursor:pointer}
-    .friend-essential{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.box{background:#0f1521;border:1px solid var(--line);border-radius:12px;padding:10px}.box .smallk{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px}.box .smallv{font-size:16px;font-weight:800}
-    .list-item{padding:8px 10px;background:#101725;border:1px solid #2a3344;border-radius:10px;margin-bottom:8px;font-size:13px}.table-wrap{overflow:auto;border-radius:14px;border:1px solid var(--line)} table{width:100%;border-collapse:collapse;min-width:980px;background:#101722} th,td{padding:12px 10px;border-bottom:1px solid #293143;text-align:left;font-size:14px} th{position:sticky;top:0;background:#151d2a}
-    .modal{position:fixed;inset:0;background:rgba(2,5,10,.72);display:none;align-items:center;justify-content:center;padding:14px;z-index:1000}.modal.show{display:flex}.modal-box{max-width:760px;width:100%;max-height:90vh;overflow:auto;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:18px}
-    .toast{position:fixed;right:18px;bottom:18px;background:#161d2b;border:1px solid var(--line);padding:14px 16px;border-radius:14px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);pointer-events:none;transition:.24s;z-index:2000;max-width:320px}.toast.show{opacity:1;transform:translateY(0)}
-    .hidden{display:none}.hl-good{color:var(--green);font-weight:800}.hl-bad{color:var(--red);font-weight:800}.hl-neutral{color:var(--blue);font-weight:800}
+    .update-log{max-height:180px;overflow:auto;margin-top:10px}
+    .tab-btn{background:#1a2130;border:1px solid var(--line);color:#fff;min-width:120px}
+    .tab-btn.active{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111;border-color:transparent}
+
+    .grid{display:grid;grid-template-columns:1.2fr .95fr;gap:16px}
+    .stack{display:flex;flex-direction:column;gap:16px}
+    .mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .title{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+    .title h2{margin:0;font-size:20px}
+
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
+      background:#0f1521;border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:700
+    }
+
+    .xpbar{height:16px;border-radius:999px;overflow:hidden;background:#0c111b;border:1px solid var(--line)}
+    .xpfill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold1),var(--gold2));box-shadow:0 0 20px rgba(255,213,74,.35)}
+    .friendfill{background:linear-gradient(90deg,var(--blue),var(--purple));box-shadow:0 0 20px rgba(99,173,255,.35)}
+    .meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:8px}
+    .avatar-wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+    .avatar{width:88px;height:88px;border-radius:20px;border:1px solid var(--line);background:#0e1320;object-fit:cover}
+
+    .bio-preview{padding:14px;border-radius:14px;font-weight:800;margin-top:10px;border:1px solid rgba(255,255,255,.06)}
+    .bio-default{background:#111722;color:#f4f7fb}
+    .bio-gold{background:linear-gradient(90deg,#524100,#d4a500);color:#fff4c7}
+    .bio-blue{background:linear-gradient(90deg,#0f2d52,#2d93ff);color:#def1ff}
+    .bio-purple{background:linear-gradient(90deg,#2d1749,#a468ff);color:#f3e6ff}
+    .bio-red{background:linear-gradient(90deg,#47131b,#ff5063);color:#ffe7eb}
+    .bio-green{background:linear-gradient(90deg,#13331f,#29cf7e);color:#e3fff0}
+
+    .exercise-list{display:flex;flex-direction:column;gap:10px}
+    .exercise{padding:12px}
+    .exercise-top{display:grid;grid-template-columns:2.1fr .9fr .9fr auto;gap:10px;align-items:end}
+    .exercise-bottom{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:8px}
+
+    .friends,.quests,.shop,.coop-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+    .friend-card,.quest-card,.shop-card,.leader-card{padding:15px}
+    .friend-card h4,.quest-name,.shop-name,.leader-name{margin:0 0 10px;font-size:18px;font-weight:900}
+    .friend-card{cursor:pointer}
+    .friend-essential{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+    .box{background:#0f1521;border:1px solid var(--line);border-radius:12px;padding:10px}
+    .box .smallk{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px}
+    .box .smallv{font-size:16px;font-weight:800}
+
+    .list-item{padding:8px 10px;background:#101725;border:1px solid #2a3344;border-radius:10px;margin-bottom:8px;font-size:13px}
+    .table-wrap{overflow:auto;border-radius:14px;border:1px solid var(--line)}
+    table{width:100%;border-collapse:collapse;min-width:980px;background:#101722}
+    th,td{padding:12px 10px;border-bottom:1px solid #293143;text-align:left;font-size:14px}
+    th{position:sticky;top:0;background:#151d2a}
+
+    .modal{position:fixed;inset:0;background:rgba(2,5,10,.72);display:none;align-items:center;justify-content:center;padding:14px;z-index:1000}
+    .modal.show{display:flex}
+    .modal-box{
+      max-width:760px;width:100%;max-height:90vh;overflow:auto;background:linear-gradient(180deg,var(--panel),var(--panel2));
+      border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:18px
+    }
+
+    .toast{
+      position:fixed;right:18px;bottom:18px;background:#161d2b;border:1px solid var(--line);padding:14px 16px;
+      border-radius:14px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);
+      pointer-events:none;transition:.24s;z-index:2000;max-width:320px
+    }
+    .toast.show{opacity:1;transform:translateY(0)}
+
+    .hidden{display:none}
+    .hl-good{color:var(--green);font-weight:800}
+    .hl-bad{color:var(--red);font-weight:800}
+    .hl-neutral{color:var(--blue);font-weight:800}
 
     .auth-switch{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;margin-bottom:12px}
     .check-row{display:flex;gap:10px;align-items:flex-start;background:#101725;border:1px solid #2a3344;border-radius:12px;padding:12px;margin-top:10px}
     .check-row input{width:auto;margin-top:2px}
     .scan-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding:10px 0}
     .face-scan{width:140px;height:140px;border-radius:30px;background:#0f1521;display:grid;place-items:center;font-size:48px;position:relative;overflow:hidden;border:1px solid var(--line)}
-    .face-line{position:absolute;left:12px;right:12px;height:4px;border-radius:999px;background:linear-gradient(90deg,transparent,var(--gold1),transparent);box-shadow:0 0 18px rgba(255,213,74,.6);animation:scanFace 1.4s linear infinite}
+    .face-line{
+      position:absolute;left:12px;right:12px;height:4px;border-radius:999px;
+      background:linear-gradient(90deg,transparent,var(--gold1),transparent);
+      box-shadow:0 0 18px rgba(255,213,74,.6);animation:scanFace 1.4s linear infinite
+    }
+
     .secret-box{background:#0f1521;border:1px solid var(--line);border-radius:14px;padding:12px}
     .demo-codes{margin-top:10px;display:flex;flex-direction:column;gap:10px}
+    .short-code{min-height:72px;line-height:1.3;font-size:12px}
+
     .celebration{position:fixed;inset:0;background:rgba(2,5,10,.78);display:none;align-items:center;justify-content:center;padding:14px;z-index:2200}
     .celebration.show{display:flex}
-    .celebration-box{max-width:520px;width:100%;text-align:center;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:var(--shadow)}
+    .celebration-box{
+      max-width:520px;width:100%;text-align:center;background:linear-gradient(180deg,var(--panel),var(--panel2));
+      border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:var(--shadow)
+    }
     .celebration-big{font-size:56px;margin-bottom:10px}
     .celebration-title{font-size:30px;font-weight:900;margin-bottom:6px}
     .celebration-sub{color:var(--muted);font-size:15px}
-    .celebration-rank{display:inline-block;margin-top:14px;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111;font-weight:900}
-
-    .profile-rank-layout{
-      display:grid;
-      grid-template-columns:170px 1fr;
-      gap:16px;
-      align-items:stretch;
+    .celebration-rank{
+      display:inline-block;margin-top:14px;padding:12px 18px;border-radius:999px;
+      background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111;font-weight:900
     }
+
+    .profile-rank-layout{display:grid;grid-template-columns:170px 1fr;gap:16px;align-items:stretch}
     .rank-showcase{
-      position:relative;
-      overflow:hidden;
-      border-radius:24px;
-      border:2px solid rgba(255,255,255,.14);
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,.08), transparent 35%),
-        linear-gradient(180deg,#101725,#0d1320);
-      box-shadow:0 20px 40px rgba(0,0,0,.35);
-      padding:16px 12px;
-      min-height:100%;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
+      position:relative;overflow:hidden;border-radius:24px;border:2px solid rgba(255,255,255,.14);
+      background:radial-gradient(circle at top left, rgba(255,255,255,.08), transparent 35%),linear-gradient(180deg,#101725,#0d1320);
+      box-shadow:0 20px 40px rgba(0,0,0,.35);padding:16px 12px;min-height:100%;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center
     }
     .rank-showcase::before{
-      content:"";
-      position:absolute;
-      inset:-30%;
-      background:radial-gradient(circle, rgba(255,213,74,.13), transparent 55%);
-      pointer-events:none;
+      content:"";position:absolute;inset:-30%;background:radial-gradient(circle, rgba(255,213,74,.13), transparent 55%);pointer-events:none
     }
     .rank-showcase > *{position:relative;z-index:1}
     .rank-top{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-weight:900;margin-bottom:10px}
@@ -108,18 +203,48 @@
     .rank-name{font-size:24px;font-weight:900;line-height:1.05;margin-bottom:8px}
     .rank-sub{font-size:12px;color:var(--muted);line-height:1.35;margin-bottom:12px}
     .rank-mini{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:12px;font-weight:800}
-    .rank-showcase.bronze{border-color:#8f6738;box-shadow:0 0 0 1px rgba(143,103,56,.18), 0 20px 40px rgba(0,0,0,.35)}
-    .rank-showcase.bronze .rank-name{color:#f0c28c}
+    .rank-showcase.bronze{border-color:#8f6738}.rank-showcase.bronze .rank-name{color:#f0c28c}
     .rank-showcase.argent{border-color:#9ba7b6}.rank-showcase.argent .rank-name{color:#e5edf7}
     .rank-showcase.iron{border-color:#7d8b9e}.rank-showcase.iron .rank-name{color:#c9d3df}
     .rank-showcase.gold{border-color:#d6a300}.rank-showcase.gold .rank-name{color:#ffd95c}
     .rank-showcase.platinum{border-color:#71e0d7}.rank-showcase.platinum .rank-name{color:#b5fff8}
     .rank-showcase.champion{border-color:#ff9a3d}.rank-showcase.champion .rank-name{color:#ffc27a}
     .rank-showcase.master{border-color:#b784ff}.rank-showcase.master .rank-name{color:#e1c7ff}
-    .rank-showcase.legend{border-color:#fff04d;box-shadow:0 0 0 1px rgba(255,240,77,.25), 0 0 30px rgba(255,240,77,.12), 0 20px 40px rgba(0,0,0,.35)}
+    .rank-showcase.legend{border-color:#fff04d;box-shadow:0 0 0 1px rgba(255,240,77,.25),0 0 30px rgba(255,240,77,.12),0 20px 40px rgba(0,0,0,.35)}
     .rank-showcase.legend .rank-name{color:#fff36c}
-    .rank-showcase.admin{border-color:#ff5b8f;box-shadow:0 0 0 1px rgba(255,91,143,.22), 0 0 34px rgba(255,91,143,.14), 0 20px 40px rgba(0,0,0,.35)}
+    .rank-showcase.admin{border-color:#ff5b8f;box-shadow:0 0 0 1px rgba(255,91,143,.22),0 0 34px rgba(255,91,143,.14),0 20px 40px rgba(0,0,0,.35)}
     .rank-showcase.admin .rank-name{color:#ff9cb8}
+
+    .leaderboard-modern{display:flex;flex-direction:column;gap:10px}
+    .leader-row{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      padding:12px 14px;border-radius:14px;background:#101725;border:1px solid #2a3344
+    }
+    .leader-row.leader-me{border-color:rgba(255,213,74,.45);box-shadow:0 0 0 1px rgba(255,213,74,.08)}
+    .leader-left,.leader-right{display:flex;align-items:center;gap:10px}
+    .leader-pos{font-size:12px;color:var(--muted);font-weight:800;min-width:24px}
+    .leader-pseudo{font-size:15px;font-weight:600;letter-spacing:.1px}
+    .leader-elo-small{font-size:13px;color:var(--muted);font-weight:700}
+    .leader-rank-small{font-size:13px;font-weight:800;white-space:nowrap}
+
+    .review-box{
+      margin-top:14px;padding:14px;border-radius:14px;background:#101725;border:1px solid #2a3344
+    }
+    .review-title{font-size:13px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+    .review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .review-item{background:#0d1320;border:1px solid #273247;border-radius:12px;padding:10px}
+    .review-item span{display:block}
+    .review-item .rk{font-size:11px;color:var(--muted);font-weight:800;margin-bottom:5px}
+    .review-item .rv{font-size:14px;font-weight:700;word-break:break-word}
+
+    .friend-mini-profile{
+      padding:16px;border-radius:18px;background:#101725;border:1px solid #2a3344
+    }
+    .friend-mini-pseudo{font-size:24px;font-weight:900;margin-bottom:10px}
+    .friend-mini-line{font-size:14px;color:var(--muted);margin-bottom:8px}
+    .friend-mini-rank{
+      display:inline-flex;padding:8px 12px;border-radius:999px;background:#0f1521;border:1px solid var(--line);font-weight:800
+    }
 
     @keyframes scanFace{0%{top:12px}100%{top:124px}}
 
@@ -131,16 +256,55 @@
       .rank-emblem{font-size:42px}
       .rank-name{font-size:21px}
     }
+
     @media (max-width:760px){
-      .shell{padding:10px}.topbar{display:none}.mobile-topbar{display:flex}.tabs{display:none}.tab-btn{width:100%;min-width:0}.mini-grid{grid-template-columns:1fr}.exercise-top{grid-template-columns:1fr}.row{flex-direction:column}.col{min-width:0}.actions button{width:100%}.avatar{width:72px;height:72px}.title h2{font-size:18px}.toast{left:12px;right:12px;max-width:none}.auth{margin-top:22px;padding:18px}h1{font-size:22px}.panel,.card,.friend-card,.quest-card,.shop-card,.leader-card{padding:14px}.friend-essential{grid-template-columns:1fr}.box .smallv{font-size:15px}.face-scan{width:120px;height:120px}.face-line{animation-duration:1.2s}
+      .shell{padding:10px}
+      .topbar{display:none}
+      .mobile-topbar{display:flex}
+      .tabs{display:none}
+      .tab-btn{width:100%;min-width:0}
+      .mini-grid{grid-template-columns:1fr}
+      .exercise-top{grid-template-columns:1fr}
+      .row{flex-direction:column}
+      .col{min-width:0}
+      .actions button{width:100%}
+      .avatar{width:72px;height:72px}
+      .title h2{font-size:18px}
+      .toast{left:12px;right:12px;max-width:none}
+      .auth{margin-top:18px;padding:16px}
+      h1{font-size:22px}
+      .panel,.card,.friend-card,.quest-card,.shop-card,.leader-card{padding:14px}
+      .friend-essential{grid-template-columns:1fr}
+      .box .smallv{font-size:15px}
+      .face-scan{width:120px;height:120px}
+      .face-line{animation-duration:1.2s}
+      .review-grid{grid-template-columns:1fr}
+      .leader-row{align-items:flex-start;flex-direction:column}
+      .leader-left,.leader-right{width:100%;justify-content:space-between}
+      .leader-pseudo{font-size:16px}
+      .mobile-topbar{
+        position:sticky;top:0;z-index:100;background:rgba(11,15,23,.9);backdrop-filter:blur(8px);
+        padding:8px 0 12px
+      }
+      .panel,.mini,.friend-card,.quest-card,.shop-card{border-radius:16px}
+      input,select,textarea,button{font-size:16px}
     }
-    @media (min-width:761px){.drawer-overlay,.side-drawer,.mobile-topbar{display:none !important}}
+
+    @media (min-width:761px){
+      .drawer-overlay,.side-drawer,.mobile-topbar{display:none !important}
+    }
   </style>
 </head>
 <body>
   <div class="shell">
     <div class="topbar">
-      <div class="brand"><div class="logo">💪</div><div><h1>Workout Tracker V3</h1><div class="sub">Responsive • Coop • Duel ranked • Quêtes • Boutique • Thèmes • Titres • Face ID • Codes secrets</div></div></div>
+      <div class="brand">
+        <div class="logo">💪</div>
+        <div>
+          <h1>Workout Tracker V4</h1>
+          <div class="sub">Responsive • Coop • Duel ranked • Quêtes • Boutique • Thèmes • Titres • Face ID • Codes secrets</div>
+        </div>
+      </div>
       <div id="topBadge" class="badge hidden">👤 Non connecté</div>
     </div>
 
@@ -154,8 +318,12 @@
       </div>
 
       <div id="loginBox">
-        <label>Nom d'utilisateur</label><input id="authUser" placeholder="Ex: LucasFit">
-        <label>Mot de passe</label><input id="authPass" type="password" placeholder="••••••••">
+        <label>Nom d'utilisateur</label>
+        <input id="authUser" placeholder="Ex: LucasFit">
+
+        <label>Mot de passe</label>
+        <input id="authPass" type="password" placeholder="••••••••">
+
         <div class="actions">
           <button class="btn-s" onclick="loginUser()">🚀 Connexion</button>
           <button class="btn-b" onclick="fakeFaceID()">📱 Face ID</button>
@@ -167,19 +335,35 @@
           <div class="col"><label>Pseudo</label><input id="regUser" placeholder="Ex: LucasFit"></div>
           <div class="col"><label>Mail</label><input id="regMail" type="email" placeholder="Ex: lucas@mail.com"></div>
         </div>
+
         <div class="row">
           <div class="col"><label>Téléphone</label><input id="regPhone" placeholder="Ex: 06 00 00 00 00"></div>
           <div class="col"><label>Poids actuel (kg)</label><input id="regWeight" type="number" min="0" step="0.1" placeholder="Ex: 50"></div>
         </div>
+
         <div class="row">
           <div class="col"><label>Objectif poids (kg)</label><input id="regGoalWeight" type="number" min="0" step="0.1" placeholder="Ex: 58"></div>
           <div class="col"><label>Mot de passe</label><input id="regPass" type="password" placeholder="••••••••"></div>
         </div>
-        <label>Confirmer le mot de passe</label><input id="regPassConfirm" type="password" placeholder="••••••••">
+
+        <label>Confirmer le mot de passe</label>
+        <input id="regPassConfirm" type="password" placeholder="••••••••">
+
+        <div class="review-box">
+          <div class="review-title">Relecture des informations</div>
+          <div class="review-grid">
+            <div class="review-item"><span class="rk">Pseudo</span><span class="rv" id="reviewUser">-</span></div>
+            <div class="review-item"><span class="rk">Mail</span><span class="rv" id="reviewMail">-</span></div>
+            <div class="review-item"><span class="rk">Téléphone</span><span class="rv" id="reviewPhone">-</span></div>
+            <div class="review-item"><span class="rk">Poids actuel</span><span class="rv" id="reviewWeight">-</span></div>
+            <div class="review-item"><span class="rk">Objectif</span><span class="rv" id="reviewGoal">-</span></div>
+          </div>
+        </div>
 
         <div class="check-row"><input type="checkbox" id="regCond1"><div>Je confirme que les informations saisies sont correctes.</div></div>
         <div class="check-row"><input type="checkbox" id="regCond2"><div>J'accepte que mes données soient stockées localement dans le navigateur.</div></div>
         <div class="check-row"><input type="checkbox" id="regCond3"><div>Je comprends que le Face ID est un effet visuel de démonstration.</div></div>
+        <div class="check-row"><input type="checkbox" id="regCond4"><div>Je confirme avoir relu mes informations avant création du compte.</div></div>
 
         <div class="actions">
           <button class="btn-p" onclick="registerUser()">✨ Créer le compte</button>
@@ -195,6 +379,7 @@
       </div>
 
       <div id="drawerOverlay" class="drawer-overlay" onclick="closeDrawer()"></div>
+
       <aside id="sideDrawer" class="side-drawer">
         <div class="drawer-header">
           <div>
@@ -203,6 +388,7 @@
           </div>
           <button class="btn-s" onclick="closeDrawer()">Fermer</button>
         </div>
+
         <div class="drawer-nav">
           <button class="tab-btn active" data-tab="dashboard" onclick="showTab('dashboard', this);closeDrawer()">🏠 Dashboard</button>
           <button class="tab-btn" data-tab="workout" onclick="showTab('workout', this);closeDrawer()">💪 Séance</button>
@@ -214,6 +400,7 @@
           <button class="tab-btn" data-tab="settings" onclick="showTab('settings', this);closeDrawer()">⚙️ Paramètres</button>
         </div>
       </aside>
+
       <div class="tabs">
         <button class="tab-btn active" data-tab="dashboard" onclick="showTab('dashboard', this)">🏠 Dashboard</button>
         <button class="tab-btn" data-tab="workout" onclick="showTab('workout', this)">💪 Séance</button>
@@ -239,13 +426,22 @@
 
               <div class="panel">
                 <div class="title"><h2>👤 Profil</h2><div id="rankBadge" class="badge">🥉 Bronze</div></div>
-                <div class="avatar-wrap"><img id="dashAvatar" class="avatar" alt="avatar"><div style="flex:1;min-width:0"><div class="sub">Photo de profil</div><div id="dashBio" class="bio-preview bio-default">🏋️ Rookie du grind</div><div class="meta"><span id="dashTitle">Titre : Rookie</span><span id="dashTheme">Thème : Gold</span></div></div></div>
+                <div class="avatar-wrap">
+                  <img id="dashAvatar" class="avatar" alt="avatar">
+                  <div style="flex:1;min-width:0">
+                    <div class="sub">Photo de profil</div>
+                    <div id="dashBio" class="bio-preview bio-default">🏋️ Rookie du grind</div>
+                    <div class="meta"><span id="dashTitle">Titre : Rookie</span><span id="dashTheme">Thème : Gold</span></div>
+                  </div>
+                </div>
+
                 <div class="mini-grid" style="margin-top:14px">
                   <div class="mini"><div class="k">Pseudo</div><div class="v" id="dashName">-</div></div>
                   <div class="mini"><div class="k">Niveau</div><div class="v" id="dashLevel">1</div></div>
                   <div class="mini"><div class="k">XP</div><div class="v" id="dashXP">0</div></div>
                   <div class="mini"><div class="k">Pièces</div><div class="v" id="dashCoins">0</div></div>
                 </div>
+
                 <div style="margin-top:14px" class="xpbar"><div id="xpFill" class="xpfill"></div></div>
                 <div class="meta"><span id="xpText">0 / 2000 XP</span><span id="goalText">🎯 Objectif poids : -</span></div>
               </div>
@@ -261,9 +457,17 @@
               </div>
             </div>
           </div>
+
           <div class="stack">
-            <div class="panel"><div class="title"><h2>🏆 Classement amis</h2><div class="badge">XP</div></div><div id="leaderboard" class="leaders"></div></div>
-            <div class="panel"><div class="title"><h2>🎖️ Succès</h2><div class="badge">Débloqués</div></div><div id="achievements"></div></div>
+            <div class="panel">
+              <div class="title"><h2>🏆 Classement amis</h2><div class="badge">ELO</div></div>
+              <div id="leaderboard" class="leaderboard-modern"></div>
+            </div>
+
+            <div class="panel">
+              <div class="title"><h2>🎖️ Succès</h2><div class="badge">Débloqués</div></div>
+              <div id="achievements"></div>
+            </div>
           </div>
         </div>
       </section>
@@ -273,35 +477,66 @@
           <div class="stack">
             <div class="panel">
               <div class="title"><h2>💪 Nouvelle séance</h2><div class="badge" id="todayBadge">📅</div></div>
+
               <div class="row">
                 <div class="col"><label>Muscles travaillés</label><input id="sessionType" placeholder="Ex: Pecs, Bras / Dos, Épaules / Rappel biceps"></div>
                 <div class="col"><label>Durée (min)</label><input id="sessionDuration" type="number" min="0" placeholder="Ex: 75"></div>
                 <div class="col"><label>Poids actuel (kg)</label><input id="bodyWeight" type="number" min="0" step="0.1" placeholder="Ex: 50"></div>
               </div>
+
               <div class="row">
-                <div class="col"><label>Mode séance</label><select id="sessionMode" onchange="updateCoopUI()"><option value="solo">Solo</option><option value="coop">Coop avec un ami</option></select></div>
+                <div class="col">
+                  <label>Mode séance</label>
+                  <select id="sessionMode" onchange="updateCoopUI()">
+                    <option value="solo">Solo</option>
+                    <option value="coop">Coop avec un ami</option>
+                  </select>
+                </div>
                 <div class="col"><label>Ami coop</label><select id="coopFriendSelect"></select></div>
                 <div class="col"><label>Boost amitié actif</label><input id="coopBoostPreview" disabled value="x1.00"></div>
               </div>
-              <label>Notes</label><textarea id="sessionNotes" placeholder="Ex: bon pump, rappel triceps, propre sur la forme..."></textarea>
-              <div class="actions"><button class="btn-p" onclick="addExercise()">➕ Ajouter un exercice</button><button class="btn-s" onclick="resetWorkout()">🧹 Reset la séance</button></div>
+
+              <label>Notes</label>
+              <textarea id="sessionNotes" placeholder="Ex: bon pump, rappel triceps, propre sur la forme..."></textarea>
+
+              <div class="actions">
+                <button class="btn-p" onclick="addExercise()">➕ Ajouter un exercice</button>
+                <button class="btn-s" onclick="resetWorkout()">🧹 Reset la séance</button>
+              </div>
+
               <div id="exerciseList" class="exercise-list" style="margin-top:12px"></div>
+
               <div class="mini-grid" style="margin-top:14px">
                 <div class="mini"><div class="k">Exercices</div><div class="v" id="liveCount">0</div></div>
                 <div class="mini"><div class="k">Volume total</div><div class="v" id="liveVolume">0</div></div>
                 <div class="mini"><div class="k">XP séance</div><div class="v" id="liveXP">0</div></div>
                 <div class="mini"><div class="k">Mode</div><div class="v" id="liveMode">Solo</div></div>
               </div>
+
               <div class="actions"><button class="btn-g" onclick="saveWorkout()">💾 Sauvegarder la séance</button></div>
             </div>
           </div>
+
           <div class="stack">
-            <div class="panel"><div class="title"><h2>📦 Presets</h2><div class="badge">Réutilisables</div></div><label>Nom du preset</label><input id="presetName" placeholder="Ex: Pecs + bras"><div class="row"><div class="col"><select id="presetSelect"></select></div><div class="col"><button class="btn-b" onclick="loadPreset()">📥 Charger</button></div><div class="col"><button class="btn-s" onclick="savePreset()">💾 Sauver</button></div><div class="col"><button class="btn-d" onclick="deletePreset()">🗑️ Supprimer</button></div></div></div>
-            <div class="panel"><div class="title"><h2>🤝 Coop & amitié</h2><div class="badge">Bonus coop uniquement</div></div><div id="coopSummary" class="coop-list"></div></div>
+            <div class="panel">
+              <div class="title"><h2>📦 Presets</h2><div class="badge">Réutilisables</div></div>
+              <label>Nom du preset</label>
+              <input id="presetName" placeholder="Ex: Pecs + bras">
+              <div class="row">
+                <div class="col"><select id="presetSelect"></select></div>
+                <div class="col"><button class="btn-b" onclick="loadPreset()">📥 Charger</button></div>
+                <div class="col"><button class="btn-s" onclick="savePreset()">💾 Sauver</button></div>
+                <div class="col"><button class="btn-d" onclick="deletePreset()">🗑️ Supprimer</button></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="title"><h2>🤝 Coop & amitié</h2><div class="badge">Bonus coop uniquement</div></div>
+              <div id="coopSummary" class="coop-list"></div>
+            </div>
           </div>
         </div>
       </section>
-
       <section id="duel" class="tab-panel hidden">
         <div class="grid">
           <div class="stack">
@@ -317,34 +552,237 @@
                 <div class="col"><label>Reps de ton ami</label><input id="duelFriendReps" type="number" min="0" placeholder="Ex: 8"></div>
                 <div class="col"><label>Résultat</label><input id="duelPreview" disabled value="En attente"></div>
               </div>
-              <label>Notes duel</label><textarea id="duelNotes" placeholder="Ex: exécution propre, pause bench, dernière rep validée..."></textarea>
-              <div class="actions"><button class="btn-p" onclick="previewDuel()">👀 Voir le résultat</button><button class="btn-g" onclick="saveDuel()">💾 Sauvegarder le duel</button><button class="btn-s" onclick="resetDuel()">🧹 Reset duel</button></div>
+              <label>Notes duel</label>
+              <textarea id="duelNotes" placeholder="Ex: exécution propre, pause bench, dernière rep validée..."></textarea>
+              <div class="actions">
+                <button class="btn-p" onclick="previewDuel()">👀 Voir le résultat</button>
+                <button class="btn-g" onclick="saveDuel()">💾 Sauvegarder le duel</button>
+                <button class="btn-s" onclick="resetDuel()">🧹 Reset duel</button>
+              </div>
             </div>
           </div>
+
           <div class="stack">
-            <div class="panel"><div class="title"><h2>🏆 Stats duel</h2><div class="badge">Ranked</div></div><div class="mini-grid"><div class="mini"><div class="k">Duels</div><div class="v" id="duelTotal">0</div></div><div class="mini"><div class="k">Victoires</div><div class="v" id="duelWins">0</div></div><div class="mini"><div class="k">Défaites</div><div class="v" id="duelLosses">0</div></div><div class="mini"><div class="k">Égalités</div><div class="v" id="duelDraws">0</div></div></div><div class="mini-grid" style="margin-top:12px"><div class="mini"><div class="k">Streak</div><div class="v" id="duelStreak">0</div></div><div class="mini"><div class="k">Best streak</div><div class="v" id="duelBest">0</div></div><div class="mini"><div class="k">Win rate</div><div class="v" id="duelRate">0%</div></div><div class="mini"><div class="k">ELO duel</div><div class="v" id="duelElo">1000</div></div></div></div>
-            <div class="panel"><div class="title"><h2>📜 Derniers duels</h2><div class="badge">Historique</div></div><div id="duelHistory"></div></div>
+            <div class="panel">
+              <div class="title"><h2>🏆 Stats duel</h2><div class="badge">Ranked</div></div>
+              <div class="mini-grid">
+                <div class="mini"><div class="k">Duels</div><div class="v" id="duelTotal">0</div></div>
+                <div class="mini"><div class="k">Victoires</div><div class="v" id="duelWins">0</div></div>
+                <div class="mini"><div class="k">Défaites</div><div class="v" id="duelLosses">0</div></div>
+                <div class="mini"><div class="k">Égalités</div><div class="v" id="duelDraws">0</div></div>
+              </div>
+              <div class="mini-grid" style="margin-top:12px">
+                <div class="mini"><div class="k">Streak</div><div class="v" id="duelStreak">0</div></div>
+                <div class="mini"><div class="k">Best streak</div><div class="v" id="duelBest">0</div></div>
+                <div class="mini"><div class="k">Win rate</div><div class="v" id="duelRate">0%</div></div>
+                <div class="mini"><div class="k">ELO duel</div><div class="v" id="duelElo">1000</div></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="title"><h2>📜 Derniers duels</h2><div class="badge">Historique</div></div>
+              <div id="duelHistory"></div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="quests" class="tab-panel hidden"><div class="panel"><div class="title"><h2>🗺️ Toutes les quêtes</h2><div class="badge" id="questSummary">0 / 0</div></div><div id="questList" class="quests"></div></div></section>
-      <section id="shop" class="tab-panel hidden"><div class="grid"><div class="stack"><div class="panel"><div class="title"><h2>🛒 Boutique</h2><div class="badge">🪙 <span id="shopCoins">0</span> pièces</div></div><div id="shopList" class="shop"></div></div></div><div class="stack"><div class="panel"><div class="title"><h2>🎨 Bios colorées</h2><div class="badge">Style salle</div></div><div id="ownedBios"></div></div></div></div></section>
-      <section id="friends" class="tab-panel hidden"><div class="grid"><div class="stack"><div class="panel"><div class="title"><h2>👥 Ajouter des amis</h2><div class="badge">Codes courts</div></div><label>Code ami court</label><textarea id="myCode" readonly placeholder="Clique sur générer."></textarea><div class="actions"><button class="btn-p" onclick="generateCode()">📋 Générer mon code ami</button><button class="btn-s" onclick="copyMyCode()">📎 Copier</button><button class="btn-b" onclick="exportSyncFile()">💾 Export profil</button></div><div class="sub">Le code ami reste court. Pour une vraie sauvegarde complète, utilise Export profil.</div><label>Ajouter / mettre à jour un ami</label><textarea id="friendCode" placeholder="Colle ici le code ami court"></textarea><div class="actions"><button class="btn-g" onclick="addFriend()">➕ Ajouter ou mettre à jour</button><button class="btn-s" onclick="importSyncFile()">📂 Import profil</button></div></div></div><div class="stack"><div class="panel"><div class="title"><h2>📜 Liste d'amis</h2><div class="badge" id="friendCount">0 ami</div></div><div id="friendsList" class="friends"></div></div></div></div></section>
-      <section id="history" class="tab-panel hidden"><div class="panel"><div class="title"><h2>📜 Historique complet</h2><div class="actions" style="margin:0"><button class="btn-s" onclick="exportData()">📤 Exporter</button><button class="btn-d" onclick="clearHistory()">🗑️ Vider</button></div></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Mode</th><th>Ami</th><th>Exercice</th><th>Reps</th><th>Poids</th><th>Volume</th><th>XP</th><th>Durée</th><th>Notes</th></tr></thead><tbody id="historyBody"></tbody></table></div></div></section>
-      <section id="settings" class="tab-panel hidden"><div class="grid"><div class="stack">
-        <div class="panel"><div class="title"><h2>⚙️ Paramètres du profil</h2><div class="badge">Personnalisable</div></div><div class="avatar-wrap"><img id="settingsAvatar" class="avatar" alt="avatar"><div style="flex:1;min-width:0"><label>Ajouter / changer la photo</label><input id="avatarInput" type="file" accept="image/*"></div></div><div class="row"><div class="col"><label>Pseudo</label><input id="profileName"></div><div class="col"><label>Mail</label><input id="profileMail" type="email"></div></div><div class="row"><div class="col"><label>Téléphone</label><input id="profilePhone"></div><div class="col"><label>Objectif poids (kg)</label><input id="goalWeight" type="number" step="0.1" min="0"></div></div><div class="row"><div class="col"><label>Profil visible aux amis</label><select id="profilePublic"><option value="true">Oui, profil public</option><option value="false">Non, profil limité</option></select></div><div class="col"><label>Thème</label><select id="themeSelect"><option value="gold">Gold</option><option value="blue">Blue</option><option value="red">Red</option><option value="green">Green</option></select></div></div><div class="row"><div class="col"><label>Titre rare équipé</label><select id="titleSelect"></select></div></div><div class="actions"><button class="btn-p" onclick="saveProfile()">💾 Sauvegarder</button></div></div>
+      <section id="quests" class="tab-panel hidden">
+        <div class="panel">
+          <div class="title"><h2>🗺️ Toutes les quêtes</h2><div class="badge" id="questSummary">0 / 0</div></div>
+          <div id="questList" class="quests"></div>
+        </div>
+      </section>
 
-        <div class="panel"><div class="title"><h2>🎟️ Codes secrets</h2><div class="badge">Bonus</div></div><div class="secret-box"><label>Entrer un code</label><input id="specialCodeInput" placeholder="Ex: WELCOME100"><div class="actions"><button class="btn-p" onclick="redeemSpecialCode()">✅ Valider le code</button></div><div class="sub">Codes disponibles : WELCOME100 • XPBOOST • ADMIN-LUCAS</div></div></div>
+      <section id="shop" class="tab-panel hidden">
+        <div class="grid">
+          <div class="stack">
+            <div class="panel">
+              <div class="title"><h2>🛒 Boutique</h2><div class="badge">🪙 <span id="shopCoins">0</span> pièces</div></div>
+              <div id="shopList" class="shop"></div>
+            </div>
+          </div>
+          <div class="stack">
+            <div class="panel">
+              <div class="title"><h2>🎨 Bios colorées</h2><div class="badge">Style salle</div></div>
+              <div id="ownedBios"></div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <div class="panel"><div class="title"><h2>👥 Profils démo</h2><div class="badge">Test</div></div><div class="actions"><button class="btn-b" onclick="installDemoProfiles()">📥 Installer profils démo</button><button class="btn-s" onclick="toggleDemoCodes()">📋 Voir codes amis</button></div><div id="demoCodesWrap" class="demo-codes hidden"></div></div>
+      <section id="friends" class="tab-panel hidden">
+        <div class="grid">
+          <div class="stack">
+            <div class="panel">
+              <div class="title"><h2>👥 Ajouter des amis</h2><div class="badge">Codes courts</div></div>
 
-        <div class="panel"><div class="title"><h2>🛠️ Update</h2><div class="badge">Champ de mise à jour</div></div><div class="sub">Tu peux écrire ici les idées de modifications esthétiques ou fonctionnelles à appliquer plus tard. Elles seront gardées dans l'application.</div><div class="update-box"><label>Nouvelle demande d'update</label><textarea id="updateInput" placeholder="Ex: rendre la page duel plus agressive, agrandir les cartes mobile, ajouter plus d'animations..."></textarea><div class="actions"><button class="btn-b" onclick="saveUpdateNote()">➕ Enregistrer l'update</button><button class="btn-s" onclick="clearUpdateNotes()">🧹 Vider la liste</button></div></div><div class="update-log" id="updateLog"></div></div>
-      </div>
-      <div class="stack"><div class="panel"><div class="title"><h2>✨ V3 propre</h2><div class="badge">Nouveautés</div></div><div class="list-item">📱 Face ID esthétique</div><div class="list-item">🎟️ Codes secrets et code admin</div><div class="list-item">👥 Profils démo et codes amis</div><div class="list-item">🎉 Animation level up</div><div class="list-item">🏆 Animation rank up</div><div class="list-item">📱 Mobile optimisé</div></div><div class="panel" style="border-style:dashed;background:rgba(255,95,95,.05)"><div class="title"><h2>🚨 Zone sensible</h2><div class="badge">Attention</div></div><div class="actions"><button class="btn-d" onclick="deleteAccount()">❌ Supprimer le compte</button><button class="btn-s" onclick="logout()">🔓 Déconnexion</button></div></div></div></div></section>
+              <label>Code ami court</label>
+              <textarea id="myCode" class="short-code" readonly placeholder="Clique sur générer."></textarea>
+
+              <div class="actions">
+                <button class="btn-p" onclick="generateCode()">📋 Générer mon code ami</button>
+                <button class="btn-s" onclick="copyMyCode()">📎 Copier</button>
+                <button class="btn-b" onclick="exportSyncFile()">💾 Export profil</button>
+              </div>
+
+              <div class="sub">Le code ami contient seulement l’essentiel : pseudo, XP, ELO, date d’inscription.</div>
+
+              <label>Ajouter / mettre à jour un ami</label>
+              <textarea id="friendCode" class="short-code" placeholder="Colle ici le code ami court"></textarea>
+
+              <div class="actions">
+                <button class="btn-g" onclick="addFriend()">➕ Ajouter ou mettre à jour</button>
+                <button class="btn-s" onclick="importSyncFile()">📂 Import profil</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="panel">
+              <div class="title"><h2>📜 Liste d'amis</h2><div class="badge" id="friendCount">0 ami</div></div>
+              <div id="friendsList" class="friends"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="history" class="tab-panel hidden">
+        <div class="panel">
+          <div class="title">
+            <h2>📜 Historique complet</h2>
+            <div class="actions" style="margin:0">
+              <button class="btn-s" onclick="exportData()">📤 Exporter</button>
+              <button class="btn-d" onclick="clearHistory()">🗑️ Vider</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th><th>Type</th><th>Mode</th><th>Ami</th><th>Exercice</th><th>Reps</th><th>Poids</th><th>Volume</th><th>XP</th><th>Durée</th><th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="historyBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="settings" class="tab-panel hidden">
+        <div class="grid">
+          <div class="stack">
+            <div class="panel">
+              <div class="title"><h2>⚙️ Paramètres du profil</h2><div class="badge">Personnalisable</div></div>
+
+              <div class="avatar-wrap">
+                <img id="settingsAvatar" class="avatar" alt="avatar">
+                <div style="flex:1;min-width:0">
+                  <label>Ajouter / changer la photo</label>
+                  <input id="avatarInput" type="file" accept="image/*">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col"><label>Pseudo</label><input id="profileName"></div>
+                <div class="col"><label>Mail</label><input id="profileMail" type="email"></div>
+              </div>
+
+              <div class="row">
+                <div class="col"><label>Téléphone</label><input id="profilePhone"></div>
+                <div class="col"><label>Objectif poids (kg)</label><input id="goalWeight" type="number" step="0.1" min="0"></div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <label>Profil visible aux amis</label>
+                  <select id="profilePublic">
+                    <option value="true">Oui, profil public</option>
+                    <option value="false">Non, profil limité</option>
+                  </select>
+                </div>
+                <div class="col">
+                  <label>Thème</label>
+                  <select id="themeSelect">
+                    <option value="gold">Gold</option>
+                    <option value="blue">Blue</option>
+                    <option value="red">Red</option>
+                    <option value="green">Green</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col"><label>Titre rare équipé</label><select id="titleSelect"></select></div>
+              </div>
+
+              <div class="actions"><button class="btn-p" onclick="saveProfile()">💾 Sauvegarder</button></div>
+            </div>
+
+            <div class="panel">
+              <div class="title"><h2>🎟️ Codes secrets</h2><div class="badge">Bonus</div></div>
+              <div class="secret-box">
+                <label>Entrer un code</label>
+                <input id="specialCodeInput" placeholder="Ex: WELCOME100">
+                <div class="actions"><button class="btn-p" onclick="redeemSpecialCode()">✅ Valider le code</button></div>
+                <div class="sub">Codes disponibles : WELCOME100 • XPBOOST • ADMIN-LUCAS</div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="title"><h2>👥 Profils démo</h2><div class="badge">Test</div></div>
+              <div class="actions">
+                <button class="btn-b" onclick="installDemoProfiles()">📥 Installer profils démo</button>
+                <button class="btn-s" onclick="toggleDemoCodes()">📋 Voir codes amis</button>
+              </div>
+              <div id="demoCodesWrap" class="demo-codes hidden"></div>
+            </div>
+
+            <div class="panel">
+              <div class="title"><h2>🛠️ Update</h2><div class="badge">Champ de mise à jour</div></div>
+              <div class="sub">Tu peux écrire ici les idées de modifications esthétiques ou fonctionnelles à appliquer plus tard.</div>
+              <div class="update-box">
+                <label>Nouvelle demande d'update</label>
+                <textarea id="updateInput" placeholder="Ex: rendre la page duel plus agressive, agrandir les cartes mobile, ajouter plus d'animations..."></textarea>
+                <div class="actions">
+                  <button class="btn-b" onclick="saveUpdateNote()">➕ Enregistrer l'update</button>
+                  <button class="btn-s" onclick="clearUpdateNotes()">🧹 Vider la liste</button>
+                </div>
+              </div>
+              <div class="update-log" id="updateLog"></div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="panel">
+              <div class="title"><h2>✨ V4 propre</h2><div class="badge">Nouveautés</div></div>
+              <div class="list-item">📋 Relecture des infos à l'inscription</div>
+              <div class="list-item">🔊 Sons doux style Apple</div>
+              <div class="list-item">📱 Mobile encore plus ergonomique</div>
+              <div class="list-item">👥 Codes amis compacts et portables</div>
+              <div class="list-item">🏆 Leaderboard amis redesign</div>
+              <div class="list-item">📈 ELO gagné aussi en solo</div>
+            </div>
+
+            <div class="panel" style="border-style:dashed;background:rgba(255,95,95,.05)">
+              <div class="title"><h2>🚨 Zone sensible</h2><div class="badge">Attention</div></div>
+              <div class="actions">
+                <button class="btn-d" onclick="deleteAccount()">❌ Supprimer le compte</button>
+                <button class="btn-s" onclick="logout()">🔓 Déconnexion</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
-  <div id="friendModal" class="modal"><div class="modal-box"><div class="title"><h2>👤 Profil ami</h2><button class="btn-s" onclick="closeFriendProfile()">Fermer</button></div><div id="friendProfileContent"></div></div></div>
+
+  <div id="friendModal" class="modal">
+    <div class="modal-box">
+      <div class="title"><h2>👤 Profil ami</h2><button class="btn-s" onclick="closeFriendProfile()">Fermer</button></div>
+      <div id="friendProfileContent"></div>
+    </div>
+  </div>
 
   <div id="faceIdModal" class="modal">
     <div class="modal-box" style="max-width:420px">
@@ -371,8 +809,11 @@
 
   <script>
     let currentUser = null;
+
     const ranks = ["🥉 Bronze","🥈 Argent","⚙️ Iron","🥇 Gold","💎 Platinum","🏆 Champion","👑 Master","🔱 Legend"];
+    const eloThresholds = [1000,1080,1160,1260,1380,1520,1680,1860];
     const friendshipThresholds = [0,100,250,500,900,1500,2300,3400];
+
     const shopItems = [
       { id:"boost_10", type:"boost", name:"⚡ Boost XP x1.1", price:120, desc:"Augmente l'XP gagnée de 10% en permanence.", value:1.1 },
       { id:"boost_25", type:"boost", name:"🚀 Boost XP x1.25", price:300, desc:"Augmente l'XP gagnée de 25% en permanence.", value:1.25 },
@@ -383,6 +824,7 @@
       { id:"bio_red", type:"bio", name:"❤️ Bio Red", price:110, desc:"Bio rouge agressive.", className:"bio-red", text:"❤️ Rage contrôlée • intensité maximale" },
       { id:"bio_green", type:"bio", name:"💚 Bio Green", price:110, desc:"Bio verte clean et athlétique.", className:"bio-green", text:"💚 Constance, volume, progression" }
     ];
+
     const rareTitles = [
       {id:'rookie', name:'Rookie', req:()=>true},
       {id:'iron_soul', name:'Iron Soul', req:d=>d.xp>=5000},
@@ -399,81 +841,253 @@
     };
 
     const demoProfiles = [
-      { name:"Axel Titan", xp:7200, duelElo:1120, title:"iron_soul", bioText:"💪 Toujours propre sur les reps", workouts:[{date:"10/03/2026",name:"Bench Press",reps:10,weight:135,xp:150}], avatar:"" },
-      { name:"Maya Iron", xp:11800, duelElo:1260, title:"golden_grinder", bioText:"⚡ Cardio + volume + discipline", workouts:[{date:"10/03/2026",name:"Squat",reps:8,weight:185,xp:164}], avatar:"" },
-      { name:"Leo Pump", xp:18400, duelElo:1450, title:"duel_lord", bioText:"🏆 Joue le duel, gagne le duel", workouts:[{date:"10/03/2026",name:"Deadlift",reps:6,weight:275,xp:183}], avatar:"" },
-      { name:"Nina Power", xp:24100, duelElo:1585, title:"team_beast", bioText:"💜 Mental d'acier • progression silencieuse", workouts:[{date:"10/03/2026",name:"Hip Thrust",reps:12,weight:225,xp:300}], avatar:"" }
+      { name:"Axel Titan", xp:7200, duelElo:1120, title:"iron_soul", createdAt:"2026-02-04", bioText:"💪 Toujours propre sur les reps" },
+      { name:"Maya Iron", xp:11800, duelElo:1260, title:"golden_grinder", createdAt:"2026-01-15", bioText:"⚡ Cardio + volume + discipline" },
+      { name:"Leo Pump", xp:18400, duelElo:1450, title:"duel_lord", createdAt:"2025-12-18", bioText:"🏆 Joue le duel, gagne le duel" },
+      { name:"Nina Power", xp:24100, duelElo:1585, title:"team_beast", createdAt:"2025-11-09", bioText:"💜 Mental d'acier • progression silencieuse" }
     ];
 
-    function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
+    let audioCtx = null;
+
+    function getAudioCtx(){
+      if(!audioCtx){
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if(AC) audioCtx = new AC();
+      }
+      return audioCtx;
+    }
+
+    function playSoftSequence(notes, master=0.02){
+      const ctx = getAudioCtx();
+      if(!ctx) return;
+      const now = ctx.currentTime;
+      notes.forEach((n)=>{
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = n.type || 'sine';
+        osc.frequency.value = n.freq;
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(n.vol || master, now + n.at + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + n.at + (n.dur || 0.12));
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + n.at);
+        osc.stop(now + n.at + (n.dur || 0.12));
+      });
+    }
+
+    function sfxTap(){ playSoftSequence([{freq:660,at:0,dur:0.07,vol:0.012,type:'sine'}]); }
+    function sfxSuccess(){ playSoftSequence([{freq:660,at:0,dur:0.09,vol:0.014},{freq:880,at:0.08,dur:0.12,vol:0.016}],0.016); }
+    function sfxFace(){ playSoftSequence([{freq:420,at:0,dur:0.08,vol:0.012},{freq:530,at:0.07,dur:0.09,vol:0.012},{freq:720,at:0.16,dur:0.12,vol:0.014}],0.014); }
+    function sfxRank(){ playSoftSequence([{freq:520,at:0,dur:0.1,vol:0.013},{freq:780,at:0.08,dur:0.12,vol:0.016},{freq:1040,at:0.18,dur:0.16,vol:0.018}],0.018); }
+    function sfxLevel(){ playSoftSequence([{freq:560,at:0,dur:0.08,vol:0.013},{freq:680,at:0.06,dur:0.08,vol:0.014},{freq:840,at:0.14,dur:0.14,vol:0.016}],0.016); }
+
+    function toast(msg){
+      const t=document.getElementById('toast');
+      t.textContent=msg;
+      t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'),2400);
+    }
+
     function today(){ return new Date().toLocaleDateString('fr-FR'); }
-    function rankFromXP(xp){ return ranks[Math.min(Math.floor((xp||0)/5000), ranks.length-1)]; }
+    function isoToday(){ return new Date().toISOString().slice(0,10); }
+
+    function formatDateFR(v){
+      if(!v) return '-';
+      const d = new Date(v);
+      if(Number.isNaN(d.getTime())) return String(v);
+      return d.toLocaleDateString('fr-FR');
+    }
+
+    function formatCompactDate(v){
+      if(!v) return '-';
+      const d = new Date(v);
+      if(Number.isNaN(d.getTime())) return String(v);
+      return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'});
+    }
+
+    function eloRankIndex(elo=1000){
+      let idx = 0;
+      eloThresholds.forEach((t, i)=>{ if((elo||1000) >= t) idx = i; });
+      return idx;
+    }
+
+    function rankFromProgress(xp=0, elo=1000, admin=false){
+      if(admin) return '🛡 ADMIN';
+      const xpIndex = Math.floor((xp||0)/5000);
+      const finalIndex = Math.min(ranks.length-1, Math.max(xpIndex, eloRankIndex(elo)));
+      return ranks[finalIndex];
+    }
+
     function levelFromXP(xp){ return Math.floor((xp||0)/2000)+1; }
     function xpLevelFill(xp){ return Math.max(0, Math.min(100, ((xp||0)%2000)/20)); }
     function sessionKeys(arr){ return [...new Set((arr||[]).map(w => `${w.date}|${w.sessionType}|${w.duration}|${w.notes}|${w.mode||'solo'}|${w.coopFriend||''}`))]; }
     function calculateXP(reps,weight){ const r=Number(reps)||0; const w=Number(weight)||0; return (r*w)/9; }
-    function safeEncode(obj){ return btoa(encodeURIComponent(JSON.stringify(obj))); }
-    function safeDecode(str){ return JSON.parse(decodeURIComponent(atob(str))); }
-    function renderAvatar(src){ return src || `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='100%' height='100%' rx='24' fill='#111722'/><text x='50%' y='56%' text-anchor='middle' font-size='46' fill='#ffd54a'>👤</text></svg>`)}`; }
-    function applyTheme(theme){ document.body.classList.remove('theme-blue','theme-red','theme-green'); if(theme==='blue') document.body.classList.add('theme-blue'); if(theme==='red') document.body.classList.add('theme-red'); if(theme==='green') document.body.classList.add('theme-green'); }
+
+    function safeEncode(obj){
+      const json = JSON.stringify(obj);
+      const utf = new TextEncoder().encode(json);
+      let binary = '';
+      utf.forEach(b => binary += String.fromCharCode(b));
+      return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+    }
+
+    function safeDecode(str){
+      const clean = String(str).replace(/\s+/g,'').replace(/-/g,'+').replace(/_/g,'/');
+      const pad = clean.length % 4 ? '='.repeat(4 - (clean.length % 4)) : '';
+      const binary = atob(clean + pad);
+      const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+      return JSON.parse(new TextDecoder().decode(bytes));
+    }
+
+    function chunkCode(str, size=34){
+      const clean = String(str).replace(/\s+/g,'');
+      const parts = [];
+      for(let i=0;i<clean.length;i+=size) parts.push(clean.slice(i, i+size));
+      return parts.slice(0,3).join('\n');
+    }
+
+    function renderAvatar(src){
+      return src || `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='100%' height='100%' rx='24' fill='#111722'/><text x='50%' y='56%' text-anchor='middle' font-size='46' fill='#ffd54a'>👤</text></svg>`)}`;
+    }
+
+    function applyTheme(theme){
+      document.body.classList.remove('theme-blue','theme-red','theme-green');
+      if(theme==='blue') document.body.classList.add('theme-blue');
+      if(theme==='red') document.body.classList.add('theme-red');
+      if(theme==='green') document.body.classList.add('theme-green');
+    }
 
     function defaultUser(password){
       return {
-        updateNotes:[], password, name:'', mail:'', phone:'', weight:'', goalWeight:'', avatar:'', profilePublic:true,
-        xp:0, coins:0, xpMultiplier:1, activeBio:'bio-default', activeBioText:'🏋️ Rookie du grind', ownedBios:['bio-default'],
-        theme:'gold', activeTitle:'rookie', presets:[], workouts:[], friends:[], questClaims:{}, purchasedItems:[],
-        duels:[], duelElo:1000, duelStats:{wins:0,losses:0,draws:0,streak:0,bestStreak:0},
-        redeemedCodes:[], admin:false, unlockedAllAchievements:false
+        updateNotes:[],
+        password,
+        name:'',
+        mail:'',
+        phone:'',
+        weight:'',
+        goalWeight:'',
+        avatar:'',
+        profilePublic:true,
+        createdAt: isoToday(),
+        xp:0,
+        coins:0,
+        xpMultiplier:1,
+        activeBio:'bio-default',
+        activeBioText:'🏋️ Rookie du grind',
+        ownedBios:['bio-default'],
+        theme:'gold',
+        activeTitle:'rookie',
+        presets:[],
+        workouts:[],
+        friends:[],
+        questClaims:{},
+        purchasedItems:[],
+        duels:[],
+        duelElo:1000,
+        duelStats:{wins:0,losses:0,draws:0,streak:0,bestStreak:0},
+        redeemedCodes:[],
+        admin:false,
+        unlockedAllAchievements:false
       };
     }
 
     function getUser(){ return JSON.parse(localStorage.getItem(currentUser)); }
     function saveUser(data){ localStorage.setItem(currentUser, JSON.stringify(data)); }
-    function ensureFriend(friend){ if(friend.friendshipPoints==null) friend.friendshipPoints=0; if(friend.coopSessions==null) friend.coopSessions=0; return friend; }
-    function friendshipLevel(points){ let lvl=1; friendshipThresholds.forEach((v,i)=>{ if((points||0)>=v) lvl=i+1; }); return lvl; }
-    function friendshipBoost(level){ if(level<=1) return 1; return Number((1 + ((level-1)*0.35)).toFixed(2)); }
-    function friendshipProgress(points){ const lvl=friendshipLevel(points); const currentMin=friendshipThresholds[lvl-1]??0; const next=friendshipThresholds[lvl]??null; if(next===null) return {lvl,percent:100}; return {lvl,percent:Math.max(0,Math.min(100,((points-currentMin)/(next-currentMin))*100))}; }
 
+    function ensureFriend(friend){
+      if(friend.friendshipPoints==null) friend.friendshipPoints=0;
+      if(friend.coopSessions==null) friend.coopSessions=0;
+      if(friend.createdAt==null) friend.createdAt=isoToday();
+      if(friend.duelElo==null) friend.duelElo=1000;
+      return friend;
+    }
+
+    function friendshipLevel(points){
+      let lvl=1;
+      friendshipThresholds.forEach((v,i)=>{ if((points||0)>=v) lvl=i+1; });
+      return lvl;
+    }
+
+    function friendshipBoost(level){
+      if(level<=1) return 1;
+      return Number((1 + ((level-1)*0.35)).toFixed(2));
+    }
+
+    function friendshipProgress(points){
+      const lvl=friendshipLevel(points);
+      const currentMin=friendshipThresholds[lvl-1]??0;
+      const next=friendshipThresholds[lvl]??null;
+      if(next===null) return {lvl,percent:100};
+      return {lvl,percent:Math.max(0,Math.min(100,((points-currentMin)/(next-currentMin))*100))};
+    }
+
+    function soloEloGain(duration, exercises, totalXP){
+      const d = Number(duration)||0;
+      const e = Number(exercises)||0;
+      const x = Number(totalXP)||0;
+      return Math.max(2, Math.min(12, Math.floor((d/25) + (e*0.8) + (x/650))));
+    }
     function switchAuthMode(mode){
       authLoginTab.classList.toggle('active', mode==='login');
       authRegisterTab.classList.toggle('active', mode==='register');
       loginBox.classList.toggle('hidden', mode!=='login');
       registerBox.classList.toggle('hidden', mode!=='register');
+      sfxTap();
+    }
+
+    function updateRegisterReview(){
+      reviewUser.textContent = regUser.value.trim() || '-';
+      reviewMail.textContent = regMail.value.trim() || '-';
+      reviewPhone.textContent = regPhone.value.trim() || '-';
+      reviewWeight.textContent = regWeight.value.trim() ? `${regWeight.value.trim()} kg` : '-';
+      reviewGoal.textContent = regGoalWeight.value.trim() ? `${regGoalWeight.value.trim()} kg` : '-';
     }
 
     function registerUser(){
-      if(!registerBox.classList.contains('hidden')){
-        const u=regUser.value.trim(), p=regPass.value.trim(), pc=regPassConfirm.value.trim();
-        if(!u||!p||!pc) return toast('Remplis les champs obligatoires.');
-        if(p!==pc) return toast('Les mots de passe ne correspondent pas.');
-        if(localStorage.getItem(u)) return toast('Ce compte existe déjà.');
-        if(!regCond1.checked || !regCond2.checked || !regCond3.checked) return toast('Accepte toutes les conditions.');
-        const data=defaultUser(p);
-        data.name=u; data.mail=regMail.value.trim(); data.phone=regPhone.value.trim();
-        data.weight=regWeight.value.trim(); data.goalWeight=regGoalWeight.value.trim();
-        localStorage.setItem(u, JSON.stringify(data));
-        authUser.value=u; authPass.value=p; switchAuthMode('login');
-        return toast('Compte créé avec succès ✨');
-      }
-      const u=authUser.value.trim(); const p=authPass.value.trim();
-      if(!u||!p) return toast('Remplis le nom et le mot de passe.');
+      const u=regUser.value.trim(), p=regPass.value.trim(), pc=regPassConfirm.value.trim();
+      if(!u||!p||!pc) return toast('Remplis les champs obligatoires.');
+      if(p!==pc) return toast('Les mots de passe ne correspondent pas.');
       if(localStorage.getItem(u)) return toast('Ce compte existe déjà.');
-      localStorage.setItem(u, JSON.stringify(defaultUser(p)));
+      if(!regCond1.checked || !regCond2.checked || !regCond3.checked || !regCond4.checked) return toast('Accepte toutes les conditions.');
+
+      const data=defaultUser(p);
+      data.name=u;
+      data.mail=regMail.value.trim();
+      data.phone=regPhone.value.trim();
+      data.weight=regWeight.value.trim();
+      data.goalWeight=regGoalWeight.value.trim();
+
+      localStorage.setItem(u, JSON.stringify(data));
+      authUser.value=u;
+      authPass.value=p;
+      switchAuthMode('login');
+      sfxSuccess();
       toast('Compte créé avec succès ✨');
     }
 
     function loginUser(){
-      const u=authUser.value.trim(); const p=authPass.value.trim(); const raw=localStorage.getItem(u);
+      const u=authUser.value.trim();
+      const p=authPass.value.trim();
+      const raw=localStorage.getItem(u);
       if(!raw) return toast('Compte introuvable.');
       const data=JSON.parse(raw);
       if(data.password!==p) return toast('Mot de passe incorrect.');
-      currentUser=u; auth.classList.add('hidden'); app.classList.remove('hidden'); topBadge.classList.remove('hidden'); loadAll(); toast('Connexion réussie 🚀');
+      currentUser=u;
+      auth.classList.add('hidden');
+      app.classList.remove('hidden');
+      topBadge.classList.remove('hidden');
+      loadAll();
+      sfxSuccess();
+      toast('Connexion réussie 🚀');
     }
 
     function fakeFaceID(){
-      const u=authUser.value.trim(); const raw=localStorage.getItem(u);
+      const u=authUser.value.trim();
+      const raw=localStorage.getItem(u);
       if(!u || !raw) return toast('Entre un compte existant.');
       faceIdModal.classList.add('show');
+      sfxFace();
       setTimeout(()=>{
         faceIdModal.classList.remove('show');
         currentUser=u;
@@ -481,14 +1095,31 @@
         app.classList.remove('hidden');
         topBadge.classList.remove('hidden');
         loadAll();
+        sfxSuccess();
         toast('Face ID validé 📱');
       }, 1800);
     }
 
     function closeFaceID(){ faceIdModal.classList.remove('show'); }
 
-    function logout(){ currentUser=null; app.classList.add('hidden'); auth.classList.remove('hidden'); topBadge.classList.add('hidden'); authUser.value=''; authPass.value=''; toast('Déconnecté.'); }
-    function deleteAccount(){ if(!currentUser) return; if(!confirm('Supprimer définitivement ce compte ?')) return; localStorage.removeItem(currentUser); logout(); }
+    function logout(){
+      currentUser=null;
+      app.classList.add('hidden');
+      auth.classList.remove('hidden');
+      topBadge.classList.add('hidden');
+      authUser.value='';
+      authPass.value='';
+      sfxTap();
+      toast('Déconnecté.');
+    }
+
+    function deleteAccount(){
+      if(!currentUser) return;
+      if(!confirm('Supprimer définitivement ce compte ?')) return;
+      localStorage.removeItem(currentUser);
+      sfxTap();
+      logout();
+    }
 
     function showTab(id, btn){
       document.querySelectorAll('.tab-panel').forEach(x=>x.classList.add('hidden'));
@@ -500,6 +1131,7 @@
       const titleMap={dashboard:'Dashboard',workout:'Séance',duel:'Duel',quests:'Quêtes',shop:'Boutique',friends:'Amis',history:'Historique',settings:'Paramètres'};
       const mobileTitle=document.getElementById('mobileCurrentTitle');
       if(mobileTitle) mobileTitle.textContent=titleMap[id]||id;
+      sfxTap();
     }
 
     function showCelebration(type, title, sub, badge){
@@ -508,14 +1140,15 @@
       celebrationSub.textContent = sub;
       celebrationBadge.textContent = badge;
       celebrationModal.classList.add('show');
+      if(type==='rank') sfxRank(); else sfxLevel();
       setTimeout(()=>closeCelebration(), 2600);
     }
 
     function closeCelebration(){ celebrationModal.classList.remove('show'); }
 
-    function maybeShowProgressPopups(oldXP, newXP){
-      const oldLevel=levelFromXP(oldXP), newLevel=levelFromXP(newXP);
-      const oldRank=rankFromXP(oldXP), newRank=rankFromXP(newXP);
+    function maybeShowProgressPopups(oldXP, newXP, oldElo, newElo){
+      const oldLevel=levelFromXP(oldXP||0), newLevel=levelFromXP(newXP||0);
+      const oldRank=rankFromProgress(oldXP||0, oldElo||1000), newRank=rankFromProgress(newXP||0, newElo||1000);
       if(newLevel>oldLevel) showCelebration('level','LEVEL UP',`Niveau ${newLevel} atteint`,`Niveau ${newLevel}`);
       if(newRank!==oldRank) setTimeout(()=>showCelebration('rank','NOUVEAU RANK',`Tu passes de ${oldRank} à ${newRank}`,newRank), newLevel>oldLevel ? 700 : 0);
     }
@@ -529,17 +1162,16 @@
       if(data.redeemedCodes.includes(code) && code!=="ADMIN-LUCAS") return toast('Code déjà utilisé.');
 
       const oldXP=data.xp||0;
+      const oldElo=data.duelElo||1000;
 
-      if(code==="WELCOME100"){
-        data.coins=(data.coins||0)+100;
-      }
-      if(code==="XPBOOST"){
-        data.xpMultiplier=Math.max(data.xpMultiplier||1,1.5);
-      }
+      if(code==="WELCOME100") data.coins=(data.coins||0)+100;
+      if(code==="XPBOOST") data.xpMultiplier=Math.max(data.xpMultiplier||1,1.5);
+
       if(code==="ADMIN-LUCAS"){
         data.admin=true;
         data.coins=(data.coins||0)+10000;
-        data.xp=Math.max(data.xp||0, 35000);
+        data.xp=Math.max(data.xp||0,35000);
+        data.duelElo=Math.max(data.duelElo||1000,1900);
         data.unlockedAllAchievements=true;
         data.activeTitle='legendary_pump';
         data.activeBio='bio-gold';
@@ -551,23 +1183,20 @@
       if(code!=="ADMIN-LUCAS") data.redeemedCodes.push(code);
       saveUser(data);
       loadAll();
-      maybeShowProgressPopups(oldXP, data.xp||0);
+      maybeShowProgressPopups(oldXP, data.xp||0, oldElo, data.duelElo||1000);
       specialCodeInput.value='';
+      sfxSuccess();
       toast(secretCodes[code].text);
     }
 
     function demoPayload(profile){
       return safeEncode({
-        name:profile.name,
-        xp:profile.xp,
-        rank:rankFromXP(profile.xp),
-        level:levelFromXP(profile.xp),
-        avatar:profile.avatar||'',
-        public:true,
-        title:profile.title,
-        duelElo:profile.duelElo,
-        bioText:profile.bioText,
-        workouts:profile.workouts||[]
+        v:1,
+        n:profile.name,
+        x:Math.floor(profile.xp||0),
+        e:Math.floor(profile.duelElo||1000),
+        c:profile.createdAt || isoToday(),
+        t:profile.title || 'rookie'
       });
     }
 
@@ -577,35 +1206,47 @@
       demoProfiles.forEach(p=>{
         if(!existingNames.has(p.name)){
           data.friends.push({
-            name:p.name, xp:p.xp, rank:rankFromXP(p.xp), level:levelFromXP(p.xp), avatar:p.avatar||'',
-            public:true, title:p.title, duelElo:p.duelElo, bioText:p.bioText, workouts:p.workouts||[],
-            friendshipPoints:180, coopSessions:3
+            name:p.name,
+            xp:p.xp,
+            duelElo:p.duelElo,
+            rank:rankFromProgress(p.xp,p.duelElo,false),
+            level:levelFromXP(p.xp),
+            avatar:'',
+            public:true,
+            title:p.title,
+            createdAt:p.createdAt,
+            bioText:p.bioText,
+            workouts:[],
+            friendshipPoints:180,
+            coopSessions:3
           });
         }
       });
       saveUser(data);
       renderDemoCodes();
       loadAll();
+      sfxSuccess();
       toast('Profils démo installés 👥');
     }
 
     function toggleDemoCodes(){
       demoCodesWrap.classList.toggle('hidden');
       if(!demoCodesWrap.classList.contains('hidden')) renderDemoCodes();
+      sfxTap();
     }
 
     function renderDemoCodes(){
       demoCodesWrap.innerHTML = demoProfiles.map(p=>`
         <div class="secret-box">
           <div style="font-weight:900;margin-bottom:8px">${p.name}</div>
-          <textarea readonly>${demoPayload(p)}</textarea>
+          <textarea class="short-code" readonly>${chunkCode(demoPayload(p))}</textarea>
         </div>
       `).join('');
     }
 
     function renderRankShowcase(){
       const data=getUser();
-      const rankRaw = data.admin ? 'ADMIN' : rankFromXP(data.xp||0);
+      const rankRaw = rankFromProgress(data.xp||0, data.duelElo||1000, data.admin);
 
       const map = {
         "🥉 Bronze": { cls:"bronze", emoji:"🥉", name:"BRONZE", sub:"Tu poses les bases. Continue pour monter." },
@@ -616,43 +1257,33 @@
         "🏆 Champion": { cls:"champion", emoji:"🏆", name:"CHAMPION", sub:"Tu fais partie des gros profils de l'app." },
         "👑 Master": { cls:"master", emoji:"👑", name:"MASTER", sub:"Très haut niveau. Tu domines presque tout." },
         "🔱 Legend": { cls:"legend", emoji:"⭐", name:"LEGENDE", sub:"Rang ultime. Tu es au sommet du classement." },
-        "ADMIN": { cls:"admin", emoji:"🛡️", name:"ADMIN", sub:"Profil administrateur avec accès spécial." }
+        "🛡 ADMIN": { cls:"admin", emoji:"🛡️", name:"ADMIN", sub:"Profil administrateur avec accès spécial." }
       };
 
       const conf = map[rankRaw] || map["🥉 Bronze"];
-
       const box = document.getElementById('rankShowcase');
-      const emoji = document.getElementById('rankShowcaseEmoji');
-      const name = document.getElementById('rankShowcaseName');
-      const sub = document.getElementById('rankShowcaseSub');
-      const mini = document.getElementById('rankShowcaseMini');
+      if(!box) return;
 
-      if(!box || !emoji || !name || !sub || !mini) return;
-
-      box.className = `rank-showcase ${conf.cls}`;
-      emoji.textContent = conf.emoji;
-      name.textContent = conf.name;
-      sub.textContent = conf.sub;
-      mini.textContent = data.admin
-        ? `Accès spécial • ${Math.floor(data.coins||0)} pièces`
-        : `Niveau ${levelFromXP(data.xp||0)}`;
+      rankShowcase.className = `rank-showcase ${conf.cls}`;
+      rankShowcaseEmoji.textContent = conf.emoji;
+      rankShowcaseName.textContent = conf.name;
+      rankShowcaseSub.textContent = conf.sub;
+      rankShowcaseMini.textContent = data.admin ? `Accès spécial • ${Math.floor(data.coins||0)} pièces` : `Niveau ${levelFromXP(data.xp||0)} • ELO ${Math.floor(data.duelElo||1000)}`;
     }
+
     function generateCode(){
       const data=getUser();
       const payload={
-        name:data.name||currentUser,
-        xp:Math.floor(data.xp||0),
-        rank:rankFromXP(data.xp||0),
-        level:levelFromXP(data.xp||0),
-        avatar:data.avatar||'',
-        public:data.profilePublic!==false,
-        title:data.activeTitle||'rookie',
-        duelElo:Math.floor(data.duelElo||1000),
-        bioText:data.activeBioText||'',
-        workouts:data.profilePublic!==false ? (data.workouts||[]).slice(-8) : []
+        v:1,
+        n:data.name||currentUser,
+        x:Math.floor(data.xp||0),
+        e:Math.floor(data.duelElo||1000),
+        c:data.createdAt || isoToday(),
+        t:data.activeTitle || 'rookie'
       };
-      myCode.value = safeEncode(payload);
-      toast('Code ami court généré.');
+      myCode.value = chunkCode(safeEncode(payload));
+      sfxTap();
+      toast('Code ami généré.');
     }
 
     function exportSyncFile(){
@@ -664,6 +1295,7 @@
       a.download=safeName + '_sync.json';
       a.click();
       URL.revokeObjectURL(a.href);
+      sfxTap();
       toast('Profil exporté en fichier ✅');
     }
 
@@ -684,6 +1316,7 @@
             const merged={...existing,...imported,password:existing.password};
             saveUser(merged);
             loadAll();
+            sfxSuccess();
             toast('Profil importé ✅');
           }catch(err){
             toast('Import impossible.');
@@ -696,7 +1329,10 @@
 
     function copyMyCode(){
       if(!myCode.value) return toast('Génère d’abord ton code.');
-      navigator.clipboard.writeText(myCode.value).then(()=>toast('Code copié 📎')).catch(()=>toast('Copie impossible.'));
+      navigator.clipboard.writeText(myCode.value).then(()=>{
+        sfxTap();
+        toast('Code copié 📎');
+      }).catch(()=>toast('Copie impossible.'));
     }
 
     function addFriend(){
@@ -704,17 +1340,36 @@
       if(!code) return toast('Colle un code ami.');
       try{
         const incoming=safeDecode(code);
-        if(!incoming.name) return toast('Code ami invalide.');
+        if(!incoming.n) return toast('Code ami invalide.');
+
+        const friendObj = {
+          name: incoming.n,
+          xp: Number(incoming.x)||0,
+          duelElo: Number(incoming.e)||1000,
+          rank: rankFromProgress(Number(incoming.x)||0, Number(incoming.e)||1000, false),
+          level: levelFromXP(Number(incoming.x)||0),
+          createdAt: incoming.c || isoToday(),
+          title: incoming.t || 'rookie',
+          public: true,
+          avatar: '',
+          workouts: [],
+          bioText: '',
+          friendshipPoints: 0,
+          coopSessions: 0
+        };
+
         const data=getUser();
-        const idx=data.friends.findIndex(f=>f.name===incoming.name);
+        const idx=data.friends.findIndex(f=>f.name===friendObj.name);
         const merged=idx>=0
-          ? {...incoming, friendshipPoints:data.friends[idx].friendshipPoints||0, coopSessions:data.friends[idx].coopSessions||0}
-          : {...incoming, friendshipPoints:0, coopSessions:0};
+          ? {...friendObj, friendshipPoints:data.friends[idx].friendshipPoints||0, coopSessions:data.friends[idx].coopSessions||0}
+          : friendObj;
+
         if(idx>=0) data.friends[idx]=merged; else data.friends.push(merged);
         saveUser(data);
         friendCode.value='';
         loadAll();
-        toast(`Ami ${idx>=0?'mis à jour':'ajouté'} : ${incoming.name}`);
+        sfxSuccess();
+        toast(`Ami ${idx>=0?'mis à jour':'ajouté'} : ${friendObj.name}`);
       }catch(e){
         toast('Code ami invalide.');
       }
@@ -727,6 +1382,7 @@
       data.friends.splice(index,1);
       saveUser(data);
       loadAll();
+      sfxTap();
       toast(`Ami supprimé : ${name}`);
     }
 
@@ -746,6 +1402,7 @@
         o1.value=i;
         o1.textContent=`${f.name} • Amitié niv ${friendshipLevel(f.friendshipPoints)}`;
         coopFriendSelect.appendChild(o1);
+
         const o2=document.createElement('option');
         o2.value=i;
         o2.textContent=f.name;
@@ -783,9 +1440,10 @@
         updateWorkoutPreview();
       };
       node.querySelectorAll('input').forEach(i=>i.addEventListener('input',refresh));
-      node.querySelector('.ex-del').addEventListener('click',()=>{ node.remove(); updateWorkoutPreview(); });
+      node.querySelector('.ex-del').addEventListener('click',()=>{ node.remove(); updateWorkoutPreview(); sfxTap(); });
       exerciseList.appendChild(node);
       refresh();
+      sfxTap();
     }
 
     function resetWorkout(){
@@ -796,6 +1454,7 @@
       sessionMode.value='solo';
       updateCoopUI();
       updateWorkoutPreview();
+      sfxTap();
     }
 
     function currentExercises(){
@@ -843,11 +1502,14 @@
     function saveWorkout(){
       const data=getUser();
       const oldXP=data.xp||0;
+      const oldElo=data.duelElo||1000;
+
       const type=sessionType.value.trim();
       const duration=sessionDuration.value||'';
       const notes=sessionNotes.value.trim();
       const mode=sessionMode.value;
       const list=currentExercises();
+
       if(!type) return toast('Indique les muscles travaillés.');
       if(!list.length) return toast('Ajoute au moins un exercice.');
 
@@ -867,8 +1529,18 @@
         const finalXP=mode==='coop'? solo*coopMult : solo;
         totalXP+=finalXP;
         data.workouts.push({
-          date:today(), sessionType:type, duration, notes, mode, coopFriend:coopFriendName, coopBoost:coopMult,
-          name:x.ex, reps:x.reps, weight:x.weight, volume:x.reps*x.weight, xp:finalXP
+          date:today(),
+          sessionType:type,
+          duration,
+          notes,
+          mode,
+          coopFriend:coopFriendName,
+          coopBoost:coopMult,
+          name:x.ex,
+          reps:x.reps,
+          weight:x.weight,
+          volume:x.reps*x.weight,
+          xp:finalXP
         });
       });
 
@@ -882,13 +1554,16 @@
         f.friendshipPoints += 35 + (list.length*10);
         f.coopSessions += 1;
         data.friends[friendIdx]=f;
+      } else {
+        data.duelElo = Math.min(2500, (data.duelElo||1000) + soloEloGain(duration, list.length, totalXP));
       }
 
       saveUser(data);
       resetWorkout();
       loadAll();
-      maybeShowProgressPopups(oldXP, data.xp||0);
-      toast(`Séance sauvegardée : +${Math.floor(totalXP)} XP • +${coins} 🪙`);
+      maybeShowProgressPopups(oldXP, data.xp||0, oldElo, data.duelElo||1000);
+      sfxSuccess();
+      toast(`Séance sauvegardée : +${Math.floor(totalXP)} XP • +${coins} 🪙 • +${(data.duelElo||1000)-oldElo} ELO`);
     }
 
     function savePreset(){
@@ -900,14 +1575,23 @@
       const payload={name, sessionType:sessionType.value.trim(), exercises};
       const idx=data.presets.findIndex(p=>p.name.toLowerCase()===name.toLowerCase());
       if(idx>=0) data.presets[idx]=payload; else data.presets.push(payload);
-      saveUser(data); loadPresets(); presetName.value=''; toast('Preset sauvegardé 📦');
+      saveUser(data);
+      loadPresets();
+      presetName.value='';
+      sfxTap();
+      toast('Preset sauvegardé 📦');
     }
 
     function loadPresets(){
       const data=getUser();
       presetSelect.innerHTML='';
       if(!data.presets.length){ presetSelect.innerHTML='<option value="">Aucun preset</option>'; return; }
-      data.presets.forEach((p,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=p.name; presetSelect.appendChild(o); });
+      data.presets.forEach((p,i)=>{
+        const o=document.createElement('option');
+        o.value=i;
+        o.textContent=p.name;
+        presetSelect.appendChild(o);
+      });
     }
 
     function loadPreset(){
@@ -920,6 +1604,7 @@
       (p.exercises||[]).forEach(e=>addExercise(e.ex,e.reps,e.weight));
       presetName.value=p.name;
       updateWorkoutPreview();
+      sfxTap();
       toast(`Preset chargé : ${p.name}`);
     }
 
@@ -931,6 +1616,7 @@
       data.presets.splice(idx,1);
       saveUser(data);
       loadPresets();
+      sfxTap();
       toast(`Preset supprimé : ${name}`);
     }
 
@@ -947,43 +1633,57 @@
       duelFriendReps.value='';
       duelNotes.value='';
       duelPreview.value='En attente';
+      sfxTap();
     }
 
     function saveDuel(){
       const data=getUser();
       const oldXP=data.xp||0;
+      const oldElo=data.duelElo||1000;
+
       if(!(data.friends||[]).length) return toast('Ajoute d’abord un ami.');
       const idx=Number(duelFriendSelect.value);
       const friend=data.friends[idx];
       if(!friend) return toast('Choisis un ami.');
+
       const exercise=duelExercise.value.trim();
       const weight=Number(duelWeight.value)||0;
       const mine=Number(duelMyReps.value)||0;
       const him=Number(duelFriendReps.value)||0;
       const notes=duelNotes.value.trim();
+
       if(!exercise) return toast('Choisis un exercice.');
       if(weight<=0) return toast('Indique un poids valide.');
 
       let result='draw';
-      if(mine>him) result='win'; else if(mine<him) result='loss';
+      if(mine>him) result='win';
+      else if(mine<him) result='loss';
 
       data.duels.push({ date:today(), friend:friend.name, exercise, weight, myReps:mine, friendReps:him, result, notes });
 
       if(result==='win'){
-        data.duelStats.wins++; data.duelStats.streak++;
+        data.duelStats.wins++;
+        data.duelStats.streak++;
         data.duelStats.bestStreak=Math.max(data.duelStats.bestStreak,data.duelStats.streak);
-        data.duelElo += 25; data.xp += 180; data.coins += 30;
+        data.duelElo += 25;
+        data.xp += 180;
+        data.coins += 30;
       } else if(result==='loss'){
-        data.duelStats.losses++; data.duelStats.streak=0;
-        data.duelElo = Math.max(0,(data.duelElo||1000)-20); data.coins += 10;
+        data.duelStats.losses++;
+        data.duelStats.streak=0;
+        data.duelElo = Math.max(0,(data.duelElo||1000)-20);
+        data.coins += 10;
       } else {
-        data.duelStats.draws++; data.duelElo += 5; data.coins += 15;
+        data.duelStats.draws++;
+        data.duelElo += 5;
+        data.coins += 15;
       }
 
       saveUser(data);
       resetDuel();
       loadAll();
-      maybeShowProgressPopups(oldXP, data.xp||0);
+      maybeShowProgressPopups(oldXP, data.xp||0, oldElo, data.duelElo||1000);
+      sfxSuccess();
       toast(result==='win' ? 'Victoire 🏆 • Duel enregistré' : result==='loss' ? 'Défaite ❌ • Duel enregistré' : 'Égalité 🤝 • Duel enregistré');
     }
 
@@ -1002,6 +1702,7 @@
       const duelWins=data.duelStats?.wins||0;
       const duelStreak=data.duelStats?.bestStreak||0;
       const duelCount=(data.duels||[]).length;
+
       return [
         {id:'q1',title:'💪 Début du grind',desc:'Faire 3 séances',current:sessions,goal:3,xpReward:300,coinReward:40},
         {id:'q2',title:'🧩 Split hybride',desc:'Faire 2 séances multi-muscles',current:multi,goal:2,xpReward:400,coinReward:55},
@@ -1025,9 +1726,11 @@
         {id:'q20',title:'🔥 Série de feu',desc:'Atteindre 3 de win streak',current:duelStreak,goal:3,xpReward:500,coinReward:80}
       ];
     }
+
     function claimQuest(id){
       const data=getUser();
       const oldXP=data.xp||0;
+      const oldElo=data.duelElo||1000;
       const q=questDefs(data).find(x=>x.id===id);
       if(!q) return;
       if((data.questClaims||{})[id]) return toast('Quête déjà récupérée.');
@@ -1037,7 +1740,8 @@
       data.coins += q.coinReward;
       saveUser(data);
       loadAll();
-      maybeShowProgressPopups(oldXP, data.xp||0);
+      maybeShowProgressPopups(oldXP, data.xp||0, oldElo, data.duelElo||1000);
+      sfxSuccess();
       toast(`Quête validée : +${q.xpReward} XP • +${q.coinReward} 🪙`);
     }
 
@@ -1047,7 +1751,12 @@
       const data=getUser();
       const titles=unlockedTitles(data);
       titleSelect.innerHTML='';
-      titles.forEach(t=>{ const o=document.createElement('option'); o.value=t.id; o.textContent=t.name; titleSelect.appendChild(o); });
+      titles.forEach(t=>{
+        const o=document.createElement('option');
+        o.value=t.id;
+        o.textContent=t.name;
+        titleSelect.appendChild(o);
+      });
       if(!titles.some(t=>t.id===data.activeTitle)) data.activeTitle=titles[0]?.id || 'rookie';
       titleSelect.value=data.activeTitle;
     }
@@ -1061,15 +1770,17 @@
       dashLevel.textContent=levelFromXP(data.xp);
       dashXP.textContent=Math.floor(data.xp);
       dashCoins.textContent=Math.floor(data.coins||0);
-      rankBadge.textContent=data.admin ? '🛡 ADMIN' : rankFromXP(data.xp);
+      rankBadge.textContent=rankFromProgress(data.xp, data.duelElo, data.admin);
       xpFill.style.width=`${xpLevelFill(data.xp)}%`;
       xpText.textContent=`${Math.floor((data.xp||0)%2000)} / 2000 XP vers le niveau ${levelFromXP(data.xp)+1}`;
       goalText.textContent=data.goalWeight ? `🎯 Objectif poids : ${data.goalWeight} kg` : '🎯 Objectif poids : -';
       soloBoostText.textContent=`x${Number(data.xpMultiplier||1).toFixed(2)}`;
+
       const sessions=sessionKeys(data.workouts).length;
       statSessions.textContent=sessions;
       statExercises.textContent=(data.workouts||[]).length;
       statAvgXP.textContent=sessions?Math.floor((data.xp||0)/sessions):0;
+
       const avatar=renderAvatar(data.avatar);
       dashAvatar.src=avatar;
       settingsAvatar.src=avatar;
@@ -1078,7 +1789,8 @@
       dashTitle.textContent=`Titre : ${titleName(data.activeTitle)}`;
       dashTheme.textContent=`Thème : ${(data.theme||'gold').toUpperCase()}`;
       applyTheme(data.theme||'gold');
-      if(mobileRankMini) mobileRankMini.textContent=data.admin ? '🛡 ADMIN' : rankFromXP(data.xp);
+
+      if(mobileRankMini) mobileRankMini.textContent=rankFromProgress(data.xp, data.duelElo, data.admin);
       todayBadge.textContent=`📅 ${today()}`;
       renderRankShowcase();
     }
@@ -1087,10 +1799,27 @@
       const data=getUser();
       const list=[
         {name:data.name||currentUser,xp:data.xp,duelElo:data.duelElo||1000,me:true,admin:data.admin},
-        ...(data.friends||[]).map(f=>({name:f.name,xp:f.xp||0,duelElo:f.duelElo||1000,me:false,admin:f.admin||false}))
-      ].sort((a,b)=>b.xp-a.xp).slice(0,10);
+        ...(data.friends||[]).map(f=>({
+          name:f.name,
+          xp:f.xp||0,
+          duelElo:f.duelElo||1000,
+          me:false,
+          admin:false
+        }))
+      ].sort((a,b)=>(b.duelElo||1000)-(a.duelElo||1000)).slice(0,10);
 
-      leaderboard.innerHTML=list.map((p,i)=>`<div class="leader-card"><div class="leader-name">#${i+1} ${p.me?'👑 ':''}${p.admin?'🛡 ':''}${p.name}</div><div class="meta"><span>XP ${Math.floor(p.xp||0)}</span><span>ELO ${Math.floor(p.duelElo||1000)}</span></div></div>`).join('');
+      leaderboard.innerHTML=list.map((p,i)=>`
+        <div class="leader-row ${p.me?'leader-me':''}">
+          <div class="leader-left">
+            <div class="leader-pos">#${i+1}</div>
+            <div class="leader-pseudo">${p.name}</div>
+          </div>
+          <div class="leader-right">
+            <div class="leader-elo-small">ELO ${Math.floor(p.duelElo||1000)}</div>
+            <div class="leader-rank-small">${rankFromProgress(p.xp||0,p.duelElo||1000,p.admin)}</div>
+          </div>
+        </div>
+      `).join('');
     }
 
     function loadCoopSummary(){
@@ -1115,12 +1844,14 @@
         achievements.innerHTML=full.map(x=>`<div class="list-item">${x}</div>`).join('');
         return;
       }
+
       const workouts=data.workouts||[];
       const coop=new Set(workouts.filter(w=>w.mode==='coop').map(w=>`${w.date}|${w.coopFriend||''}|${w.notes||''}`)).size;
       const duelWins=data.duelStats?.wins||0;
       const bestStreak=data.duelStats?.bestStreak||0;
       const bestFriendLvl=Math.max(1,...(data.friends||[]).map(f=>friendshipLevel(f.friendshipPoints||0)));
       const items=[];
+
       if(workouts.length>=1) items.push('🎉 Première séance enregistrée');
       if(sessionKeys(workouts).length>=5) items.push('📅 5 séances complètes');
       if(data.xp>=2000) items.push('⭐ Niveau 2 atteint');
@@ -1130,6 +1861,7 @@
       if((data.duels||[]).length>=1) items.push('⚔️ Premier duel');
       if(duelWins>=3) items.push('🏅 3 victoires en duel');
       if(bestStreak>=3) items.push('🔥 Win streak 3 atteinte');
+
       achievements.innerHTML=items.length?items.map(x=>`<div class="list-item">${x}</div>`).join(''):'<div class="sub">Aucun succès débloqué.</div>';
     }
 
@@ -1167,14 +1899,20 @@
         data.coins -= item.price;
         data.xpMultiplier=item.value;
         data.purchasedItems.push(item.id);
-        saveUser(data); loadAll(); return toast(`Achat réussi : ${item.name}`);
+        saveUser(data);
+        loadAll();
+        sfxSuccess();
+        return toast(`Achat réussi : ${item.name}`);
       }
       if(item.type==='bio'){
         if(data.ownedBios.includes(item.className)) return toast('Tu possèdes déjà cette bio.');
         data.coins -= item.price;
         data.ownedBios.push(item.className);
         data.purchasedItems.push(item.id);
-        saveUser(data); loadAll(); return toast(`Bio achetée : ${item.name}`);
+        saveUser(data);
+        loadAll();
+        sfxSuccess();
+        return toast(`Bio achetée : ${item.name}`);
       }
     }
 
@@ -1184,17 +1922,36 @@
       if(className!=='bio-default' && !data.ownedBios.includes(className)) return toast('Tu ne possèdes pas cette bio.');
       data.activeBio=className;
       data.activeBioText=className==='bio-default' ? '🏋️ Rookie du grind' : item.text;
-      saveUser(data); loadAll(); toast('Bio équipée ✅');
+      saveUser(data);
+      loadAll();
+      sfxTap();
+      toast('Bio équipée ✅');
     }
 
     function loadFriends(){
       const data=getUser();
       const friends=(data.friends||[]).map(ensureFriend);
       friendCount.textContent=`${friends.length} ${friends.length>1?'amis':'ami'}`;
-      if(!friends.length){ friendsList.innerHTML='<div class="sub">Aucun ami ajouté pour le moment.</div>'; return; }
+      if(!friends.length){
+        friendsList.innerHTML='<div class="sub">Aucun ami ajouté pour le moment.</div>';
+        return;
+      }
       friendsList.innerHTML=friends.map((f,i)=>{
-        const lvl=friendshipLevel(f.friendshipPoints||0);
-        return `<div class="friend-card" onclick="openFriendProfile(${i})"><h4>👤 ${f.name}</h4><div class="friend-essential"><div class="box"><div class="smallk">Niveau</div><div class="smallv">${f.level || levelFromXP(f.xp||0)}</div></div><div class="box"><div class="smallk">Rank</div><div class="smallv">${f.admin?'ADMIN':(f.rank || rankFromXP(f.xp||0))}</div></div><div class="box"><div class="smallk">Amitié</div><div class="smallv">Niv ${lvl}</div></div><div class="box"><div class="smallk">Boost coop</div><div class="smallv">x${friendshipBoost(lvl).toFixed(2)}</div></div></div><div class="actions"><button class="btn-s" onclick="event.stopPropagation();openFriendProfile(${i})">Voir profil</button><button class="btn-d" onclick="event.stopPropagation();removeFriend(${i})">Supprimer</button></div></div>`;
+        return `
+          <div class="friend-card" onclick="openFriendProfile(${i})">
+            <h4>👤 ${f.name}</h4>
+            <div class="friend-essential">
+              <div class="box"><div class="smallk">Rank</div><div class="smallv">${rankFromProgress(f.xp||0, f.duelElo||1000)}</div></div>
+              <div class="box"><div class="smallk">ELO</div><div class="smallv">${Math.floor(f.duelElo||1000)}</div></div>
+              <div class="box"><div class="smallk">Inscrit le</div><div class="smallv">${formatCompactDate(f.createdAt)}</div></div>
+              <div class="box"><div class="smallk">Amitié</div><div class="smallv">Niv ${friendshipLevel(f.friendshipPoints||0)}</div></div>
+            </div>
+            <div class="actions">
+              <button class="btn-s" onclick="event.stopPropagation();openFriendProfile(${i})">Voir profil</button>
+              <button class="btn-d" onclick="event.stopPropagation();removeFriend(${i})">Supprimer</button>
+            </div>
+          </div>
+        `;
       }).join('');
     }
 
@@ -1202,13 +1959,17 @@
       const data=getUser();
       const friend=data.friends[index];
       if(!friend) return;
-      const lvl=friendshipLevel(friend.friendshipPoints||0);
-      const boost=friendshipBoost(lvl);
-      const avatar=renderAvatar(friend.avatar);
-      const publicView=friend.public!==false;
-      const workouts=publicView ? (friend.workouts||[]) : [];
-      friendProfileContent.innerHTML=`<div class="avatar-wrap"><img src="${avatar}" class="avatar"><div style="flex:1"><div class="v" style="font-size:24px">${friend.name}</div><div class="sub">${friend.admin?'🛡 ADMIN':(friend.rank || rankFromXP(friend.xp||0))} • Niveau ${friend.level || levelFromXP(friend.xp||0)}</div>${publicView && friend.bioText ? `<div class="bio-preview bio-default">${friend.bioText}</div>` : `<div class="bio-preview bio-default">🔒 Profil privé : version limitée visible</div>`}</div></div><div class="mini-grid" style="margin-top:14px"><div class="mini"><div class="k">Amitié</div><div class="v">Niv ${lvl}</div></div><div class="mini"><div class="k">Boost coop</div><div class="v">x${boost.toFixed(2)}</div></div><div class="mini"><div class="k">XP</div><div class="v">${publicView ? Math.floor(friend.xp||0) : 'Caché'}</div></div><div class="mini"><div class="k">ELO duel</div><div class="v">${publicView ? Math.floor(friend.duelElo||1000) : 'Caché'}</div></div></div><div class="title" style="margin-top:18px"><h2>📜 Aperçu de ses séances</h2><div class="badge">${publicView ? 'Visible' : 'Privé'}</div></div>${publicView ? (workouts.slice(-8).reverse().map(w=>`<div class="list-item"><strong>${w.name||'-'}</strong><br>${w.date||''} • ${w.reps||0} reps × ${w.weight||0} lbs • XP ${Math.floor(w.xp||0)}</div>`).join('') || '<div class="sub">Aucune séance visible.</div>') : '<div class="sub">Ce profil a activé le mode privé. Seules les infos essentielles sont visibles.</div>'}`;
+      friendProfileContent.innerHTML=`
+        <div class="friend-mini-profile">
+          <div class="friend-mini-pseudo">${friend.name}</div>
+          <div class="friend-mini-line">Rank : ${rankFromProgress(friend.xp||0, friend.duelElo||1000)}</div>
+          <div class="friend-mini-line">ELO : ${Math.floor(friend.duelElo||1000)}</div>
+          <div class="friend-mini-line">Inscrit depuis : ${formatDateFR(friend.createdAt)}</div>
+          <div class="friend-mini-rank">Profil compact local</div>
+        </div>
+      `;
       friendModal.classList.add('show');
+      sfxTap();
     }
 
     function closeFriendProfile(){ friendModal.classList.remove('show'); }
@@ -1248,6 +2009,7 @@
       data.activeTitle=titleSelect.value || data.activeTitle;
       saveUser(data);
       loadAll();
+      sfxSuccess();
       toast('Profil sauvegardé ✅');
     }
 
@@ -1273,22 +2035,37 @@
       a.download=`${currentUser||'workout'}_backup.json`;
       a.click();
       URL.revokeObjectURL(a.href);
+      sfxTap();
       toast('Export effectué 📤');
     }
 
     function clearHistory(){
       if(!confirm('Vider tout l’historique ?')) return;
       const data=getUser();
-      data.workouts=[]; data.xp=0; data.coins=0; data.questClaims={}; data.duels=[]; data.duelElo=1000;
+      data.workouts=[];
+      data.xp=0;
+      data.coins=0;
+      data.questClaims={};
+      data.duels=[];
+      data.duelElo=1000;
       data.duelStats={wins:0,losses:0,draws:0,streak:0,bestStreak:0};
       data.friends=(data.friends||[]).map(f=>({...f,friendshipPoints:0,coopSessions:0}));
       saveUser(data);
       loadAll();
+      sfxTap();
       toast('Historique vidé.');
     }
 
-    function openDrawer(){ if(sideDrawer) sideDrawer.classList.add('open'); if(drawerOverlay) drawerOverlay.classList.add('show'); }
-    function closeDrawer(){ if(sideDrawer) sideDrawer.classList.remove('open'); if(drawerOverlay) drawerOverlay.classList.remove('show'); }
+    function openDrawer(){
+      if(sideDrawer) sideDrawer.classList.add('open');
+      if(drawerOverlay) drawerOverlay.classList.add('show');
+      sfxTap();
+    }
+
+    function closeDrawer(){
+      if(sideDrawer) sideDrawer.classList.remove('open');
+      if(drawerOverlay) drawerOverlay.classList.remove('show');
+    }
 
     function saveUpdateNote(){
       const data=getUser();
@@ -1299,6 +2076,7 @@
       saveUser(data);
       if(document.getElementById('updateInput')) document.getElementById('updateInput').value='';
       renderUpdateLog();
+      sfxTap();
       toast('Update enregistrée ✅');
     }
 
@@ -1307,6 +2085,7 @@
       data.updateNotes=[];
       saveUser(data);
       renderUpdateLog();
+      sfxTap();
       toast('Liste des updates vidée.');
     }
 
@@ -1329,6 +2108,7 @@
       if(!data.activeTitle) data.activeTitle='rookie';
       if(!Array.isArray(data.ownedBios)) data.ownedBios=['bio-default'];
       if(!Array.isArray(data.redeemedCodes)) data.redeemedCodes=[];
+      if(!data.createdAt) data.createdAt=isoToday();
       saveUser(data);
       loadDashboard();
       loadSettings();
@@ -1354,9 +2134,18 @@
         data.avatar=ev.target.result;
         saveUser(data);
         loadAll();
+        sfxSuccess();
         toast('Photo de profil ajoutée 🖼️');
       };
       reader.readAsDataURL(file);
+    });
+
+    [regUser,regMail,regPhone,regWeight,regGoalWeight].forEach(el=>{
+      el.addEventListener('input', updateRegisterReview);
+    });
+
+    document.addEventListener('click', e=>{
+      if(e.target.tagName==='BUTTON') sfxTap();
     });
 
     coopFriendSelect.addEventListener('change', updateCoopUI);
@@ -1366,6 +2155,7 @@
     faceIdModal.addEventListener('click', e=>{ if(e.target===faceIdModal) closeFaceID(); });
     celebrationModal.addEventListener('click', e=>{ if(e.target===celebrationModal) closeCelebration(); });
 
+    updateRegisterReview();
   </script>
 </body>
 </html>
