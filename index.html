@@ -2,315 +2,86 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Workout Tracker V2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workout Tracker V3</title>
   <style>
     :root{
       --bg:#0b0f17; --panel:#151b27; --panel2:#1b2231; --line:#2b3447; --text:#f4f7fb; --muted:#98a6bd;
       --gold1:#ffd54a; --gold2:#ff9f1a; --green:#31d17c; --red:#ff6464; --blue:#63adff; --purple:#9a74ff;
       --shadow:0 16px 36px rgba(0,0,0,.35); --radius:18px;
     }
-
     *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Inter,Arial,sans-serif;
-      background:
-        radial-gradient(circle at top left,rgba(255,213,74,.08),transparent 25%),
-        radial-gradient(circle at top right,rgba(99,173,255,.08),transparent 25%),
-        linear-gradient(180deg,#090c12,#0f141f 45%,#0b0f17);
-      color:var(--text);
-      min-height:100vh;
-    }
-
+    body{margin:0;font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at top left,rgba(255,213,74,.08),transparent 25%),radial-gradient(circle at top right,rgba(99,173,255,.08),transparent 25%),linear-gradient(180deg,#090c12,#0f141f 45%,#0b0f17);color:var(--text)}
     body.theme-blue{--gold1:#76b9ff;--gold2:#438fff;--purple:#6e9fff}
     body.theme-red{--gold1:#ff8f8f;--gold2:#ff5050;--purple:#ff7d98}
     body.theme-green{--gold1:#78e8b1;--gold2:#29cf7e;--purple:#63adff}
-
     .shell{max-width:1450px;margin:auto;padding:14px}
     .topbar{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
-    .brand{display:flex;gap:12px;align-items:center;min-width:0}
-    .logo{
-      width:52px;height:52px;border-radius:16px;
-      background:linear-gradient(135deg,var(--gold1),var(--gold2));
-      display:grid;place-items:center;font-size:26px;color:#111;font-weight:900;box-shadow:var(--shadow)
-    }
-    h1{margin:0;font-size:28px}
-    .sub{color:var(--muted);font-size:13px;margin-top:4px}
-
-    .card,.panel,.mini,.friend-card,.quest-card,.shop-card,.exercise,.auth,.leader-card{
-      background:linear-gradient(180deg,var(--panel),var(--panel2));
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow)
-    }
-
-    .auth{max-width:560px;margin:40px auto 0;padding:22px}
-    .panel,.card{padding:16px}
-    .mini{padding:14px}
-
-    .k{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
-    .v{font-size:22px;font-weight:900;word-break:break-word}
-    .row{display:flex;gap:12px;flex-wrap:wrap}
-    .col{flex:1;min-width:220px}
-
+    .brand{display:flex;gap:12px;align-items:center;min-width:0}.logo{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--gold1),var(--gold2));display:grid;place-items:center;font-size:26px;color:#111;font-weight:900;box-shadow:var(--shadow)}
+    h1{margin:0;font-size:28px}.sub{color:var(--muted);font-size:13px;margin-top:4px}
+    .card,.panel,.mini,.friend-card,.quest-card,.shop-card,.exercise,.auth,.leader-card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .auth{max-width:560px;margin:50px auto 0;padding:22px}.panel,.card{padding:16px}.mini{padding:14px}
+    .k{color:var(--muted);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}.v{font-size:22px;font-weight:900;word-break:break-word}
+    .row{display:flex;gap:12px;flex-wrap:wrap}.col{flex:1;min-width:220px}
     label{display:block;color:var(--muted);font-size:13px;font-weight:700;margin:12px 0 7px}
-    input,select,textarea{
-      width:100%;background:#0d1320;color:var(--text);border:1px solid #33405a;border-radius:12px;
-      padding:12px 14px;outline:none;font-size:14px
-    }
+    input,select,textarea{width:100%;background:#0d1320;color:var(--text);border:1px solid #33405a;border-radius:12px;padding:12px 14px;outline:none;font-size:14px}
     input:focus,select:focus,textarea:focus{border-color:var(--gold1);box-shadow:0 0 0 3px rgba(255,213,74,.11)}
     textarea{resize:vertical;min-height:88px}
     button{border:none;border-radius:12px;padding:12px 15px;font-weight:800;cursor:pointer;transition:.15s;font-size:14px}
-    button:hover{transform:translateY(-1px)}
-    button:active{transform:none}
-    .btn-p{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111}
-    .btn-s{background:#222b3d;border:1px solid var(--line);color:var(--text)}
-    .btn-g{background:linear-gradient(135deg,#4fe08e,#20b96f);color:#08120c}
-    .btn-d{background:linear-gradient(135deg,#ff7a7a,#ff4343);color:#fff}
-    .btn-b{background:linear-gradient(135deg,#76b9ff,#438fff);color:#08111d}
-
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    .tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-    .tab-btn{
-      background:#1a2130;border:1px solid var(--line);color:#fff;min-width:120px
-    }
-    .tab-btn.active{
-      background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111;border-color:transparent
-    }
-
+    button:hover{transform:translateY(-1px)} button:active{transform:none}
+    .btn-p{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111}.btn-s{background:#222b3d;border:1px solid var(--line);color:var(--text)}.btn-g{background:linear-gradient(135deg,#4fe08e,#20b96f);color:#08120c}.btn-d{background:linear-gradient(135deg,#ff7a7a,#ff4343);color:#fff}.btn-b{background:linear-gradient(135deg,#76b9ff,#438fff);color:#08111d}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
     .mobile-topbar{display:none;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
-    .drawer-btn{
-      background:#1a2130;border:1px solid var(--line);color:#fff;width:48px;height:48px;border-radius:14px;font-size:20px
-    }
+    .drawer-btn{background:#1a2130;border:1px solid var(--line);color:#fff;width:48px;height:48px;border-radius:14px;font-size:20px}
     .mobile-title{font-weight:900;font-size:16px}
-
     .drawer-overlay{position:fixed;inset:0;background:rgba(3,7,13,.6);display:none;z-index:1200}
     .drawer-overlay.show{display:block}
-    .side-drawer{
-      position:fixed;top:0;left:0;height:100vh;width:min(82vw,320px);
-      background:linear-gradient(180deg,var(--panel),var(--panel2));
-      border-right:1px solid var(--line);box-shadow:var(--shadow);
-      transform:translateX(-105%);transition:.22s ease;z-index:1300;padding:16px;overflow:auto
-    }
+    .side-drawer{position:fixed;top:0;left:0;height:100vh;width:min(82vw,320px);background:linear-gradient(180deg,var(--panel),var(--panel2));border-right:1px solid var(--line);box-shadow:var(--shadow);transform:translateX(-105%);transition:.22s ease;z-index:1300;padding:16px;overflow:auto}
     .side-drawer.open{transform:translateX(0)}
     .drawer-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
     .drawer-nav{display:flex;flex-direction:column;gap:10px}
     .drawer-nav button{width:100%;text-align:left}
-
     .update-box{background:#111827;border:1px dashed var(--line);border-radius:14px;padding:12px;margin-top:10px}
-    .update-log{max-height:180px;overflow:auto;margin-top:10px}
+    .update-log{max-height:180px;overflow:auto;margin-top:10px}.tab-btn{background:#1a2130;border:1px solid var(--line);color:#fff;min-width:120px}.tab-btn.active{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111;border-color:transparent}
+    .grid{display:grid;grid-template-columns:1.2fr .95fr;gap:16px}.stack{display:flex;flex-direction:column;gap:16px}.mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .title{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.title h2{margin:0;font-size:20px}.badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#0f1521;border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:700}
+    .xpbar{height:16px;border-radius:999px;overflow:hidden;background:#0c111b;border:1px solid var(--line)}.xpfill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold1),var(--gold2));box-shadow:0 0 20px rgba(255,213,74,.35)}.friendfill{background:linear-gradient(90deg,var(--blue),var(--purple));box-shadow:0 0 20px rgba(99,173,255,.35)}
+    .meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:8px}.avatar-wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap}.avatar{width:88px;height:88px;border-radius:20px;border:1px solid var(--line);background:#0e1320;object-fit:cover}
+    .bio-preview{padding:14px;border-radius:14px;font-weight:800;margin-top:10px;border:1px solid rgba(255,255,255,.06)}.bio-default{background:#111722;color:#f4f7fb}.bio-gold{background:linear-gradient(90deg,#524100,#d4a500);color:#fff4c7}.bio-blue{background:linear-gradient(90deg,#0f2d52,#2d93ff);color:#def1ff}.bio-purple{background:linear-gradient(90deg,#2d1749,#a468ff);color:#f3e6ff}.bio-red{background:linear-gradient(90deg,#47131b,#ff5063);color:#ffe7eb}.bio-green{background:linear-gradient(90deg,#13331f,#29cf7e);color:#e3fff0}
+    .exercise-list{display:flex;flex-direction:column;gap:10px}.exercise{padding:12px}.exercise-top{display:grid;grid-template-columns:2.1fr .9fr .9fr auto;gap:10px;align-items:end}.exercise-bottom{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:8px}
+    .friends,.quests,.shop,.coop-list,.leaders{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}.friend-card,.quest-card,.shop-card,.leader-card{padding:15px}.friend-card h4,.quest-name,.shop-name,.leader-name{margin:0 0 10px;font-size:18px;font-weight:900}.friend-card{cursor:pointer}
+    .friend-essential{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.box{background:#0f1521;border:1px solid var(--line);border-radius:12px;padding:10px}.box .smallk{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px}.box .smallv{font-size:16px;font-weight:800}
+    .list-item{padding:8px 10px;background:#101725;border:1px solid #2a3344;border-radius:10px;margin-bottom:8px;font-size:13px}.table-wrap{overflow:auto;border-radius:14px;border:1px solid var(--line)} table{width:100%;border-collapse:collapse;min-width:980px;background:#101722} th,td{padding:12px 10px;border-bottom:1px solid #293143;text-align:left;font-size:14px} th{position:sticky;top:0;background:#151d2a}
+    .modal{position:fixed;inset:0;background:rgba(2,5,10,.72);display:none;align-items:center;justify-content:center;padding:14px;z-index:1000}.modal.show{display:flex}.modal-box{max-width:760px;width:100%;max-height:90vh;overflow:auto;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:18px}
+    .toast{position:fixed;right:18px;bottom:18px;background:#161d2b;border:1px solid var(--line);padding:14px 16px;border-radius:14px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);pointer-events:none;transition:.24s;z-index:2000;max-width:320px}.toast.show{opacity:1;transform:translateY(0)}
+    .hidden{display:none}.hl-good{color:var(--green);font-weight:800}.hl-bad{color:var(--red);font-weight:800}.hl-neutral{color:var(--blue);font-weight:800}
 
-    .grid{display:grid;grid-template-columns:1.2fr .95fr;gap:16px}
-    .stack{display:flex;flex-direction:column;gap:16px}
-    .mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-
-    .title{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
-    .title h2{margin:0;font-size:20px}
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;
-      background:#0f1521;border:1px solid var(--line);color:var(--muted);font-size:13px;font-weight:700
-    }
-
-    .xpbar{height:16px;border-radius:999px;overflow:hidden;background:#0c111b;border:1px solid var(--line)}
-    .xpfill{
-      height:100%;width:0%;
-      background:linear-gradient(90deg,var(--gold1),var(--gold2));
-      box-shadow:0 0 20px rgba(255,213,74,.35)
-    }
-    .friendfill{
-      background:linear-gradient(90deg,var(--blue),var(--purple));
-      box-shadow:0 0 20px rgba(99,173,255,.35)
-    }
-
-    .meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:8px}
-    .avatar-wrap{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-    .avatar{width:88px;height:88px;border-radius:20px;border:1px solid var(--line);background:#0e1320;object-fit:cover}
-
-    .bio-preview{padding:14px;border-radius:14px;font-weight:800;margin-top:10px;border:1px solid rgba(255,255,255,.06)}
-    .bio-default{background:#111722;color:#f4f7fb}
-    .bio-gold{background:linear-gradient(90deg,#524100,#d4a500);color:#fff4c7}
-    .bio-blue{background:linear-gradient(90deg,#0f2d52,#2d93ff);color:#def1ff}
-    .bio-purple{background:linear-gradient(90deg,#2d1749,#a468ff);color:#f3e6ff}
-    .bio-red{background:linear-gradient(90deg,#47131b,#ff5063);color:#ffe7eb}
-    .bio-green{background:linear-gradient(90deg,#13331f,#29cf7e);color:#e3fff0}
-
-    .exercise-list{display:flex;flex-direction:column;gap:10px}
-    .exercise{padding:12px}
-    .exercise-top{display:grid;grid-template-columns:2.1fr .9fr .9fr auto;gap:10px;align-items:end}
-    .exercise-bottom{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px;margin-top:8px}
-
-    .friends,.quests,.shop,.coop-list,.leaders{
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px
-    }
-    .friend-card,.quest-card,.shop-card,.leader-card{padding:15px}
-    .friend-card h4,.quest-name,.shop-name,.leader-name{margin:0 0 10px;font-size:18px;font-weight:900}
-    .friend-card{cursor:pointer}
-
-    .friend-essential{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-    .box{background:#0f1521;border:1px solid var(--line);border-radius:12px;padding:10px}
-    .box .smallk{font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px}
-    .box .smallv{font-size:16px;font-weight:800}
-
-    .list-item{padding:8px 10px;background:#101725;border:1px solid #2a3344;border-radius:10px;margin-bottom:8px;font-size:13px}
-    .table-wrap{overflow:auto;border-radius:14px;border:1px solid var(--line)}
-    table{width:100%;border-collapse:collapse;min-width:980px;background:#101722}
-    th,td{padding:12px 10px;border-bottom:1px solid #293143;text-align:left;font-size:14px}
-    th{position:sticky;top:0;background:#151d2a}
-
-    .modal{
-      position:fixed;inset:0;background:rgba(2,5,10,.72);display:none;align-items:center;justify-content:center;padding:14px;z-index:1000
-    }
-    .modal.show{display:flex}
-    .modal-box{
-      max-width:760px;width:100%;max-height:90vh;overflow:auto;
-      background:linear-gradient(180deg,var(--panel),var(--panel2));
-      border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:18px
-    }
-
-    .toast{
-      position:fixed;right:18px;bottom:18px;background:#161d2b;border:1px solid var(--line);
-      padding:14px 16px;border-radius:14px;box-shadow:var(--shadow);opacity:0;
-      transform:translateY(10px);pointer-events:none;transition:.24s;z-index:2000;max-width:320px
-    }
-    .toast.show{opacity:1;transform:translateY(0)}
-
-    .hidden{display:none}
-    .hl-good{color:var(--green);font-weight:800}
-    .hl-bad{color:var(--red);font-weight:800}
-    .hl-neutral{color:var(--blue);font-weight:800}
-
-    .auth-switch{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-    .auth-card{
-      background:#0f1521;border:1px solid var(--line);border-radius:14px;padding:12px
-    }
-    .check-row{
-      display:flex;gap:10px;align-items:flex-start;margin-top:10px;
-      background:#101725;border:1px solid #2a3344;border-radius:12px;padding:12px
-    }
-    .check-row input{width:auto;margin-top:3px;transform:scale(1.15)}
-    .sticky-mobile-save{
-      display:none;position:sticky;bottom:10px;z-index:20;margin-top:12px
-    }
-
-    .scan-box{
-      display:flex;flex-direction:column;align-items:center;gap:14px;padding:16px
-    }
-    .face-ring{
-      width:120px;height:120px;border-radius:50%;
-      border:4px solid rgba(255,255,255,.15);
-      border-top-color:var(--gold1);
-      animation:spin 1s linear infinite;
-      display:grid;place-items:center;font-size:40px;background:#0f1521
-    }
-    @keyframes spin{to{transform:rotate(360deg)}}
-
-    .celebration{
-      position:fixed;inset:0;display:none;align-items:center;justify-content:center;
-      background:rgba(5,8,15,.72);z-index:3000;padding:20px
-    }
-    .celebration.show{display:flex;animation:fadeIn .2s ease}
-    .celebration-box{
-      width:min(92vw,520px);
-      text-align:center;
-      background:linear-gradient(180deg,#1a2233,#131a27);
-      border:1px solid var(--line);
-      border-radius:26px;
-      box-shadow:0 30px 70px rgba(0,0,0,.45);
-      padding:28px 22px;
-      transform:scale(.92);
-      animation:popIn .3s ease forwards;
-      position:relative;
-      overflow:hidden
-    }
-    .celebration-box::before{
-      content:"";
-      position:absolute;inset:-40%;
-      background:conic-gradient(from 0deg, rgba(255,213,74,.14), rgba(99,173,255,.10), rgba(154,116,255,.14), rgba(255,213,74,.14));
-      animation:spin 5s linear infinite;
-      z-index:0
-    }
-    .celebration-inner{position:relative;z-index:1}
-    .celebration-emoji{font-size:56px;margin-bottom:10px}
+    .auth-switch{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;margin-bottom:12px}
+    .check-row{display:flex;gap:10px;align-items:flex-start;background:#101725;border:1px solid #2a3344;border-radius:12px;padding:12px;margin-top:10px}
+    .check-row input{width:auto;margin-top:2px}
+    .scan-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding:10px 0}
+    .face-scan{width:140px;height:140px;border-radius:30px;background:#0f1521;display:grid;place-items:center;font-size:48px;position:relative;overflow:hidden;border:1px solid var(--line)}
+    .face-line{position:absolute;left:12px;right:12px;height:4px;border-radius:999px;background:linear-gradient(90deg,transparent,var(--gold1),transparent);box-shadow:0 0 18px rgba(255,213,74,.6);animation:scanFace 1.4s linear infinite}
+    .secret-box{background:#0f1521;border:1px solid var(--line);border-radius:14px;padding:12px}
+    .demo-codes{margin-top:10px;display:flex;flex-direction:column;gap:10px}
+    .celebration{position:fixed;inset:0;background:rgba(2,5,10,.78);display:none;align-items:center;justify-content:center;padding:14px;z-index:2200}
+    .celebration.show{display:flex}
+    .celebration-box{max-width:520px;width:100%;text-align:center;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:var(--shadow)}
+    .celebration-big{font-size:56px;margin-bottom:10px}
     .celebration-title{font-size:30px;font-weight:900;margin-bottom:6px}
     .celebration-sub{color:var(--muted);font-size:15px}
-    .celebration-glow{
-      display:inline-block;margin-top:14px;padding:12px 16px;border-radius:999px;
-      background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111;font-weight:900
-    }
+    .celebration-rank{display:inline-block;margin-top:14px;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111;font-weight:900}
+    @keyframes scanFace{0%{top:12px}100%{top:124px}}
 
-    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-    @keyframes popIn{
-      0%{transform:scale(.86) translateY(12px);opacity:0}
-      100%{transform:scale(1) translateY(0);opacity:1}
-    }
-
-    .confetti{
-      position:absolute;width:10px;height:16px;top:-20px;border-radius:4px;opacity:.9;
-      animation:fall linear forwards
-    }
-    @keyframes fall{
-      0%{transform:translateY(-20px) rotate(0deg)}
-      100%{transform:translateY(110vh) rotate(720deg)}
-    }
-
-    @media (max-width:1100px){
-      .grid{grid-template-columns:1fr}
-      .mini-grid{grid-template-columns:repeat(2,1fr)}
-    }
-
-    @media (max-width:760px){
-      body{padding-bottom:82px}
-      .shell{padding:10px}
-      .topbar{display:none}
-      .mobile-topbar{display:flex}
-      .tabs{display:none}
-      .tab-btn{width:100%;min-width:0}
-      .mini-grid{grid-template-columns:1fr}
-      .exercise-top{grid-template-columns:1fr}
-      .row{flex-direction:column}
-      .col{min-width:0}
-      .actions button{width:100%}
-      .avatar{width:72px;height:72px}
-      .title h2{font-size:18px}
-      .toast{left:12px;right:12px;max-width:none}
-      .auth{margin-top:18px;padding:16px;border-radius:22px}
-      h1{font-size:22px}
-      .panel,.card,.friend-card,.quest-card,.shop-card,.leader-card{padding:14px}
-      .friend-essential{grid-template-columns:1fr}
-      .box .smallv{font-size:15px}
-      input,select,textarea,button{font-size:16px}
-      .auth-switch{flex-direction:column}
-      .sticky-mobile-save{display:block}
-      .mobile-bottom-nav{
-        position:fixed;left:0;right:0;bottom:0;z-index:1400;
-        background:rgba(15,20,31,.96);
-        backdrop-filter:blur(12px);
-        border-top:1px solid var(--line);
-        display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:10px calc(10px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left));
-      }
-      .mobile-nav-btn{
-        border:1px solid var(--line);background:#141c29;color:#fff;border-radius:14px;padding:10px 6px;font-size:12px;font-weight:800
-      }
-      .mobile-nav-btn.active{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111}
-    }
-
-    @media (min-width:761px){
-      .drawer-overlay,.side-drawer,.mobile-topbar,.mobile-bottom-nav{display:none !important}
-    }
+    @media (max-width:1100px){.grid{grid-template-columns:1fr}.mini-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:760px){.shell{padding:10px}.topbar{display:none}.mobile-topbar{display:flex}.tabs{display:none}.tab-btn{width:100%;min-width:0}.mini-grid{grid-template-columns:1fr}.exercise-top{grid-template-columns:1fr}.row{flex-direction:column}.col{min-width:0}.actions button{width:100%}.avatar{width:72px;height:72px}.title h2{font-size:18px}.toast{left:12px;right:12px;max-width:none}.auth{margin-top:22px;padding:18px}h1{font-size:22px}.panel,.card,.friend-card,.quest-card,.shop-card,.leader-card{padding:14px}.friend-essential{grid-template-columns:1fr}.box .smallv{font-size:15px}.face-scan{width:120px;height:120px}.face-line{animation-duration:1.2s}}
+    @media (min-width:761px){.drawer-overlay,.side-drawer,.mobile-topbar{display:none !important}}
   </style>
 </head>
 <body>
   <div class="shell">
     <div class="topbar">
-      <div class="brand">
-        <div class="logo">💪</div>
-        <div>
-          <h1>Workout Tracker V2</h1>
-          <div class="sub">Responsive • Coop • Duel ranked • Quêtes • Boutique • Thèmes • Titres</div>
-        </div>
-      </div>
+      <div class="brand"><div class="logo">💪</div><div><h1>Workout Tracker V3</h1><div class="sub">Responsive • Coop • Duel ranked • Quêtes • Boutique • Thèmes • Titres • Face ID • Codes secrets</div></div></div>
       <div id="topBadge" class="badge hidden">👤 Non connecté</div>
     </div>
 
@@ -319,81 +90,40 @@
       <div class="sub">Tout est enregistré localement dans ton navigateur.</div>
 
       <div class="auth-switch">
-        <button id="authLoginTab" class="tab-btn active" onclick="switchAuthMode('login')">Connexion</button>
-        <button id="authRegisterTab" class="tab-btn" onclick="switchAuthMode('register')">Créer un compte</button>
+        <button class="tab-btn active" id="authLoginTab" onclick="switchAuthMode('login')">Connexion</button>
+        <button class="tab-btn" id="authRegisterTab" onclick="switchAuthMode('register')">Créer un compte</button>
       </div>
 
-      <div id="loginBox" style="margin-top:12px">
-        <label>Nom d'utilisateur</label>
-        <input id="authUser" placeholder="Ex: LucasFit">
-
-        <label>Mot de passe</label>
-        <input id="authPass" type="password" placeholder="••••••••">
-
+      <div id="loginBox">
+        <label>Nom d'utilisateur</label><input id="authUser" placeholder="Ex: LucasFit">
+        <label>Mot de passe</label><input id="authPass" type="password" placeholder="••••••••">
         <div class="actions">
-          <button class="btn-p" onclick="loginUser()">🚀 Connexion</button>
-          <button class="btn-b" onclick="fakeFaceIDLogin()">📱 Faux Face ID</button>
+          <button class="btn-s" onclick="loginUser()">🚀 Connexion</button>
+          <button class="btn-b" onclick="fakeFaceID()">📱 Face ID</button>
         </div>
       </div>
 
-      <div id="registerBox" class="hidden" style="margin-top:12px">
+      <div id="registerBox" class="hidden">
         <div class="row">
-          <div class="col">
-            <label>Pseudo</label>
-            <input id="regName" placeholder="Ex: LucasFit">
-          </div>
-          <div class="col">
-            <label>Mail</label>
-            <input id="regMail" type="email" placeholder="Ex: lucas@mail.com">
-          </div>
+          <div class="col"><label>Pseudo</label><input id="regUser" placeholder="Ex: LucasFit"></div>
+          <div class="col"><label>Mail</label><input id="regMail" type="email" placeholder="Ex: lucas@mail.com"></div>
         </div>
-
         <div class="row">
-          <div class="col">
-            <label>Téléphone</label>
-            <input id="regPhone" placeholder="Ex: 06 00 00 00 00">
-          </div>
-          <div class="col">
-            <label>Poids actuel (kg)</label>
-            <input id="regWeight" type="number" min="0" step="0.1" placeholder="Ex: 50">
-          </div>
+          <div class="col"><label>Téléphone</label><input id="regPhone" placeholder="Ex: 06 00 00 00 00"></div>
+          <div class="col"><label>Poids actuel (kg)</label><input id="regWeight" type="number" min="0" step="0.1" placeholder="Ex: 50"></div>
         </div>
-
         <div class="row">
-          <div class="col">
-            <label>Objectif poids (kg)</label>
-            <input id="regGoalWeight" type="number" min="0" step="0.1" placeholder="Ex: 58">
-          </div>
-          <div class="col">
-            <label>Mot de passe</label>
-            <input id="regPass" type="password" placeholder="••••••••">
-          </div>
+          <div class="col"><label>Objectif poids (kg)</label><input id="regGoalWeight" type="number" min="0" step="0.1" placeholder="Ex: 58"></div>
+          <div class="col"><label>Mot de passe</label><input id="regPass" type="password" placeholder="••••••••"></div>
         </div>
+        <label>Confirmer le mot de passe</label><input id="regPassConfirm" type="password" placeholder="••••••••">
 
-        <label>Confirmer le mot de passe</label>
-        <input id="regPass2" type="password" placeholder="••••••••">
-
-        <div class="auth-card" style="margin-top:14px">
-          <div class="k">Conditions à confirmer</div>
-
-          <label class="check-row">
-            <input id="cond1" type="checkbox">
-            <span>Je confirme que les informations saisies sont correctes.</span>
-          </label>
-
-          <label class="check-row">
-            <input id="cond2" type="checkbox">
-            <span>J'accepte le stockage local des données dans le navigateur.</span>
-          </label>
-
-          <label class="check-row">
-            <input id="cond3" type="checkbox">
-            <span>Je comprends que le Face ID proposé ici est une simulation visuelle.</span>
-          </label>
-        </div>
+        <div class="check-row"><input type="checkbox" id="regCond1"><div>Je confirme que les informations saisies sont correctes.</div></div>
+        <div class="check-row"><input type="checkbox" id="regCond2"><div>J'accepte que mes données soient stockées localement dans le navigateur.</div></div>
+        <div class="check-row"><input type="checkbox" id="regCond3"><div>Je comprends que le Face ID est un effet visuel de démonstration.</div></div>
 
         <div class="actions">
-          <button class="btn-g" onclick="registerUser()">✨ Créer le compte</button>
+          <button class="btn-p" onclick="registerUser()">✨ Créer le compte</button>
         </div>
       </div>
     </div>
@@ -406,7 +136,6 @@
       </div>
 
       <div id="drawerOverlay" class="drawer-overlay" onclick="closeDrawer()"></div>
-
       <aside id="sideDrawer" class="side-drawer">
         <div class="drawer-header">
           <div>
@@ -426,7 +155,6 @@
           <button class="tab-btn" data-tab="settings" onclick="showTab('settings', this);closeDrawer()">⚙️ Paramètres</button>
         </div>
       </aside>
-
       <div class="tabs">
         <button class="tab-btn active" data-tab="dashboard" onclick="showTab('dashboard', this)">🏠 Dashboard</button>
         <button class="tab-btn" data-tab="workout" onclick="showTab('workout', this)">💪 Séance</button>
@@ -442,40 +170,17 @@
         <div class="grid">
           <div class="stack">
             <div class="panel">
-              <div class="title">
-                <h2>👤 Profil</h2>
-                <div id="rankBadge" class="badge">🥉 Bronze</div>
-              </div>
-
-              <div class="avatar-wrap">
-                <img id="dashAvatar" class="avatar" alt="avatar">
-                <div style="flex:1;min-width:0">
-                  <div class="sub">Photo de profil</div>
-                  <div id="dashBio" class="bio-preview bio-default">🏋️ Rookie du grind</div>
-                  <div class="meta">
-                    <span id="dashTitle">Titre : Rookie</span>
-                    <span id="dashTheme">Thème : Gold</span>
-                  </div>
-                </div>
-              </div>
-
+              <div class="title"><h2>👤 Profil</h2><div id="rankBadge" class="badge">🥉 Bronze</div></div>
+              <div class="avatar-wrap"><img id="dashAvatar" class="avatar" alt="avatar"><div style="flex:1;min-width:0"><div class="sub">Photo de profil</div><div id="dashBio" class="bio-preview bio-default">🏋️ Rookie du grind</div><div class="meta"><span id="dashTitle">Titre : Rookie</span><span id="dashTheme">Thème : Gold</span></div></div></div>
               <div class="mini-grid" style="margin-top:14px">
                 <div class="mini"><div class="k">Pseudo</div><div class="v" id="dashName">-</div></div>
                 <div class="mini"><div class="k">Niveau</div><div class="v" id="dashLevel">1</div></div>
                 <div class="mini"><div class="k">XP</div><div class="v" id="dashXP">0</div></div>
                 <div class="mini"><div class="k">Pièces</div><div class="v" id="dashCoins">0</div></div>
               </div>
-
-              <div style="margin-top:14px" class="xpbar">
-                <div id="xpFill" class="xpfill"></div>
-              </div>
-
-              <div class="meta">
-                <span id="xpText">0 / 2000 XP</span>
-                <span id="goalText">🎯 Objectif poids : -</span>
-              </div>
+              <div style="margin-top:14px" class="xpbar"><div id="xpFill" class="xpfill"></div></div>
+              <div class="meta"><span id="xpText">0 / 2000 XP</span><span id="goalText">🎯 Objectif poids : -</span></div>
             </div>
-
             <div class="panel">
               <div class="title"><h2>📈 Résumé</h2><div class="badge">Auto</div></div>
               <div class="mini-grid">
@@ -486,17 +191,9 @@
               </div>
             </div>
           </div>
-
           <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>🏆 Classement amis</h2><div class="badge">XP</div></div>
-              <div id="leaderboard" class="leaders"></div>
-            </div>
-
-            <div class="panel">
-              <div class="title"><h2>🎖️ Succès</h2><div class="badge">Débloqués</div></div>
-              <div id="achievements"></div>
-            </div>
+            <div class="panel"><div class="title"><h2>🏆 Classement amis</h2><div class="badge">XP</div></div><div id="leaderboard" class="leaders"></div></div>
+            <div class="panel"><div class="title"><h2>🎖️ Succès</h2><div class="badge">Débloqués</div></div><div id="achievements"></div></div>
           </div>
         </div>
       </section>
@@ -506,69 +203,31 @@
           <div class="stack">
             <div class="panel">
               <div class="title"><h2>💪 Nouvelle séance</h2><div class="badge" id="todayBadge">📅</div></div>
-
               <div class="row">
                 <div class="col"><label>Muscles travaillés</label><input id="sessionType" placeholder="Ex: Pecs, Bras / Dos, Épaules / Rappel biceps"></div>
                 <div class="col"><label>Durée (min)</label><input id="sessionDuration" type="number" min="0" placeholder="Ex: 75"></div>
                 <div class="col"><label>Poids actuel (kg)</label><input id="bodyWeight" type="number" min="0" step="0.1" placeholder="Ex: 50"></div>
               </div>
-
               <div class="row">
-                <div class="col">
-                  <label>Mode séance</label>
-                  <select id="sessionMode" onchange="updateCoopUI()">
-                    <option value="solo">Solo</option>
-                    <option value="coop">Coop avec un ami</option>
-                  </select>
-                </div>
+                <div class="col"><label>Mode séance</label><select id="sessionMode" onchange="updateCoopUI()"><option value="solo">Solo</option><option value="coop">Coop avec un ami</option></select></div>
                 <div class="col"><label>Ami coop</label><select id="coopFriendSelect"></select></div>
                 <div class="col"><label>Boost amitié actif</label><input id="coopBoostPreview" disabled value="x1.00"></div>
               </div>
-
-              <label>Notes</label>
-              <textarea id="sessionNotes" placeholder="Ex: bon pump, rappel triceps, propre sur la forme..."></textarea>
-
-              <div class="actions">
-                <button class="btn-p" onclick="addExercise()">➕ Ajouter un exercice</button>
-                <button class="btn-s" onclick="resetWorkout()">🧹 Reset la séance</button>
-              </div>
-
+              <label>Notes</label><textarea id="sessionNotes" placeholder="Ex: bon pump, rappel triceps, propre sur la forme..."></textarea>
+              <div class="actions"><button class="btn-p" onclick="addExercise()">➕ Ajouter un exercice</button><button class="btn-s" onclick="resetWorkout()">🧹 Reset la séance</button></div>
               <div id="exerciseList" class="exercise-list" style="margin-top:12px"></div>
-
               <div class="mini-grid" style="margin-top:14px">
                 <div class="mini"><div class="k">Exercices</div><div class="v" id="liveCount">0</div></div>
                 <div class="mini"><div class="k">Volume total</div><div class="v" id="liveVolume">0</div></div>
                 <div class="mini"><div class="k">XP séance</div><div class="v" id="liveXP">0</div></div>
                 <div class="mini"><div class="k">Mode</div><div class="v" id="liveMode">Solo</div></div>
               </div>
-
-              <div class="sticky-mobile-save">
-                <button class="btn-g" style="width:100%" onclick="saveWorkout()">💾 Sauvegarder la séance</button>
-              </div>
-
-              <div class="actions">
-                <button class="btn-g" onclick="saveWorkout()">💾 Sauvegarder la séance</button>
-              </div>
+              <div class="actions"><button class="btn-g" onclick="saveWorkout()">💾 Sauvegarder la séance</button></div>
             </div>
           </div>
-
           <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>📦 Presets</h2><div class="badge">Réutilisables</div></div>
-              <label>Nom du preset</label>
-              <input id="presetName" placeholder="Ex: Pecs + bras">
-              <div class="row">
-                <div class="col"><select id="presetSelect"></select></div>
-                <div class="col"><button class="btn-b" onclick="loadPreset()">📥 Charger</button></div>
-                <div class="col"><button class="btn-s" onclick="savePreset()">💾 Sauver</button></div>
-                <div class="col"><button class="btn-d" onclick="deletePreset()">🗑️ Supprimer</button></div>
-              </div>
-            </div>
-
-            <div class="panel">
-              <div class="title"><h2>🤝 Coop & amitié</h2><div class="badge">Bonus coop uniquement</div></div>
-              <div id="coopSummary" class="coop-list"></div>
-            </div>
+            <div class="panel"><div class="title"><h2>📦 Presets</h2><div class="badge">Réutilisables</div></div><label>Nom du preset</label><input id="presetName" placeholder="Ex: Pecs + bras"><div class="row"><div class="col"><select id="presetSelect"></select></div><div class="col"><button class="btn-b" onclick="loadPreset()">📥 Charger</button></div><div class="col"><button class="btn-s" onclick="savePreset()">💾 Sauver</button></div><div class="col"><button class="btn-d" onclick="deletePreset()">🗑️ Supprimer</button></div></div></div>
+            <div class="panel"><div class="title"><h2>🤝 Coop & amitié</h2><div class="badge">Bonus coop uniquement</div></div><div id="coopSummary" class="coop-list"></div></div>
           </div>
         </div>
       </section>
@@ -578,267 +237,64 @@
           <div class="stack">
             <div class="panel">
               <div class="title"><h2>⚔️ Duel ranked</h2><div class="badge">ELO + streak</div></div>
-
               <div class="row">
                 <div class="col"><label>Ami</label><select id="duelFriendSelect"></select></div>
                 <div class="col"><label>Exercice</label><input id="duelExercise" placeholder="Ex: Développé couché"></div>
                 <div class="col"><label>Poids imposé (lbs)</label><input id="duelWeight" type="number" min="0" step="0.1" placeholder="Ex: 135"></div>
               </div>
-
               <div class="row">
                 <div class="col"><label>Tes reps</label><input id="duelMyReps" type="number" min="0" placeholder="Ex: 10"></div>
                 <div class="col"><label>Reps de ton ami</label><input id="duelFriendReps" type="number" min="0" placeholder="Ex: 8"></div>
                 <div class="col"><label>Résultat</label><input id="duelPreview" disabled value="En attente"></div>
               </div>
-
-              <label>Notes duel</label>
-              <textarea id="duelNotes" placeholder="Ex: exécution propre, pause bench, dernière rep validée..."></textarea>
-
-              <div class="actions">
-                <button class="btn-p" onclick="previewDuel()">👀 Voir le résultat</button>
-                <button class="btn-g" onclick="saveDuel()">💾 Sauvegarder le duel</button>
-                <button class="btn-s" onclick="resetDuel()">🧹 Reset duel</button>
-              </div>
+              <label>Notes duel</label><textarea id="duelNotes" placeholder="Ex: exécution propre, pause bench, dernière rep validée..."></textarea>
+              <div class="actions"><button class="btn-p" onclick="previewDuel()">👀 Voir le résultat</button><button class="btn-g" onclick="saveDuel()">💾 Sauvegarder le duel</button><button class="btn-s" onclick="resetDuel()">🧹 Reset duel</button></div>
             </div>
           </div>
-
           <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>🏆 Stats duel</h2><div class="badge">Ranked</div></div>
-              <div class="mini-grid">
-                <div class="mini"><div class="k">Duels</div><div class="v" id="duelTotal">0</div></div>
-                <div class="mini"><div class="k">Victoires</div><div class="v" id="duelWins">0</div></div>
-                <div class="mini"><div class="k">Défaites</div><div class="v" id="duelLosses">0</div></div>
-                <div class="mini"><div class="k">Égalités</div><div class="v" id="duelDraws">0</div></div>
-              </div>
-              <div class="mini-grid" style="margin-top:12px">
-                <div class="mini"><div class="k">Streak</div><div class="v" id="duelStreak">0</div></div>
-                <div class="mini"><div class="k">Best streak</div><div class="v" id="duelBest">0</div></div>
-                <div class="mini"><div class="k">Win rate</div><div class="v" id="duelRate">0%</div></div>
-                <div class="mini"><div class="k">ELO duel</div><div class="v" id="duelElo">1000</div></div>
-              </div>
-            </div>
-
-            <div class="panel">
-              <div class="title"><h2>📜 Derniers duels</h2><div class="badge">Historique</div></div>
-              <div id="duelHistory"></div>
-            </div>
+            <div class="panel"><div class="title"><h2>🏆 Stats duel</h2><div class="badge">Ranked</div></div><div class="mini-grid"><div class="mini"><div class="k">Duels</div><div class="v" id="duelTotal">0</div></div><div class="mini"><div class="k">Victoires</div><div class="v" id="duelWins">0</div></div><div class="mini"><div class="k">Défaites</div><div class="v" id="duelLosses">0</div></div><div class="mini"><div class="k">Égalités</div><div class="v" id="duelDraws">0</div></div></div><div class="mini-grid" style="margin-top:12px"><div class="mini"><div class="k">Streak</div><div class="v" id="duelStreak">0</div></div><div class="mini"><div class="k">Best streak</div><div class="v" id="duelBest">0</div></div><div class="mini"><div class="k">Win rate</div><div class="v" id="duelRate">0%</div></div><div class="mini"><div class="k">ELO duel</div><div class="v" id="duelElo">1000</div></div></div></div>
+            <div class="panel"><div class="title"><h2>📜 Derniers duels</h2><div class="badge">Historique</div></div><div id="duelHistory"></div></div>
           </div>
         </div>
       </section>
 
-      <section id="quests" class="tab-panel hidden">
-        <div class="panel">
-          <div class="title"><h2>🗺️ Toutes les quêtes</h2><div class="badge" id="questSummary">0 / 0</div></div>
-          <div id="questList" class="quests"></div>
-        </div>
-      </section>
+      <section id="quests" class="tab-panel hidden"><div class="panel"><div class="title"><h2>🗺️ Toutes les quêtes</h2><div class="badge" id="questSummary">0 / 0</div></div><div id="questList" class="quests"></div></div></section>
+      <section id="shop" class="tab-panel hidden"><div class="grid"><div class="stack"><div class="panel"><div class="title"><h2>🛒 Boutique</h2><div class="badge">🪙 <span id="shopCoins">0</span> pièces</div></div><div id="shopList" class="shop"></div></div></div><div class="stack"><div class="panel"><div class="title"><h2>🎨 Bios colorées</h2><div class="badge">Style salle</div></div><div id="ownedBios"></div></div></div></div></section>
+      <section id="friends" class="tab-panel hidden"><div class="grid"><div class="stack"><div class="panel"><div class="title"><h2>👥 Ajouter des amis</h2><div class="badge">Codes courts</div></div><label>Code ami court</label><textarea id="myCode" readonly placeholder="Clique sur générer."></textarea><div class="actions"><button class="btn-p" onclick="generateCode()">📋 Générer mon code ami</button><button class="btn-s" onclick="copyMyCode()">📎 Copier</button><button class="btn-b" onclick="exportSyncFile()">💾 Export profil</button></div><div class="sub">Le code ami reste court. Pour une vraie sauvegarde complète, utilise Export profil.</div><label>Ajouter / mettre à jour un ami</label><textarea id="friendCode" placeholder="Colle ici le code ami court"></textarea><div class="actions"><button class="btn-g" onclick="addFriend()">➕ Ajouter ou mettre à jour</button><button class="btn-s" onclick="importSyncFile()">📂 Import profil</button></div></div></div><div class="stack"><div class="panel"><div class="title"><h2>📜 Liste d'amis</h2><div class="badge" id="friendCount">0 ami</div></div><div id="friendsList" class="friends"></div></div></div></div></section>
+      <section id="history" class="tab-panel hidden"><div class="panel"><div class="title"><h2>📜 Historique complet</h2><div class="actions" style="margin:0"><button class="btn-s" onclick="exportData()">📤 Exporter</button><button class="btn-d" onclick="clearHistory()">🗑️ Vider</button></div></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Mode</th><th>Ami</th><th>Exercice</th><th>Reps</th><th>Poids</th><th>Volume</th><th>XP</th><th>Durée</th><th>Notes</th></tr></thead><tbody id="historyBody"></tbody></table></div></div></section>
+      <section id="settings" class="tab-panel hidden"><div class="grid"><div class="stack">
+        <div class="panel"><div class="title"><h2>⚙️ Paramètres du profil</h2><div class="badge">Personnalisable</div></div><div class="avatar-wrap"><img id="settingsAvatar" class="avatar" alt="avatar"><div style="flex:1;min-width:0"><label>Ajouter / changer la photo</label><input id="avatarInput" type="file" accept="image/*"></div></div><div class="row"><div class="col"><label>Pseudo</label><input id="profileName"></div><div class="col"><label>Mail</label><input id="profileMail" type="email"></div></div><div class="row"><div class="col"><label>Téléphone</label><input id="profilePhone"></div><div class="col"><label>Objectif poids (kg)</label><input id="goalWeight" type="number" step="0.1" min="0"></div></div><div class="row"><div class="col"><label>Profil visible aux amis</label><select id="profilePublic"><option value="true">Oui, profil public</option><option value="false">Non, profil limité</option></select></div><div class="col"><label>Thème</label><select id="themeSelect"><option value="gold">Gold</option><option value="blue">Blue</option><option value="red">Red</option><option value="green">Green</option></select></div></div><div class="row"><div class="col"><label>Titre rare équipé</label><select id="titleSelect"></select></div></div><div class="actions"><button class="btn-p" onclick="saveProfile()">💾 Sauvegarder</button></div></div>
 
-      <section id="shop" class="tab-panel hidden">
-        <div class="grid">
-          <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>🛒 Boutique</h2><div class="badge">🪙 <span id="shopCoins">0</span> pièces</div></div>
-              <div id="shopList" class="shop"></div>
-            </div>
-          </div>
+        <div class="panel"><div class="title"><h2>🎟️ Codes secrets</h2><div class="badge">Bonus</div></div><div class="secret-box"><label>Entrer un code</label><input id="specialCodeInput" placeholder="Ex: WELCOME100"><div class="actions"><button class="btn-p" onclick="redeemSpecialCode()">✅ Valider le code</button></div><div class="sub">Codes disponibles : WELCOME100 • XPBOOST • ADMIN-LUCAS</div></div></div>
 
-          <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>🎨 Bios colorées</h2><div class="badge">Style salle</div></div>
-              <div id="ownedBios"></div>
-            </div>
-          </div>
-        </div>
-      </section>
+        <div class="panel"><div class="title"><h2>👥 Profils démo</h2><div class="badge">Test</div></div><div class="actions"><button class="btn-b" onclick="installDemoProfiles()">📥 Installer profils démo</button><button class="btn-s" onclick="toggleDemoCodes()">📋 Voir codes amis</button></div><div id="demoCodesWrap" class="demo-codes hidden"></div></div>
 
-      <section id="friends" class="tab-panel hidden">
-        <div class="grid">
-          <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>👥 Ajouter des amis</h2><div class="badge">Codes courts</div></div>
-              <label>Code ami court</label>
-              <textarea id="myCode" readonly placeholder="Clique sur générer."></textarea>
-              <div class="actions">
-                <button class="btn-p" onclick="generateCode()">📋 Générer mon code ami</button>
-                <button class="btn-s" onclick="copyMyCode()">📎 Copier</button>
-                <button class="btn-b" onclick="exportSyncFile()">💾 Export profil</button>
-              </div>
-              <div class="sub">Le code ami reste court. Pour une vraie sauvegarde complète, utilise Export profil.</div>
-
-              <label>Ajouter / mettre à jour un ami</label>
-              <textarea id="friendCode" placeholder="Colle ici le code ami court"></textarea>
-              <div class="actions">
-                <button class="btn-g" onclick="addFriend()">➕ Ajouter ou mettre à jour</button>
-                <button class="btn-s" onclick="importSyncFile()">📂 Import profil</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>📜 Liste d'amis</h2><div class="badge" id="friendCount">0 ami</div></div>
-              <div id="friendsList" class="friends"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="history" class="tab-panel hidden">
-        <div class="panel">
-          <div class="title">
-            <h2>📜 Historique complet</h2>
-            <div class="actions" style="margin:0">
-              <button class="btn-s" onclick="exportData()">📤 Exporter</button>
-              <button class="btn-d" onclick="clearHistory()">🗑️ Vider</button>
-            </div>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th><th>Type</th><th>Mode</th><th>Ami</th><th>Exercice</th><th>Reps</th><th>Poids</th><th>Volume</th><th>XP</th><th>Durée</th><th>Notes</th>
-                </tr>
-              </thead>
-              <tbody id="historyBody"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <section id="settings" class="tab-panel hidden">
-        <div class="grid">
-          <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>⚙️ Paramètres du profil</h2><div class="badge">Personnalisable</div></div>
-
-              <div class="avatar-wrap">
-                <img id="settingsAvatar" class="avatar" alt="avatar">
-                <div style="flex:1;min-width:0">
-                  <label>Ajouter / changer la photo</label>
-                  <input id="avatarInput" type="file" accept="image/*">
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col"><label>Pseudo</label><input id="profileName"></div>
-                <div class="col"><label>Mail</label><input id="profileMail" type="email"></div>
-              </div>
-
-              <div class="row">
-                <div class="col"><label>Téléphone</label><input id="profilePhone"></div>
-                <div class="col"><label>Objectif poids (kg)</label><input id="goalWeight" type="number" step="0.1" min="0"></div>
-              </div>
-
-              <div class="row">
-                <div class="col">
-                  <label>Profil visible aux amis</label>
-                  <select id="profilePublic">
-                    <option value="true">Oui, profil public</option>
-                    <option value="false">Non, profil limité</option>
-                  </select>
-                </div>
-                <div class="col">
-                  <label>Thème</label>
-                  <select id="themeSelect">
-                    <option value="gold">Gold</option>
-                    <option value="blue">Blue</option>
-                    <option value="red">Red</option>
-                    <option value="green">Green</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col"><label>Titre rare équipé</label><select id="titleSelect"></select></div>
-              </div>
-
-              <div class="actions">
-                <button class="btn-p" onclick="saveProfile()">💾 Sauvegarder</button>
-              </div>
-            </div>
-
-            <div class="panel">
-              <div class="title"><h2>🛠️ Update</h2><div class="badge">Champ de mise à jour</div></div>
-              <div class="sub">Tu peux écrire ici les idées de modifications esthétiques ou fonctionnelles à appliquer plus tard. Elles seront gardées dans l'application.</div>
-              <div class="update-box">
-                <label>Nouvelle demande d'update</label>
-                <textarea id="updateInput" placeholder="Ex: rendre la page duel plus agressive, agrandir les cartes mobile, ajouter plus d'animations..."></textarea>
-                <div class="actions">
-                  <button class="btn-b" onclick="saveUpdateNote()">➕ Enregistrer l'update</button>
-                  <button class="btn-s" onclick="clearUpdateNotes()">🧹 Vider la liste</button>
-                </div>
-              </div>
-              <div class="update-log" id="updateLog"></div>
-            </div>
-          </div>
-
-          <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>✨ V2 propre</h2><div class="badge">Nouveautés</div></div>
-              <div class="list-item">📱 Interface mobile améliorée</div>
-              <div class="list-item">🔐 Inscription complète avec conditions</div>
-              <div class="list-item">📱 Faux Face ID visuel</div>
-              <div class="list-item">🎉 Animation de level up</div>
-              <div class="list-item">🏆 Animation de rank up</div>
-              <div class="list-item">⚔️ Duel ranked avec ELO</div>
-            </div>
-
-            <div class="panel" style="border-style:dashed;background:rgba(255,95,95,.05)">
-              <div class="title"><h2>🚨 Zone sensible</h2><div class="badge">Attention</div></div>
-              <div class="actions">
-                <button class="btn-d" onclick="deleteAccount()">❌ Supprimer le compte</button>
-                <button class="btn-s" onclick="logout()">🔓 Déconnexion</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  </div>
-
-  <div class="mobile-bottom-nav">
-    <button class="mobile-nav-btn active" data-tab="dashboard" onclick="showTab('dashboard', this)">🏠<br>Home</button>
-    <button class="mobile-nav-btn" data-tab="workout" onclick="showTab('workout', this)">💪<br>Séance</button>
-    <button class="mobile-nav-btn" data-tab="duel" onclick="showTab('duel', this)">⚔️<br>Duel</button>
-    <button class="mobile-nav-btn" data-tab="settings" onclick="showTab('settings', this)">⚙️<br>Réglages</button>
-  </div>
-
-  <div id="friendModal" class="modal">
-    <div class="modal-box">
-      <div class="title">
-        <h2>👤 Profil ami</h2>
-        <button class="btn-s" onclick="closeFriendProfile()">Fermer</button>
+        <div class="panel"><div class="title"><h2>🛠️ Update</h2><div class="badge">Champ de mise à jour</div></div><div class="sub">Tu peux écrire ici les idées de modifications esthétiques ou fonctionnelles à appliquer plus tard. Elles seront gardées dans l'application.</div><div class="update-box"><label>Nouvelle demande d'update</label><textarea id="updateInput" placeholder="Ex: rendre la page duel plus agressive, agrandir les cartes mobile, ajouter plus d'animations..."></textarea><div class="actions"><button class="btn-b" onclick="saveUpdateNote()">➕ Enregistrer l'update</button><button class="btn-s" onclick="clearUpdateNotes()">🧹 Vider la liste</button></div></div><div class="update-log" id="updateLog"></div></div>
       </div>
-      <div id="friendProfileContent"></div>
+      <div class="stack"><div class="panel"><div class="title"><h2>✨ V3 propre</h2><div class="badge">Nouveautés</div></div><div class="list-item">📱 Face ID esthétique</div><div class="list-item">🎟️ Codes secrets et code admin</div><div class="list-item">👥 Profils démo et codes amis</div><div class="list-item">🎉 Animation level up</div><div class="list-item">🏆 Animation rank up</div><div class="list-item">📱 Mobile optimisé</div></div><div class="panel" style="border-style:dashed;background:rgba(255,95,95,.05)"><div class="title"><h2>🚨 Zone sensible</h2><div class="badge">Attention</div></div><div class="actions"><button class="btn-d" onclick="deleteAccount()">❌ Supprimer le compte</button><button class="btn-s" onclick="logout()">🔓 Déconnexion</button></div></div></div></div></section>
     </div>
   </div>
+
+  <div id="friendModal" class="modal"><div class="modal-box"><div class="title"><h2>👤 Profil ami</h2><button class="btn-s" onclick="closeFriendProfile()">Fermer</button></div><div id="friendProfileContent"></div></div></div>
 
   <div id="faceIdModal" class="modal">
     <div class="modal-box" style="max-width:420px">
-      <div class="title">
-        <h2>📱 Faux Face ID</h2>
-        <button class="btn-s" onclick="closeFaceID()">Fermer</button>
-      </div>
-      <div class="scan-box">
-        <div class="face-ring">🙂</div>
-        <div class="v" style="font-size:20px">Scan du visage...</div>
-        <div class="sub">Simulation visuelle de biométrie</div>
+      <div class="title"><h2>📱 Face ID</h2><button class="btn-s" onclick="closeFaceID()">Fermer</button></div>
+      <div class="scan-wrap">
+        <div class="face-scan">🙂<div class="face-line"></div></div>
+        <div class="v" style="font-size:20px">Analyse du visage...</div>
+        <div class="sub">Authentification biométrique</div>
       </div>
     </div>
   </div>
 
   <div id="celebrationModal" class="celebration">
     <div class="celebration-box">
-      <div class="celebration-inner">
-        <div id="celebrationEmoji" class="celebration-emoji">🎉</div>
-        <div id="celebrationTitle" class="celebration-title">Level Up !</div>
-        <div id="celebrationSub" class="celebration-sub">Tu passes au niveau supérieur.</div>
-        <div id="celebrationBadge" class="celebration-glow">Niveau 2</div>
-        <div class="actions" style="justify-content:center">
-          <button class="btn-s" onclick="closeCelebration()">Fermer</button>
-        </div>
-      </div>
+      <div class="celebration-big" id="celebrationEmoji">🎉</div>
+      <div class="celebration-title" id="celebrationTitle">LEVEL UP</div>
+      <div class="celebration-sub" id="celebrationSub">Niveau atteint</div>
+      <div class="celebration-rank" id="celebrationBadge">Niveau 2</div>
+      <div class="actions" style="justify-content:center"><button class="btn-s" onclick="closeCelebration()">Fermer</button></div>
     </div>
   </div>
 
@@ -846,10 +302,8 @@
 
   <script>
     let currentUser = null;
-
     const ranks = ["🥉 Bronze","🥈 Argent","⚙️ Iron","🥇 Gold","💎 Platinum","🏆 Champion","👑 Master","🔱 Legend"];
     const friendshipThresholds = [0,100,250,500,900,1500,2300,3400];
-
     const shopItems = [
       { id:"boost_10", type:"boost", name:"⚡ Boost XP x1.1", price:120, desc:"Augmente l'XP gagnée de 10% en permanence.", value:1.1 },
       { id:"boost_25", type:"boost", name:"🚀 Boost XP x1.25", price:300, desc:"Augmente l'XP gagnée de 25% en permanence.", value:1.25 },
@@ -860,7 +314,6 @@
       { id:"bio_red", type:"bio", name:"❤️ Bio Red", price:110, desc:"Bio rouge agressive.", className:"bio-red", text:"❤️ Rage contrôlée • intensité maximale" },
       { id:"bio_green", type:"bio", name:"💚 Bio Green", price:110, desc:"Bio verte clean et athlétique.", className:"bio-green", text:"💚 Constance, volume, progression" }
     ];
-
     const rareTitles = [
       {id:'rookie', name:'Rookie', req:()=>true},
       {id:'iron_soul', name:'Iron Soul', req:d=>d.xp>=5000},
@@ -870,267 +323,231 @@
       {id:'legendary_pump', name:'Legendary Pump', req:d=>Object.keys(d.questClaims||{}).length>=10}
     ];
 
-    function toast(msg){
-      const t=document.getElementById('toast');
-      t.textContent=msg;
-      t.classList.add('show');
-      setTimeout(()=>t.classList.remove('show'),2400);
-    }
+    const secretCodes = {
+      "WELCOME100": { type:"coins", coins:100, text:"🎁 +100 pièces" },
+      "XPBOOST": { type:"boost", boost:1.5, text:"⚡ Boost XP x1.5" },
+      "ADMIN-LUCAS": { type:"admin", text:"👑 Mode admin activé" }
+    };
 
-    function today(){
-      return new Date().toLocaleDateString('fr-FR');
-    }
+    const demoProfiles = [
+      { name:"Axel Titan", xp:7200, duelElo:1120, title:"iron_soul", bioText:"💪 Toujours propre sur les reps", workouts:[{date:"10/03/2026",name:"Bench Press",reps:10,weight:135,xp:150}], avatar:"" },
+      { name:"Maya Iron", xp:11800, duelElo:1260, title:"golden_grinder", bioText:"⚡ Cardio + volume + discipline", workouts:[{date:"10/03/2026",name:"Squat",reps:8,weight:185,xp:164}], avatar:"" },
+      { name:"Leo Pump", xp:18400, duelElo:1450, title:"duel_lord", bioText:"🏆 Joue le duel, gagne le duel", workouts:[{date:"10/03/2026",name:"Deadlift",reps:6,weight:275,xp:183}], avatar:"" },
+      { name:"Nina Power", xp:24100, duelElo:1585, title:"team_beast", bioText:"💜 Mental d'acier • progression silencieuse", workouts:[{date:"10/03/2026",name:"Hip Thrust",reps:12,weight:225,xp:300}], avatar:"" }
+    ];
 
-    function rankFromXP(xp){
-      return ranks[Math.min(Math.floor((xp||0)/5000), ranks.length-1)];
-    }
+    function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
+    function today(){ return new Date().toLocaleDateString('fr-FR'); }
+    function rankFromXP(xp){ return ranks[Math.min(Math.floor((xp||0)/5000), ranks.length-1)]; }
+    function levelFromXP(xp){ return Math.floor((xp||0)/2000)+1; }
+    function xpLevelFill(xp){ return Math.max(0, Math.min(100, ((xp||0)%2000)/20)); }
+    function sessionKeys(arr){ return [...new Set((arr||[]).map(w => `${w.date}|${w.sessionType}|${w.duration}|${w.notes}|${w.mode||'solo'}|${w.coopFriend||''}`))]; }
+    function calculateXP(reps,weight){ const r=Number(reps)||0; const w=Number(weight)||0; return (r*w)/9; }
+    function safeEncode(obj){ return btoa(encodeURIComponent(JSON.stringify(obj))); }
+    function safeDecode(str){ return JSON.parse(decodeURIComponent(atob(str))); }
+    function renderAvatar(src){ return src || `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='100%' height='100%' rx='24' fill='#111722'/><text x='50%' y='56%' text-anchor='middle' font-size='46' fill='#ffd54a'>👤</text></svg>`)}`; }
+    function applyTheme(theme){ document.body.classList.remove('theme-blue','theme-red','theme-green'); if(theme==='blue') document.body.classList.add('theme-blue'); if(theme==='red') document.body.classList.add('theme-red'); if(theme==='green') document.body.classList.add('theme-green'); }
 
-    function levelFromXP(xp){
-      return Math.floor((xp||0)/2000)+1;
-    }
-
-    function xpLevelFill(xp){
-      return Math.max(0, Math.min(100, ((xp||0)%2000)/20));
-    }
-
-    function sessionKeys(arr){
-      return [...new Set((arr||[]).map(w => `${w.date}|${w.sessionType}|${w.duration}|${w.notes}|${w.mode||'solo'}|${w.coopFriend||''}`))];
-    }
-
-    function calculateXP(reps,weight){
-      const r=Number(reps)||0;
-      const w=Number(weight)||0;
-      return (r*w)/9;
-    }
-
-    function safeEncode(obj){
-      return btoa(encodeURIComponent(JSON.stringify(obj)));
-    }
-
-    function safeDecode(str){
-      return JSON.parse(decodeURIComponent(atob(str)));
-    }
-
-    function renderAvatar(src){
-      return src || `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><rect width='100%' height='100%' rx='24' fill='#111722'/><text x='50%' y='56%' text-anchor='middle' font-size='46' fill='#ffd54a'>👤</text></svg>`)}`;
-    }
-
-    function applyTheme(theme){
-      document.body.classList.remove('theme-blue','theme-red','theme-green');
-      if(theme==='blue') document.body.classList.add('theme-blue');
-      if(theme==='red') document.body.classList.add('theme-red');
-      if(theme==='green') document.body.classList.add('theme-green');
-    }
-
-    function defaultUser(password, info={}){
+    function defaultUser(password){
       return {
-        updateNotes:[],
-        password,
-        name:info.name||'',
-        mail:info.mail||'',
-        phone:info.phone||'',
-        weight:info.weight||'',
-        goalWeight:info.goalWeight||'',
-        avatar:'',
-        profilePublic:true,
-        xp:0,
-        coins:0,
-        xpMultiplier:1,
-        activeBio:'bio-default',
-        activeBioText:'🏋️ Rookie du grind',
-        ownedBios:['bio-default'],
-        theme:'gold',
-        activeTitle:'rookie',
-        presets:[],
-        workouts:[],
-        friends:[],
-        questClaims:{},
-        purchasedItems:[],
-        duels:[],
-        duelElo:1000,
-        duelStats:{wins:0,losses:0,draws:0,streak:0,bestStreak:0},
-        acceptedTerms:true,
-        fakeFaceIdEnabled:true,
-        lastLevel:1,
-        lastRank:'🥉 Bronze'
+        updateNotes:[], password, name:'', mail:'', phone:'', weight:'', goalWeight:'', avatar:'', profilePublic:true,
+        xp:0, coins:0, xpMultiplier:1, activeBio:'bio-default', activeBioText:'🏋️ Rookie du grind', ownedBios:['bio-default'],
+        theme:'gold', activeTitle:'rookie', presets:[], workouts:[], friends:[], questClaims:{}, purchasedItems:[],
+        duels:[], duelElo:1000, duelStats:{wins:0,losses:0,draws:0,streak:0,bestStreak:0},
+        redeemedCodes:[], admin:false, unlockedAllAchievements:false
       };
     }
 
-    function getUser(){
-      return JSON.parse(localStorage.getItem(currentUser));
-    }
-
-    function saveUser(data){
-      localStorage.setItem(currentUser, JSON.stringify(data));
-    }
-
-    function ensureFriend(friend){
-      if(friend.friendshipPoints==null) friend.friendshipPoints=0;
-      if(friend.coopSessions==null) friend.coopSessions=0;
-      return friend;
-    }
-
-    function friendshipLevel(points){
-      let lvl=1;
-      friendshipThresholds.forEach((v,i)=>{ if((points||0)>=v) lvl=i+1; });
-      return lvl;
-    }
-
-    function friendshipBoost(level){
-      if(level<=1) return 1;
-      return Number((1 + ((level-1)*0.35)).toFixed(2));
-    }
-
-    function friendshipProgress(points){
-      const lvl=friendshipLevel(points);
-      const currentMin=friendshipThresholds[lvl-1]??0;
-      const next=friendshipThresholds[lvl]??null;
-      if(next===null) return {lvl,percent:100};
-      return {lvl,percent:Math.max(0,Math.min(100,((points-currentMin)/(next-currentMin))*100))};
-    }
+    function getUser(){ return JSON.parse(localStorage.getItem(currentUser)); }
+    function saveUser(data){ localStorage.setItem(currentUser, JSON.stringify(data)); }
+    function ensureFriend(friend){ if(friend.friendshipPoints==null) friend.friendshipPoints=0; if(friend.coopSessions==null) friend.coopSessions=0; return friend; }
+    function friendshipLevel(points){ let lvl=1; friendshipThresholds.forEach((v,i)=>{ if((points||0)>=v) lvl=i+1; }); return lvl; }
+    function friendshipBoost(level){ if(level<=1) return 1; return Number((1 + ((level-1)*0.35)).toFixed(2)); }
+    function friendshipProgress(points){ const lvl=friendshipLevel(points); const currentMin=friendshipThresholds[lvl-1]??0; const next=friendshipThresholds[lvl]??null; if(next===null) return {lvl,percent:100}; return {lvl,percent:Math.max(0,Math.min(100,((points-currentMin)/(next-currentMin))*100))}; }
 
     function switchAuthMode(mode){
-      const loginTab=document.getElementById('authLoginTab');
-      const registerTab=document.getElementById('authRegisterTab');
-      const loginBox=document.getElementById('loginBox');
-      const registerBox=document.getElementById('registerBox');
-
-      if(mode==='login'){
-        loginTab.classList.add('active');
-        registerTab.classList.remove('active');
-        loginBox.classList.remove('hidden');
-        registerBox.classList.add('hidden');
-      }else{
-        registerTab.classList.add('active');
-        loginTab.classList.remove('active');
-        registerBox.classList.remove('hidden');
-        loginBox.classList.add('hidden');
-      }
+      authLoginTab.classList.toggle('active', mode==='login');
+      authRegisterTab.classList.toggle('active', mode==='register');
+      loginBox.classList.toggle('hidden', mode!=='login');
+      registerBox.classList.toggle('hidden', mode!=='register');
     }
 
     function registerUser(){
-      const name=document.getElementById('regName').value.trim();
-      const mail=document.getElementById('regMail').value.trim();
-      const phone=document.getElementById('regPhone').value.trim();
-      const weight=document.getElementById('regWeight').value.trim();
-      const goalWeight=document.getElementById('regGoalWeight').value.trim();
-      const pass=document.getElementById('regPass').value.trim();
-      const pass2=document.getElementById('regPass2').value.trim();
-      const c1=document.getElementById('cond1').checked;
-      const c2=document.getElementById('cond2').checked;
-      const c3=document.getElementById('cond3').checked;
-
-      if(!name || !mail || !phone || !weight || !goalWeight || !pass || !pass2) return toast('Remplis tous les champs.');
-      if(pass!==pass2) return toast('Les mots de passe ne correspondent pas.');
-      if(!c1 || !c2 || !c3) return toast('Tu dois confirmer toutes les conditions.');
-      if(localStorage.getItem(name)) return toast('Ce compte existe déjà.');
-
-      const data=defaultUser(pass,{name,mail,phone,weight,goalWeight});
-      localStorage.setItem(name, JSON.stringify(data));
-
-      document.getElementById('authUser').value=name;
-      document.getElementById('authPass').value=pass;
-      switchAuthMode('login');
+      if(!registerBox.classList.contains('hidden')){
+        const u=regUser.value.trim(), p=regPass.value.trim(), pc=regPassConfirm.value.trim();
+        if(!u||!p||!pc) return toast('Remplis les champs obligatoires.');
+        if(p!==pc) return toast('Les mots de passe ne correspondent pas.');
+        if(localStorage.getItem(u)) return toast('Ce compte existe déjà.');
+        if(!regCond1.checked || !regCond2.checked || !regCond3.checked) return toast('Accepte toutes les conditions.');
+        const data=defaultUser(p);
+        data.name=u; data.mail=regMail.value.trim(); data.phone=regPhone.value.trim();
+        data.weight=regWeight.value.trim(); data.goalWeight=regGoalWeight.value.trim();
+        localStorage.setItem(u, JSON.stringify(data));
+        authUser.value=u; authPass.value=p; switchAuthMode('login');
+        return toast('Compte créé avec succès ✨');
+      }
+      const u=authUser.value.trim(); const p=authPass.value.trim();
+      if(!u||!p) return toast('Remplis le nom et le mot de passe.');
+      if(localStorage.getItem(u)) return toast('Ce compte existe déjà.');
+      localStorage.setItem(u, JSON.stringify(defaultUser(p)));
       toast('Compte créé avec succès ✨');
     }
 
     function loginUser(){
-      const u=document.getElementById('authUser').value.trim();
-      const p=document.getElementById('authPass').value.trim();
-      const raw=localStorage.getItem(u);
-
+      const u=authUser.value.trim(); const p=authPass.value.trim(); const raw=localStorage.getItem(u);
       if(!raw) return toast('Compte introuvable.');
-
       const data=JSON.parse(raw);
       if(data.password!==p) return toast('Mot de passe incorrect.');
-
-      currentUser=u;
-      document.getElementById('auth').classList.add('hidden');
-      document.getElementById('app').classList.remove('hidden');
-      document.getElementById('topBadge').classList.remove('hidden');
-      loadAll();
-      toast('Connexion réussie 🚀');
+      currentUser=u; auth.classList.add('hidden'); app.classList.remove('hidden'); topBadge.classList.remove('hidden'); loadAll(); toast('Connexion réussie 🚀');
     }
 
-    function fakeFaceIDLogin(){
-      const u=document.getElementById('authUser').value.trim();
-      if(!u) return toast("Entre d'abord ton nom d'utilisateur.");
-
-      const raw=localStorage.getItem(u);
-      if(!raw) return toast('Compte introuvable.');
-
-      const data=JSON.parse(raw);
-      if(data.fakeFaceIdEnabled===false) return toast('Face ID désactivé sur ce compte.');
-
-      const modal=document.getElementById('faceIdModal');
-      modal.classList.add('show');
-
+    function fakeFaceID(){
+      const u=authUser.value.trim(); const raw=localStorage.getItem(u);
+      if(!u || !raw) return toast('Entre un compte existant.');
+      faceIdModal.classList.add('show');
       setTimeout(()=>{
-        closeFaceID();
+        faceIdModal.classList.remove('show');
         currentUser=u;
-        document.getElementById('auth').classList.add('hidden');
-        document.getElementById('app').classList.remove('hidden');
-        document.getElementById('topBadge').classList.remove('hidden');
+        auth.classList.add('hidden');
+        app.classList.remove('hidden');
+        topBadge.classList.remove('hidden');
         loadAll();
-        toast('Face ID accepté ✅');
+        toast('Face ID validé 📱');
       }, 1800);
     }
 
-    function closeFaceID(){
-      document.getElementById('faceIdModal').classList.remove('show');
-    }
+    function closeFaceID(){ faceIdModal.classList.remove('show'); }
 
-    function logout(){
-      currentUser=null;
-      document.getElementById('app').classList.add('hidden');
-      document.getElementById('auth').classList.remove('hidden');
-      document.getElementById('topBadge').classList.add('hidden');
-      document.getElementById('authUser').value='';
-      document.getElementById('authPass').value='';
-      toast('Déconnecté.');
-    }
-
-    function deleteAccount(){
-      if(!currentUser) return;
-      if(!confirm('Supprimer définitivement ce compte ?')) return;
-      localStorage.removeItem(currentUser);
-      logout();
-    }
+    function logout(){ currentUser=null; app.classList.add('hidden'); auth.classList.remove('hidden'); topBadge.classList.add('hidden'); authUser.value=''; authPass.value=''; toast('Déconnecté.'); }
+    function deleteAccount(){ if(!currentUser) return; if(!confirm('Supprimer définitivement ce compte ?')) return; localStorage.removeItem(currentUser); logout(); }
 
     function showTab(id, btn){
       document.querySelectorAll('.tab-panel').forEach(x=>x.classList.add('hidden'));
       document.getElementById(id).classList.remove('hidden');
-
       document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
       document.querySelectorAll('.drawer-nav .tab-btn').forEach(b=>b.classList.remove('active'));
-      document.querySelectorAll('.mobile-nav-btn').forEach(b=>b.classList.remove('active'));
-
-      document.querySelectorAll(`.tab-btn[data-tab="${id}"]`).forEach(b=>b.classList.add('active'));
-      document.querySelectorAll(`.mobile-nav-btn[data-tab="${id}"]`).forEach(b=>b.classList.add('active'));
       if(btn) btn.classList.add('active');
-
+      document.querySelectorAll(`.tab-btn[data-tab="${id}"]`).forEach(b=>b.classList.add('active'));
       const titleMap={dashboard:'Dashboard',workout:'Séance',duel:'Duel',quests:'Quêtes',shop:'Boutique',friends:'Amis',history:'Historique',settings:'Paramètres'};
       const mobileTitle=document.getElementById('mobileCurrentTitle');
       if(mobileTitle) mobileTitle.textContent=titleMap[id]||id;
     }
 
+    function showCelebration(type, title, sub, badge){
+      celebrationEmoji.textContent = type==='rank' ? '🏆' : '🎉';
+      celebrationTitle.textContent = title;
+      celebrationSub.textContent = sub;
+      celebrationBadge.textContent = badge;
+      celebrationModal.classList.add('show');
+      setTimeout(()=>closeCelebration(), 2600);
+    }
+
+    function closeCelebration(){ celebrationModal.classList.remove('show'); }
+
+    function maybeShowProgressPopups(oldXP, newXP){
+      const oldLevel=levelFromXP(oldXP), newLevel=levelFromXP(newXP);
+      const oldRank=rankFromXP(oldXP), newRank=rankFromXP(newXP);
+      if(newLevel>oldLevel) showCelebration('level','LEVEL UP',`Niveau ${newLevel} atteint`,`Niveau ${newLevel}`);
+      if(newRank!==oldRank) setTimeout(()=>showCelebration('rank','NOUVEAU RANK',`Tu passes de ${oldRank} à ${newRank}`,newRank), newLevel>oldLevel ? 700 : 0);
+    }
+
+    function redeemSpecialCode(){
+      const code=(specialCodeInput.value||'').trim().toUpperCase();
+      const data=getUser();
+      if(!code) return toast('Entre un code.');
+      if(!secretCodes[code]) return toast('Code invalide.');
+      if(!Array.isArray(data.redeemedCodes)) data.redeemedCodes=[];
+      if(data.redeemedCodes.includes(code) && code!=="ADMIN-LUCAS") return toast('Code déjà utilisé.');
+
+      const oldXP=data.xp||0;
+
+      if(code==="WELCOME100"){
+        data.coins=(data.coins||0)+100;
+      }
+      if(code==="XPBOOST"){
+        data.xpMultiplier=Math.max(data.xpMultiplier||1,1.5);
+      }
+      if(code==="ADMIN-LUCAS"){
+        data.admin=true;
+        data.coins=(data.coins||0)+10000;
+        data.xp=Math.max(data.xp||0, 35000);
+        data.unlockedAllAchievements=true;
+        data.activeTitle='legendary_pump';
+        data.activeBio='bio-gold';
+        data.activeBioText='👑 Admin du grind';
+        ["bio-gold","bio-blue","bio-purple","bio-red","bio-green"].forEach(b=>{ if(!data.ownedBios.includes(b)) data.ownedBios.push(b); });
+        data.xpMultiplier=Math.max(data.xpMultiplier||1,1.5);
+      }
+
+      if(code!=="ADMIN-LUCAS") data.redeemedCodes.push(code);
+      saveUser(data);
+      loadAll();
+      maybeShowProgressPopups(oldXP, data.xp||0);
+      specialCodeInput.value='';
+      toast(secretCodes[code].text);
+    }
+
+    function demoPayload(profile){
+      return safeEncode({
+        name:profile.name,
+        xp:profile.xp,
+        rank:rankFromXP(profile.xp),
+        level:levelFromXP(profile.xp),
+        avatar:profile.avatar||'',
+        public:true,
+        title:profile.title,
+        duelElo:profile.duelElo,
+        bioText:profile.bioText,
+        workouts:profile.workouts||[]
+      });
+    }
+
+    function installDemoProfiles(){
+      const data=getUser();
+      const existingNames = new Set((data.friends||[]).map(f=>f.name));
+      demoProfiles.forEach(p=>{
+        if(!existingNames.has(p.name)){
+          data.friends.push({
+            name:p.name, xp:p.xp, rank:rankFromXP(p.xp), level:levelFromXP(p.xp), avatar:p.avatar||'',
+            public:true, title:p.title, duelElo:p.duelElo, bioText:p.bioText, workouts:p.workouts||[],
+            friendshipPoints:180, coopSessions:3
+          });
+        }
+      });
+      saveUser(data);
+      renderDemoCodes();
+      loadAll();
+      toast('Profils démo installés 👥');
+    }
+
+    function toggleDemoCodes(){
+      demoCodesWrap.classList.toggle('hidden');
+      if(!demoCodesWrap.classList.contains('hidden')) renderDemoCodes();
+    }
+
+    function renderDemoCodes(){
+      demoCodesWrap.innerHTML = demoProfiles.map(p=>`
+        <div class="secret-box">
+          <div style="font-weight:900;margin-bottom:8px">${p.name}</div>
+          <textarea readonly>${demoPayload(p)}</textarea>
+        </div>
+      `).join('');
+    }
     function generateCode(){
       const data=getUser();
       const payload={
-        v:2,
         name:data.name||currentUser,
-        level:levelFromXP(data.xp),
-        rank:rankFromXP(data.xp),
+        xp:Math.floor(data.xp||0),
+        rank:rankFromXP(data.xp||0),
+        level:levelFromXP(data.xp||0),
         avatar:data.avatar||'',
         public:data.profilePublic!==false,
         title:data.activeTitle||'rookie',
         duelElo:Math.floor(data.duelElo||1000),
-        xp:Math.floor(data.xp||0),
-        coins:Math.floor(data.coins||0),
         bioText:data.activeBioText||'',
         workouts:data.profilePublic!==false ? (data.workouts||[]).slice(-8) : []
       };
-      document.getElementById('myCode').value=safeEncode(payload);
+      myCode.value = safeEncode(payload);
       toast('Code ami court généré.');
     }
 
@@ -1158,7 +575,7 @@
           try{
             const imported=JSON.parse(ev.target.result);
             if(!imported || typeof imported!=='object') return toast('Fichier invalide.');
-            if(!currentUser) return toast("Connecte-toi d'abord.");
+            if(!currentUser) return toast('Connecte-toi d’abord.');
             const existing=getUser();
             const merged={...existing,...imported,password:existing.password};
             saveUser(merged);
@@ -1174,29 +591,24 @@
     }
 
     function copyMyCode(){
-      const val=document.getElementById('myCode').value;
-      if(!val) return toast("Génère d'abord ton code.");
-      navigator.clipboard.writeText(val).then(()=>toast('Code copié 📎')).catch(()=>toast('Copie impossible.'));
+      if(!myCode.value) return toast('Génère d’abord ton code.');
+      navigator.clipboard.writeText(myCode.value).then(()=>toast('Code copié 📎')).catch(()=>toast('Copie impossible.'));
     }
 
     function addFriend(){
-      const code=document.getElementById('friendCode').value.trim();
+      const code=friendCode.value.trim();
       if(!code) return toast('Colle un code ami.');
       try{
         const incoming=safeDecode(code);
         if(!incoming.name) return toast('Code ami invalide.');
-
         const data=getUser();
         const idx=data.friends.findIndex(f=>f.name===incoming.name);
         const merged=idx>=0
           ? {...incoming, friendshipPoints:data.friends[idx].friendshipPoints||0, coopSessions:data.friends[idx].coopSessions||0}
           : {...incoming, friendshipPoints:0, coopSessions:0};
-
-        if(idx>=0) data.friends[idx]=merged;
-        else data.friends.push(merged);
-
+        if(idx>=0) data.friends[idx]=merged; else data.friends.push(merged);
         saveUser(data);
-        document.getElementById('friendCode').value='';
+        friendCode.value='';
         loadAll();
         toast(`Ami ${idx>=0?'mis à jour':'ajouté'} : ${incoming.name}`);
       }catch(e){
@@ -1217,70 +629,46 @@
     function loadFriendSelects(){
       const data=getUser();
       const friends=(data.friends||[]).map(ensureFriend);
-      const coop=document.getElementById('coopFriendSelect');
-      const duel=document.getElementById('duelFriendSelect');
-
-      coop.innerHTML='';
-      duel.innerHTML='';
-
+      coopFriendSelect.innerHTML='';
+      duelFriendSelect.innerHTML='';
       if(!friends.length){
-        coop.innerHTML='<option value="">Aucun ami disponible</option>';
-        duel.innerHTML='<option value="">Aucun ami disponible</option>';
-        document.getElementById('coopBoostPreview').value='x1.00';
+        coopFriendSelect.innerHTML='<option value="">Aucun ami disponible</option>';
+        duelFriendSelect.innerHTML='<option value="">Aucun ami disponible</option>';
+        coopBoostPreview.value='x1.00';
         return;
       }
-
       friends.forEach((f,i)=>{
         const o1=document.createElement('option');
         o1.value=i;
         o1.textContent=`${f.name} • Amitié niv ${friendshipLevel(f.friendshipPoints)}`;
-        coop.appendChild(o1);
-
+        coopFriendSelect.appendChild(o1);
         const o2=document.createElement('option');
         o2.value=i;
         o2.textContent=f.name;
-        duel.appendChild(o2);
+        duelFriendSelect.appendChild(o2);
       });
-
       updateCoopUI();
     }
 
     function updateCoopUI(){
       const data=getUser();
-      const isCoop=document.getElementById('sessionMode').value==='coop';
-      const coopSelect=document.getElementById('coopFriendSelect');
-
-      coopSelect.disabled=!isCoop;
-
+      const isCoop=sessionMode.value==='coop';
+      coopFriendSelect.disabled=!isCoop;
       if(!isCoop || !(data.friends||[]).length){
-        document.getElementById('coopBoostPreview').value='x1.00';
+        coopBoostPreview.value='x1.00';
         updateWorkoutPreview();
         return;
       }
-
-      const friend=ensureFriend(data.friends[Number(coopSelect.value)||0]);
+      const friend=ensureFriend(data.friends[Number(coopFriendSelect.value)||0]);
       const boost=friendshipBoost(friendshipLevel(friend.friendshipPoints));
-      document.getElementById('coopBoostPreview').value=`x${boost.toFixed(2)}`;
+      coopBoostPreview.value=`x${boost.toFixed(2)}`;
       updateWorkoutPreview();
     }
 
     function addExercise(ex='', reps='', weight=''){
       const node=document.createElement('div');
       node.className='exercise';
-      node.innerHTML=`
-        <div class="exercise-top">
-          <div><label>Exercice</label><input class="ex-name" value="${ex}" placeholder="Ex: Squat"></div>
-          <div><label>Reps</label><input class="ex-reps" type="number" min="0" value="${reps}"></div>
-          <div><label>Poids (lbs)</label><input class="ex-weight" type="number" min="0" step="0.1" value="${weight}"></div>
-          <div><label>Action</label><button class="btn-d ex-del">🗑️</button></div>
-        </div>
-        <div class="exercise-bottom">
-          <div>✨ XP : <span class="ex-xp">0</span></div>
-          <div>📦 Volume : <span class="ex-vol">0</span></div>
-          <div>🕘 Dernière fois : <span class="ex-last">Aucune donnée</span></div>
-        </div>
-      `;
-
+      node.innerHTML=`<div class="exercise-top"><div><label>Exercice</label><input class="ex-name" value="${ex}" placeholder="Ex: Squat"></div><div><label>Reps</label><input class="ex-reps" type="number" min="0" value="${reps}"></div><div><label>Poids (lbs)</label><input class="ex-weight" type="number" min="0" step="0.1" value="${weight}"></div><div><label>Action</label><button class="btn-d ex-del">🗑️</button></div></div><div class="exercise-bottom"><div>✨ XP : <span class="ex-xp">0</span></div><div>📦 Volume : <span class="ex-vol">0</span></div><div>🕘 Dernière fois : <span class="ex-last">Aucune donnée</span></div></div>`;
       const refresh=()=>{
         const n=node.querySelector('.ex-name').value.trim();
         const r=Number(node.querySelector('.ex-reps').value)||0;
@@ -1290,23 +678,18 @@
         node.querySelector('.ex-last').innerHTML=lastPerformance(n,r,w);
         updateWorkoutPreview();
       };
-
       node.querySelectorAll('input').forEach(i=>i.addEventListener('input',refresh));
-      node.querySelector('.ex-del').addEventListener('click',()=>{
-        node.remove();
-        updateWorkoutPreview();
-      });
-
-      document.getElementById('exerciseList').appendChild(node);
+      node.querySelector('.ex-del').addEventListener('click',()=>{ node.remove(); updateWorkoutPreview(); });
+      exerciseList.appendChild(node);
       refresh();
     }
 
     function resetWorkout(){
-      document.getElementById('exerciseList').innerHTML='';
-      document.getElementById('sessionType').value='';
-      document.getElementById('sessionDuration').value='';
-      document.getElementById('sessionNotes').value='';
-      document.getElementById('sessionMode').value='solo';
+      exerciseList.innerHTML='';
+      sessionType.value='';
+      sessionDuration.value='';
+      sessionNotes.value='';
+      sessionMode.value='solo';
       updateCoopUI();
       updateWorkoutPreview();
     }
@@ -1335,45 +718,39 @@
       const data=currentUser?getUser():null;
       const exs=currentExercises();
       let totalXP=0,totalVol=0,mode='Solo',coopMult=1;
-
-      if(data && document.getElementById('sessionMode').value==='coop' && (data.friends||[]).length){
-        const friend=ensureFriend(data.friends[Number(document.getElementById('coopFriendSelect').value)||0]);
+      if(data && sessionMode.value==='coop' && (data.friends||[]).length){
+        const friend=ensureFriend(data.friends[Number(coopFriendSelect.value)||0]);
         coopMult=friendshipBoost(friendshipLevel(friend.friendshipPoints));
         mode=`Coop x${coopMult.toFixed(2)}`;
       }
-
       exs.forEach(x=>{
         let xp=calculateXP(x.reps,x.weight);
         if(data) xp*= (data.xpMultiplier||1);
-        if(document.getElementById('sessionMode').value==='coop') xp*=coopMult;
+        if(sessionMode.value==='coop') xp*=coopMult;
         totalXP+=xp;
         totalVol+=x.reps*x.weight;
       });
-
-      document.getElementById('liveCount').textContent=exs.length;
-      document.getElementById('liveVolume').textContent=Math.floor(totalVol);
-      document.getElementById('liveXP').textContent=Math.floor(totalXP);
-      document.getElementById('liveMode').textContent=mode;
+      liveCount.textContent=exs.length;
+      liveVolume.textContent=Math.floor(totalVol);
+      liveXP.textContent=Math.floor(totalXP);
+      liveMode.textContent=mode;
     }
 
     function saveWorkout(){
       const data=getUser();
-      const oldLevel=levelFromXP(data.xp);
-      const oldRank=rankFromXP(data.xp);
-
-      const type=document.getElementById('sessionType').value.trim();
-      const duration=document.getElementById('sessionDuration').value||'';
-      const notes=document.getElementById('sessionNotes').value.trim();
-      const mode=document.getElementById('sessionMode').value;
+      const oldXP=data.xp||0;
+      const type=sessionType.value.trim();
+      const duration=sessionDuration.value||'';
+      const notes=sessionNotes.value.trim();
+      const mode=sessionMode.value;
       const list=currentExercises();
-
       if(!type) return toast('Indique les muscles travaillés.');
       if(!list.length) return toast('Ajoute au moins un exercice.');
 
       let coopFriendName='', coopMult=1, friendIdx=-1;
       if(mode==='coop'){
-        if(!(data.friends||[]).length) return toast("Ajoute d'abord un ami.");
-        friendIdx=Number(document.getElementById('coopFriendSelect').value)||0;
+        if(!(data.friends||[]).length) return toast('Ajoute d’abord un ami.');
+        friendIdx=Number(coopFriendSelect.value)||0;
         const f=ensureFriend(data.friends[friendIdx]);
         coopFriendName=f.name;
         coopMult=friendshipBoost(friendshipLevel(f.friendshipPoints));
@@ -1386,25 +763,15 @@
         const finalXP=mode==='coop'? solo*coopMult : solo;
         totalXP+=finalXP;
         data.workouts.push({
-          date:today(),
-          sessionType:type,
-          duration,
-          notes,
-          mode,
-          coopFriend:coopFriendName,
-          coopBoost:coopMult,
-          name:x.ex,
-          reps:x.reps,
-          weight:x.weight,
-          volume:x.reps*x.weight,
-          xp:finalXP
+          date:today(), sessionType:type, duration, notes, mode, coopFriend:coopFriendName, coopBoost:coopMult,
+          name:x.ex, reps:x.reps, weight:x.weight, volume:x.reps*x.weight, xp:finalXP
         });
       });
 
       const coins=Math.max(5,Math.floor(totalXP/120));
       data.xp+=totalXP;
       data.coins+=coins;
-      data.weight=document.getElementById('bodyWeight').value||data.weight;
+      data.weight=bodyWeight.value||data.weight;
 
       if(mode==='coop' && friendIdx>=0){
         const f=ensureFriend(data.friends[friendIdx]);
@@ -1416,58 +783,45 @@
       saveUser(data);
       resetWorkout();
       loadAll();
-      handleProgressAnimations(oldLevel, oldRank, data.xp);
+      maybeShowProgressPopups(oldXP, data.xp||0);
       toast(`Séance sauvegardée : +${Math.floor(totalXP)} XP • +${coins} 🪙`);
     }
 
     function savePreset(){
       const data=getUser();
-      const name=document.getElementById('presetName').value.trim();
+      const name=presetName.value.trim();
       const exercises=currentExercises();
       if(!name) return toast('Donne un nom au preset.');
       if(!exercises.length) return toast('Ajoute des exercices avant de sauver le preset.');
-      const payload={name, sessionType:document.getElementById('sessionType').value.trim(), exercises};
+      const payload={name, sessionType:sessionType.value.trim(), exercises};
       const idx=data.presets.findIndex(p=>p.name.toLowerCase()===name.toLowerCase());
-      if(idx>=0) data.presets[idx]=payload;
-      else data.presets.push(payload);
-      saveUser(data);
-      loadPresets();
-      document.getElementById('presetName').value='';
-      toast('Preset sauvegardé 📦');
+      if(idx>=0) data.presets[idx]=payload; else data.presets.push(payload);
+      saveUser(data); loadPresets(); presetName.value=''; toast('Preset sauvegardé 📦');
     }
 
     function loadPresets(){
       const data=getUser();
-      const select=document.getElementById('presetSelect');
-      select.innerHTML='';
-      if(!data.presets.length){
-        select.innerHTML='<option value="">Aucun preset</option>';
-        return;
-      }
-      data.presets.forEach((p,i)=>{
-        const o=document.createElement('option');
-        o.value=i;
-        o.textContent=p.name;
-        select.appendChild(o);
-      });
+      presetSelect.innerHTML='';
+      if(!data.presets.length){ presetSelect.innerHTML='<option value="">Aucun preset</option>'; return; }
+      data.presets.forEach((p,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=p.name; presetSelect.appendChild(o); });
     }
 
     function loadPreset(){
       const data=getUser();
-      const idx=document.getElementById('presetSelect').value;
+      const idx=presetSelect.value;
       if(idx==='' || data.presets[idx]==null) return toast('Choisis un preset valide.');
       const p=data.presets[idx];
-      document.getElementById('exerciseList').innerHTML='';
-      document.getElementById('sessionType').value=p.sessionType||'';
+      exerciseList.innerHTML='';
+      sessionType.value=p.sessionType||'';
       (p.exercises||[]).forEach(e=>addExercise(e.ex,e.reps,e.weight));
-      document.getElementById('presetName').value=p.name;
+      presetName.value=p.name;
       updateWorkoutPreview();
       toast(`Preset chargé : ${p.name}`);
     }
 
     function deletePreset(){
       const data=getUser();
-      const idx=document.getElementById('presetSelect').value;
+      const idx=presetSelect.value;
       if(idx==='' || data.presets[idx]==null) return toast('Aucun preset sélectionné.');
       const name=data.presets[idx].name;
       data.presets.splice(idx,1);
@@ -1477,67 +831,55 @@
     }
 
     function previewDuel(){
-      const mine=Number(document.getElementById('duelMyReps').value)||0;
-      const him=Number(document.getElementById('duelFriendReps').value)||0;
-      document.getElementById('duelPreview').value = mine>him ? 'Victoire 🏆' : mine<him ? 'Défaite ❌' : 'Égalité 🤝';
+      const mine=Number(duelMyReps.value)||0;
+      const him=Number(duelFriendReps.value)||0;
+      duelPreview.value = mine>him ? 'Victoire 🏆' : mine<him ? 'Défaite ❌' : 'Égalité 🤝';
     }
 
     function resetDuel(){
-      document.getElementById('duelExercise').value='';
-      document.getElementById('duelWeight').value='';
-      document.getElementById('duelMyReps').value='';
-      document.getElementById('duelFriendReps').value='';
-      document.getElementById('duelNotes').value='';
-      document.getElementById('duelPreview').value='En attente';
+      duelExercise.value='';
+      duelWeight.value='';
+      duelMyReps.value='';
+      duelFriendReps.value='';
+      duelNotes.value='';
+      duelPreview.value='En attente';
     }
 
     function saveDuel(){
       const data=getUser();
-      const oldLevel=levelFromXP(data.xp);
-      const oldRank=rankFromXP(data.xp);
-
-      if(!(data.friends||[]).length) return toast("Ajoute d'abord un ami.");
-      const idx=Number(document.getElementById('duelFriendSelect').value);
+      const oldXP=data.xp||0;
+      if(!(data.friends||[]).length) return toast('Ajoute d’abord un ami.');
+      const idx=Number(duelFriendSelect.value);
       const friend=data.friends[idx];
       if(!friend) return toast('Choisis un ami.');
-
-      const exercise=document.getElementById('duelExercise').value.trim();
-      const weight=Number(document.getElementById('duelWeight').value)||0;
-      const mine=Number(document.getElementById('duelMyReps').value)||0;
-      const him=Number(document.getElementById('duelFriendReps').value)||0;
-      const notes=document.getElementById('duelNotes').value.trim();
-
+      const exercise=duelExercise.value.trim();
+      const weight=Number(duelWeight.value)||0;
+      const mine=Number(duelMyReps.value)||0;
+      const him=Number(duelFriendReps.value)||0;
+      const notes=duelNotes.value.trim();
       if(!exercise) return toast('Choisis un exercice.');
       if(weight<=0) return toast('Indique un poids valide.');
 
       let result='draw';
-      if(mine>him) result='win';
-      else if(mine<him) result='loss';
+      if(mine>him) result='win'; else if(mine<him) result='loss';
 
       data.duels.push({ date:today(), friend:friend.name, exercise, weight, myReps:mine, friendReps:him, result, notes });
 
       if(result==='win'){
-        data.duelStats.wins++;
-        data.duelStats.streak++;
+        data.duelStats.wins++; data.duelStats.streak++;
         data.duelStats.bestStreak=Math.max(data.duelStats.bestStreak,data.duelStats.streak);
-        data.duelElo += 25;
-        data.xp += 180;
-        data.coins += 30;
+        data.duelElo += 25; data.xp += 180; data.coins += 30;
       } else if(result==='loss'){
-        data.duelStats.losses++;
-        data.duelStats.streak=0;
-        data.duelElo = Math.max(0,(data.duelElo||1000)-20);
-        data.coins += 10;
+        data.duelStats.losses++; data.duelStats.streak=0;
+        data.duelElo = Math.max(0,(data.duelElo||1000)-20); data.coins += 10;
       } else {
-        data.duelStats.draws++;
-        data.duelElo += 5;
-        data.coins += 15;
+        data.duelStats.draws++; data.duelElo += 5; data.coins += 15;
       }
 
       saveUser(data);
       resetDuel();
       loadAll();
-      handleProgressAnimations(oldLevel, oldRank, data.xp);
+      maybeShowProgressPopups(oldXP, data.xp||0);
       toast(result==='win' ? 'Victoire 🏆 • Duel enregistré' : result==='loss' ? 'Défaite ❌ • Duel enregistré' : 'Égalité 🤝 • Duel enregistré');
     }
 
@@ -1556,7 +898,6 @@
       const duelWins=data.duelStats?.wins||0;
       const duelStreak=data.duelStats?.bestStreak||0;
       const duelCount=(data.duels||[]).length;
-
       return [
         {id:'q1',title:'💪 Début du grind',desc:'Faire 3 séances',current:sessions,goal:3,xpReward:300,coinReward:40},
         {id:'q2',title:'🧩 Split hybride',desc:'Faire 2 séances multi-muscles',current:multi,goal:2,xpReward:400,coinReward:55},
@@ -1583,132 +924,99 @@
 
     function claimQuest(id){
       const data=getUser();
-      const oldLevel=levelFromXP(data.xp);
-      const oldRank=rankFromXP(data.xp);
-
+      const oldXP=data.xp||0;
       const q=questDefs(data).find(x=>x.id===id);
       if(!q) return;
       if((data.questClaims||{})[id]) return toast('Quête déjà récupérée.');
       if(q.current < q.goal) return toast('Quête pas encore terminée.');
-
       data.questClaims[id]=true;
       data.xp += q.xpReward;
       data.coins += q.coinReward;
       saveUser(data);
       loadAll();
-      handleProgressAnimations(oldLevel, oldRank, data.xp);
+      maybeShowProgressPopups(oldXP, data.xp||0);
       toast(`Quête validée : +${q.xpReward} XP • +${q.coinReward} 🪙`);
     }
 
-    function unlockedTitles(data){
-      return rareTitles.filter(t=>t.req(data));
-    }
+    function unlockedTitles(data){ return rareTitles.filter(t=>t.req(data)); }
 
     function loadTitles(){
       const data=getUser();
       const titles=unlockedTitles(data);
-      const select=document.getElementById('titleSelect');
-      select.innerHTML='';
-      titles.forEach(t=>{
-        const o=document.createElement('option');
-        o.value=t.id;
-        o.textContent=t.name;
-        select.appendChild(o);
-      });
-      if(!titles.some(t=>t.id===data.activeTitle)) data.activeTitle=titles[0].id;
-      select.value=data.activeTitle;
+      titleSelect.innerHTML='';
+      titles.forEach(t=>{ const o=document.createElement('option'); o.value=t.id; o.textContent=t.name; titleSelect.appendChild(o); });
+      if(!titles.some(t=>t.id===data.activeTitle)) data.activeTitle=titles[0]?.id || 'rookie';
+      titleSelect.value=data.activeTitle;
     }
 
-    function titleName(id){
-      return (rareTitles.find(t=>t.id===id)||{name:'Rookie'}).name;
-    }
+    function titleName(id){ return (rareTitles.find(t=>t.id===id)||{name:'Rookie'}).name; }
 
     function loadDashboard(){
       const data=getUser();
-      document.getElementById('topBadge').textContent=`👤 ${data.name || currentUser}`;
-      document.getElementById('dashName').textContent=data.name||currentUser;
-      document.getElementById('dashLevel').textContent=levelFromXP(data.xp);
-      document.getElementById('dashXP').textContent=Math.floor(data.xp);
-      document.getElementById('dashCoins').textContent=Math.floor(data.coins||0);
-      document.getElementById('rankBadge').textContent=rankFromXP(data.xp);
-      document.getElementById('xpFill').style.width=`${xpLevelFill(data.xp)}%`;
-      document.getElementById('xpText').textContent=`${Math.floor((data.xp||0)%2000)} / 2000 XP vers le niveau ${levelFromXP(data.xp)+1}`;
-      document.getElementById('goalText').textContent=data.goalWeight ? `🎯 Objectif poids : ${data.goalWeight} kg` : '🎯 Objectif poids : -';
-      document.getElementById('soloBoostText').textContent=`x${Number(data.xpMultiplier||1).toFixed(2)}`;
-
+      topBadge.textContent=`👤 ${data.name || currentUser}`;
+      dashName.textContent=data.name||currentUser;
+      dashLevel.textContent=levelFromXP(data.xp);
+      dashXP.textContent=Math.floor(data.xp);
+      dashCoins.textContent=Math.floor(data.coins||0);
+      rankBadge.textContent=data.admin ? '🛡 ADMIN' : rankFromXP(data.xp);
+      xpFill.style.width=`${xpLevelFill(data.xp)}%`;
+      xpText.textContent=`${Math.floor((data.xp||0)%2000)} / 2000 XP vers le niveau ${levelFromXP(data.xp)+1}`;
+      goalText.textContent=data.goalWeight ? `🎯 Objectif poids : ${data.goalWeight} kg` : '🎯 Objectif poids : -';
+      soloBoostText.textContent=`x${Number(data.xpMultiplier||1).toFixed(2)}`;
       const sessions=sessionKeys(data.workouts).length;
-      document.getElementById('statSessions').textContent=sessions;
-      document.getElementById('statExercises').textContent=(data.workouts||[]).length;
-      document.getElementById('statAvgXP').textContent=sessions?Math.floor((data.xp||0)/sessions):0;
-
+      statSessions.textContent=sessions;
+      statExercises.textContent=(data.workouts||[]).length;
+      statAvgXP.textContent=sessions?Math.floor((data.xp||0)/sessions):0;
       const avatar=renderAvatar(data.avatar);
-      document.getElementById('dashAvatar').src=avatar;
-      document.getElementById('settingsAvatar').src=avatar;
-
-      const dashBio=document.getElementById('dashBio');
+      dashAvatar.src=avatar;
+      settingsAvatar.src=avatar;
       dashBio.className=`bio-preview ${data.activeBio||'bio-default'}`;
       dashBio.textContent=data.activeBioText || '🏋️ Rookie du grind';
-
-      document.getElementById('dashTitle').textContent=`Titre : ${titleName(data.activeTitle)}`;
-      document.getElementById('dashTheme').textContent=`Thème : ${(data.theme||'gold').toUpperCase()}`;
+      dashTitle.textContent=`Titre : ${titleName(data.activeTitle)}`;
+      dashTheme.textContent=`Thème : ${(data.theme||'gold').toUpperCase()}`;
       applyTheme(data.theme||'gold');
-
-      const mobileRank=document.getElementById('mobileRankMini');
-      if(mobileRank) mobileRank.textContent=rankFromXP(data.xp);
-
-      const todayBadge=document.getElementById('todayBadge');
-      if(todayBadge) todayBadge.textContent=`📅 ${today()}`;
+      if(mobileRankMini) mobileRankMini.textContent=data.admin ? '🛡 ADMIN' : rankFromXP(data.xp);
+      todayBadge.textContent=`📅 ${today()}`;
     }
 
     function loadLeaderboard(){
       const data=getUser();
       const list=[
-        {name:data.name||currentUser,xp:data.xp,duelElo:data.duelElo||1000,me:true},
-        ...(data.friends||[]).map(f=>({name:f.name,xp:f.xp||0,duelElo:f.duelElo||1000,me:false}))
-      ]
-      .sort((a,b)=>b.xp-a.xp)
-      .slice(0,10);
+        {name:data.name||currentUser,xp:data.xp,duelElo:data.duelElo||1000,me:true,admin:data.admin},
+        ...(data.friends||[]).map(f=>({name:f.name,xp:f.xp||0,duelElo:f.duelElo||1000,me:false,admin:f.admin||false}))
+      ].sort((a,b)=>b.xp-a.xp).slice(0,10);
 
-      document.getElementById('leaderboard').innerHTML=list.map((p,i)=>`
-        <div class="leader-card">
-          <div class="leader-name">#${i+1} ${p.me?'👑 ':''}${p.name}</div>
-          <div class="meta"><span>XP ${Math.floor(p.xp||0)}</span><span>ELO ${Math.floor(p.duelElo||1000)}</span></div>
-        </div>
-      `).join('');
+      leaderboard.innerHTML=list.map((p,i)=>`<div class="leader-card"><div class="leader-name">#${i+1} ${p.me?'👑 ':''}${p.admin?'🛡 ':''}${p.name}</div><div class="meta"><span>XP ${Math.floor(p.xp||0)}</span><span>ELO ${Math.floor(p.duelElo||1000)}</span></div></div>`).join('');
     }
 
     function loadCoopSummary(){
       const data=getUser();
       const friends=(data.friends||[]).map(ensureFriend);
-
-      if(!friends.length){
-        document.getElementById('coopSummary').innerHTML='<div class="sub">Ajoute un ami pour débloquer la coop.</div>';
-        return;
-      }
-
-      document.getElementById('coopSummary').innerHTML=friends.map(f=>{
+      if(!friends.length){ coopSummary.innerHTML='<div class="sub">Ajoute un ami pour débloquer la coop.</div>'; return; }
+      coopSummary.innerHTML=friends.map(f=>{
         const prog=friendshipProgress(f.friendshipPoints||0);
         const boost=friendshipBoost(prog.lvl);
-        return `
-          <div class="friend-card">
-            <div class="quest-name">🤝 ${f.name}</div>
-            <div class="sub">Niveau d'amitié ${prog.lvl} • ${f.coopSessions||0} séance(s) coop</div>
-            <div class="xpbar" style="margin-top:10px"><div class="xpfill friendfill" style="width:${prog.percent}%"></div></div>
-            <div class="meta"><span>${f.friendshipPoints||0} pts</span><span>Boost coop : x${boost.toFixed(2)}</span></div>
-          </div>
-        `;
+        return `<div class="friend-card"><div class="quest-name">🤝 ${f.name}</div><div class="sub">Niveau d'amitié ${prog.lvl} • ${f.coopSessions||0} séance(s) coop</div><div class="xpbar" style="margin-top:10px"><div class="xpfill friendfill" style="width:${prog.percent}%"></div></div><div class="meta"><span>${f.friendshipPoints||0} pts</span><span>Boost coop : x${boost.toFixed(2)}</span></div></div>`;
       }).join('');
     }
 
     function loadAchievements(){
       const data=getUser();
+      if(data.unlockedAllAchievements){
+        const full=[
+          '🎉 Première séance enregistrée','📅 5 séances complètes','⭐ Niveau 2 atteint','🥇 Gold débloqué',
+          '🤝 Première séance coop','💙 Amitié niveau 3 atteinte','⚔️ Premier duel','🏅 3 victoires en duel',
+          '🔥 Win streak 3 atteinte','👑 Tous les succès débloqués'
+        ];
+        achievements.innerHTML=full.map(x=>`<div class="list-item">${x}</div>`).join('');
+        return;
+      }
       const workouts=data.workouts||[];
       const coop=new Set(workouts.filter(w=>w.mode==='coop').map(w=>`${w.date}|${w.coopFriend||''}|${w.notes||''}`)).size;
       const duelWins=data.duelStats?.wins||0;
       const bestStreak=data.duelStats?.bestStreak||0;
       const bestFriendLvl=Math.max(1,...(data.friends||[]).map(f=>friendshipLevel(f.friendshipPoints||0)));
       const items=[];
-
       if(workouts.length>=1) items.push('🎉 Première séance enregistrée');
       if(sessionKeys(workouts).length>=5) items.push('📅 5 séances complètes');
       if(data.xp>=2000) items.push('⭐ Niveau 2 atteint');
@@ -1718,69 +1026,31 @@
       if((data.duels||[]).length>=1) items.push('⚔️ Premier duel');
       if(duelWins>=3) items.push('🏅 3 victoires en duel');
       if(bestStreak>=3) items.push('🔥 Win streak 3 atteinte');
-
-      document.getElementById('achievements').innerHTML=items.length
-        ? items.map(x=>`<div class="list-item">${x}</div>`).join('')
-        : '<div class="sub">Aucun succès débloqué.</div>';
+      achievements.innerHTML=items.length?items.map(x=>`<div class="list-item">${x}</div>`).join(''):'<div class="sub">Aucun succès débloqué.</div>';
     }
 
     function loadQuests(){
       const data=getUser();
       const qs=questDefs(data);
       const done=qs.filter(q=>(data.questClaims||{})[q.id]).length;
-      document.getElementById('questSummary').textContent=`${done} / ${qs.length}`;
-
-      document.getElementById('questList').innerHTML=qs.map(q=>{
+      questSummary.textContent=`${done} / ${qs.length}`;
+      questList.innerHTML=qs.map(q=>{
         const ok=q.current>=q.goal;
         const claimed=!!(data.questClaims||{})[q.id];
-        return `
-          <div class="quest-card">
-            <div class="quest-name">${q.title}</div>
-            <div class="sub">${q.desc}</div>
-            <div class="xpbar" style="margin:10px 0"><div class="xpfill" style="width:${Math.min(100,(q.current/q.goal)*100)}%"></div></div>
-            <div class="sub">Récompense : +${q.xpReward} XP • +${q.coinReward} 🪙</div>
-            <div class="actions">
-              <button class="${ok && !claimed ? 'btn-g':'btn-s'}" ${ok && !claimed ? `onclick="claimQuest('${q.id}')"` : 'disabled'}>
-                ${claimed ? 'Déjà récupérée' : ok ? 'Récupérer' : `${Math.floor(q.current)} / ${q.goal}`}
-              </button>
-            </div>
-          </div>
-        `;
+        return `<div class="quest-card"><div class="quest-name">${q.title}</div><div class="sub">${q.desc}</div><div class="xpbar" style="margin:10px 0"><div class="xpfill" style="width:${Math.min(100,(q.current/q.goal)*100)}%"></div></div><div class="sub">Récompense : +${q.xpReward} XP • +${q.coinReward} 🪙</div><div class="actions"><button class="${ok && !claimed ? 'btn-g':'btn-s'}" ${ok && !claimed ? `onclick="claimQuest('${q.id}')"` : 'disabled'}>${claimed ? 'Déjà récupérée' : ok ? 'Récupérer' : `${Math.floor(q.current)} / ${q.goal}`}</button></div></div>`;
       }).join('');
     }
 
     function loadShop(){
       const data=getUser();
-      document.getElementById('shopCoins').textContent=Math.floor(data.coins||0);
-
-      document.getElementById('shopList').innerHTML=shopItems.map(item=>{
+      shopCoins.textContent=Math.floor(data.coins||0);
+      shopList.innerHTML=shopItems.map(item=>{
         const owned=item.type==='bio'?data.ownedBios.includes(item.className):(data.xpMultiplier>=item.value);
-        return `
-          <div class="shop-card">
-            <div class="shop-name">${item.name}</div>
-            <div class="sub">${item.desc}</div>
-            <div class="badge" style="margin-top:10px">💰 ${item.price} pièces</div>
-            <div class="actions">
-              <button class="${owned?'btn-s':'btn-p'}" onclick="buyItem('${item.id}')">${owned?'Déjà obtenu':'Acheter'}</button>
-            </div>
-            ${item.type==='bio' ? `<div class="bio-preview ${item.className}">${item.text}</div>`:''}
-          </div>
-        `;
+        return `<div class="shop-card"><div class="shop-name">${item.name}</div><div class="sub">${item.desc}</div><div class="badge" style="margin-top:10px">💰 ${item.price} pièces</div><div class="actions"><button class="${owned?'btn-s':'btn-p'}" onclick="buyItem('${item.id}')">${owned?'Déjà obtenu':'Acheter'}</button></div>${item.type==='bio' ? `<div class="bio-preview ${item.className}">${item.text}</div>`:''}</div>`;
       }).join('');
 
-      const owned=[
-        {className:'bio-default',text:'🏋️ Rookie du grind',owned:true},
-        ...shopItems.filter(i=>i.type==='bio').map(i=>({className:i.className,text:i.text,owned:data.ownedBios.includes(i.className)}))
-      ];
-
-      document.getElementById('ownedBios').innerHTML=owned.map(b=>`
-        <div style="margin-top:12px">
-          <div class="bio-preview ${b.className}">${b.text}</div>
-          <div class="actions">
-            <button class="${b.owned?'btn-g':'btn-s'}" ${b.owned?`onclick="equipBio('${b.className}')"`:'disabled'}>${b.owned?'Équiper':'Non possédée'}</button>
-          </div>
-        </div>
-      `).join('');
+      const owned=[{className:'bio-default',text:'🏋️ Rookie du grind',owned:true},...shopItems.filter(i=>i.type==='bio').map(i=>({className:i.className,text:i.text,owned:data.ownedBios.includes(i.className)}))];
+      ownedBios.innerHTML=owned.map(b=>`<div style="margin-top:12px"><div class="bio-preview ${b.className}">${b.text}</div><div class="actions"><button class="${b.owned?'btn-g':'btn-s'}" ${b.owned?`onclick="equipBio('${b.className}')"`:'disabled'}>${b.owned?'Équiper':'Non possédée'}</button></div></div>`).join('');
     }
 
     function buyItem(id){
@@ -1788,25 +1058,19 @@
       const item=shopItems.find(x=>x.id===id);
       if(!item) return;
       if((data.coins||0)<item.price) return toast('Pas assez de pièces.');
-
       if(item.type==='boost'){
         if((data.xpMultiplier||1)>=item.value) return toast('Tu as déjà un boost égal ou supérieur.');
         data.coins -= item.price;
         data.xpMultiplier=item.value;
         data.purchasedItems.push(item.id);
-        saveUser(data);
-        loadAll();
-        return toast(`Achat réussi : ${item.name}`);
+        saveUser(data); loadAll(); return toast(`Achat réussi : ${item.name}`);
       }
-
       if(item.type==='bio'){
         if(data.ownedBios.includes(item.className)) return toast('Tu possèdes déjà cette bio.');
         data.coins -= item.price;
         data.ownedBios.push(item.className);
         data.purchasedItems.push(item.id);
-        saveUser(data);
-        loadAll();
-        return toast(`Bio achetée : ${item.name}`);
+        saveUser(data); loadAll(); return toast(`Bio achetée : ${item.name}`);
       }
     }
 
@@ -1816,38 +1080,17 @@
       if(className!=='bio-default' && !data.ownedBios.includes(className)) return toast('Tu ne possèdes pas cette bio.');
       data.activeBio=className;
       data.activeBioText=className==='bio-default' ? '🏋️ Rookie du grind' : item.text;
-      saveUser(data);
-      loadAll();
-      toast('Bio équipée ✅');
+      saveUser(data); loadAll(); toast('Bio équipée ✅');
     }
 
     function loadFriends(){
       const data=getUser();
       const friends=(data.friends||[]).map(ensureFriend);
-      document.getElementById('friendCount').textContent=`${friends.length} ${friends.length>1?'amis':'ami'}`;
-
-      if(!friends.length){
-        document.getElementById('friendsList').innerHTML='<div class="sub">Aucun ami ajouté pour le moment.</div>';
-        return;
-      }
-
-      document.getElementById('friendsList').innerHTML=friends.map((f,i)=>{
+      friendCount.textContent=`${friends.length} ${friends.length>1?'amis':'ami'}`;
+      if(!friends.length){ friendsList.innerHTML='<div class="sub">Aucun ami ajouté pour le moment.</div>'; return; }
+      friendsList.innerHTML=friends.map((f,i)=>{
         const lvl=friendshipLevel(f.friendshipPoints||0);
-        return `
-          <div class="friend-card" onclick="openFriendProfile(${i})">
-            <h4>👤 ${f.name}</h4>
-            <div class="friend-essential">
-              <div class="box"><div class="smallk">Niveau</div><div class="smallv">${f.level || levelFromXP(f.xp||0)}</div></div>
-              <div class="box"><div class="smallk">Rank</div><div class="smallv">${f.rank || rankFromXP(f.xp||0)}</div></div>
-              <div class="box"><div class="smallk">Amitié</div><div class="smallv">Niv ${lvl}</div></div>
-              <div class="box"><div class="smallk">Boost coop</div><div class="smallv">x${friendshipBoost(lvl).toFixed(2)}</div></div>
-            </div>
-            <div class="actions">
-              <button class="btn-s" onclick="event.stopPropagation();openFriendProfile(${i})">Voir profil</button>
-              <button class="btn-d" onclick="event.stopPropagation();removeFriend(${i})">Supprimer</button>
-            </div>
-          </div>
-        `;
+        return `<div class="friend-card" onclick="openFriendProfile(${i})"><h4>👤 ${f.name}</h4><div class="friend-essential"><div class="box"><div class="smallk">Niveau</div><div class="smallv">${f.level || levelFromXP(f.xp||0)}</div></div><div class="box"><div class="smallk">Rank</div><div class="smallv">${f.admin?'ADMIN':(f.rank || rankFromXP(f.xp||0))}</div></div><div class="box"><div class="smallk">Amitié</div><div class="smallv">Niv ${lvl}</div></div><div class="box"><div class="smallk">Boost coop</div><div class="smallv">x${friendshipBoost(lvl).toFixed(2)}</div></div></div><div class="actions"><button class="btn-s" onclick="event.stopPropagation();openFriendProfile(${i})">Voir profil</button><button class="btn-d" onclick="event.stopPropagation();removeFriend(${i})">Supprimer</button></div></div>`;
       }).join('');
     }
 
@@ -1855,63 +1098,22 @@
       const data=getUser();
       const friend=data.friends[index];
       if(!friend) return;
-
       const lvl=friendshipLevel(friend.friendshipPoints||0);
       const boost=friendshipBoost(lvl);
       const avatar=renderAvatar(friend.avatar);
       const publicView=friend.public!==false;
       const workouts=publicView ? (friend.workouts||[]) : [];
-
-      document.getElementById('friendProfileContent').innerHTML=`
-        <div class="avatar-wrap">
-          <img src="${avatar}" class="avatar">
-          <div style="flex:1">
-            <div class="v" style="font-size:24px">${friend.name}</div>
-            <div class="sub">${friend.rank || rankFromXP(friend.xp||0)} • Niveau ${friend.level || levelFromXP(friend.xp||0)}</div>
-            ${publicView && friend.bioText ? `<div class="bio-preview bio-default">${friend.bioText}</div>` : `<div class="bio-preview bio-default">🔒 Profil privé : version limitée visible</div>`}
-          </div>
-        </div>
-
-        <div class="mini-grid" style="margin-top:14px">
-          <div class="mini"><div class="k">Amitié</div><div class="v">Niv ${lvl}</div></div>
-          <div class="mini"><div class="k">Boost coop</div><div class="v">x${boost.toFixed(2)}</div></div>
-          <div class="mini"><div class="k">XP</div><div class="v">${publicView ? Math.floor(friend.xp||0) : 'Caché'}</div></div>
-          <div class="mini"><div class="k">ELO duel</div><div class="v">${publicView ? Math.floor(friend.duelElo||1000) : 'Caché'}</div></div>
-        </div>
-
-        <div class="title" style="margin-top:18px"><h2>📜 Aperçu de ses séances</h2><div class="badge">${publicView ? 'Visible' : 'Privé'}</div></div>
-        ${publicView
-          ? (workouts.slice(-8).reverse().map(w=>`<div class="list-item"><strong>${w.name||'-'}</strong><br>${w.date||''} • ${w.reps||0} reps × ${w.weight||0} lbs • XP ${Math.floor(w.xp||0)}</div>`).join('') || '<div class="sub">Aucune séance visible.</div>')
-          : '<div class="sub">Ce profil a activé le mode privé. Seules les infos essentielles sont visibles.</div>'
-        }
-      `;
-      document.getElementById('friendModal').classList.add('show');
+      friendProfileContent.innerHTML=`<div class="avatar-wrap"><img src="${avatar}" class="avatar"><div style="flex:1"><div class="v" style="font-size:24px">${friend.name}</div><div class="sub">${friend.admin?'🛡 ADMIN':(friend.rank || rankFromXP(friend.xp||0))} • Niveau ${friend.level || levelFromXP(friend.xp||0)}</div>${publicView && friend.bioText ? `<div class="bio-preview bio-default">${friend.bioText}</div>` : `<div class="bio-preview bio-default">🔒 Profil privé : version limitée visible</div>`}</div></div><div class="mini-grid" style="margin-top:14px"><div class="mini"><div class="k">Amitié</div><div class="v">Niv ${lvl}</div></div><div class="mini"><div class="k">Boost coop</div><div class="v">x${boost.toFixed(2)}</div></div><div class="mini"><div class="k">XP</div><div class="v">${publicView ? Math.floor(friend.xp||0) : 'Caché'}</div></div><div class="mini"><div class="k">ELO duel</div><div class="v">${publicView ? Math.floor(friend.duelElo||1000) : 'Caché'}</div></div></div><div class="title" style="margin-top:18px"><h2>📜 Aperçu de ses séances</h2><div class="badge">${publicView ? 'Visible' : 'Privé'}</div></div>${publicView ? (workouts.slice(-8).reverse().map(w=>`<div class="list-item"><strong>${w.name||'-'}</strong><br>${w.date||''} • ${w.reps||0} reps × ${w.weight||0} lbs • XP ${Math.floor(w.xp||0)}</div>`).join('') || '<div class="sub">Aucune séance visible.</div>') : '<div class="sub">Ce profil a activé le mode privé. Seules les infos essentielles sont visibles.</div>'}`;
+      friendModal.classList.add('show');
     }
 
-    function closeFriendProfile(){
-      document.getElementById('friendModal').classList.remove('show');
-    }
+    function closeFriendProfile(){ friendModal.classList.remove('show'); }
 
     function loadHistory(){
       const data=getUser();
-      const body=document.getElementById('historyBody');
-      body.innerHTML='';
+      historyBody.innerHTML='';
       [...(data.workouts||[])].reverse().forEach(w=>{
-        body.innerHTML += `
-          <tr>
-            <td>${w.date||''}</td>
-            <td>${w.sessionType||'-'}</td>
-            <td>${w.mode||'solo'}</td>
-            <td>${w.coopFriend||'-'}</td>
-            <td>${w.name||''}</td>
-            <td>${w.reps||0}</td>
-            <td>${w.weight||0}</td>
-            <td>${Math.floor(w.volume||0)}</td>
-            <td>${Math.floor(w.xp||0)}</td>
-            <td>${w.duration||'-'}</td>
-            <td>${w.notes||'-'}</td>
-          </tr>
-        `;
+        historyBody.innerHTML += `<tr><td>${w.date||''}</td><td>${w.sessionType||'-'}</td><td>${w.mode||'solo'}</td><td>${w.coopFriend||'-'}</td><td>${w.name||''}</td><td>${w.reps||0}</td><td>${w.weight||0}</td><td>${Math.floor(w.volume||0)}</td><td>${Math.floor(w.xp||0)}</td><td>${w.duration||'-'}</td><td>${w.notes||'-'}</td></tr>`;
       });
     }
 
@@ -1919,36 +1121,27 @@
       const data=getUser();
       const s=data.duelStats||{wins:0,losses:0,draws:0,streak:0,bestStreak:0};
       const total=(s.wins||0)+(s.losses||0)+(s.draws||0);
-
-      document.getElementById('duelTotal').textContent=total;
-      document.getElementById('duelWins').textContent=s.wins||0;
-      document.getElementById('duelLosses').textContent=s.losses||0;
-      document.getElementById('duelDraws').textContent=s.draws||0;
-      document.getElementById('duelStreak').textContent=s.streak||0;
-      document.getElementById('duelBest').textContent=s.bestStreak||0;
-      document.getElementById('duelRate').textContent=`${total?Math.round((s.wins/total)*100):0}%`;
-      document.getElementById('duelElo').textContent=Math.floor(data.duelElo||1000);
-
-      document.getElementById('duelHistory').innerHTML=(data.duels||[]).slice(-8).reverse().map(d=>`
-        <div class="list-item">
-          <strong>${d.exercise}</strong><br>
-          ${d.date} • vs ${d.friend} • ${d.weight} lbs<br>
-          Toi: ${d.myReps} reps • Lui: ${d.friendReps} reps<br>
-          Résultat: ${d.result==='win'?'Victoire 🏆':d.result==='loss'?'Défaite ❌':'Égalité 🤝'}
-        </div>
-      `).join('') || '<div class="sub">Aucun duel enregistré.</div>';
+      duelTotal.textContent=total;
+      duelWins.textContent=s.wins||0;
+      duelLosses.textContent=s.losses||0;
+      duelDraws.textContent=s.draws||0;
+      duelStreak.textContent=s.streak||0;
+      duelBest.textContent=s.bestStreak||0;
+      duelRate.textContent=`${total?Math.round((s.wins/total)*100):0}%`;
+      duelElo.textContent=Math.floor(data.duelElo||1000);
+      duelHistory.innerHTML=(data.duels||[]).slice(-8).reverse().map(d=>`<div class="list-item"><strong>${d.exercise}</strong><br>${d.date} • vs ${d.friend} • ${d.weight} lbs<br>Toi: ${d.myReps} reps • Lui: ${d.friendReps} reps<br>Résultat: ${d.result==='win'?'Victoire 🏆':d.result==='loss'?'Défaite ❌':'Égalité 🤝'}</div>`).join('') || '<div class="sub">Aucun duel enregistré.</div>';
     }
 
     function saveProfile(){
       const data=getUser();
-      data.name=document.getElementById('profileName').value.trim();
-      data.mail=document.getElementById('profileMail').value.trim();
-      data.phone=document.getElementById('profilePhone').value.trim();
-      data.goalWeight=document.getElementById('goalWeight').value.trim();
-      data.weight=document.getElementById('bodyWeight').value.trim() || data.weight;
-      data.profilePublic=document.getElementById('profilePublic').value==='true';
-      data.theme=document.getElementById('themeSelect').value;
-      data.activeTitle=document.getElementById('titleSelect').value || data.activeTitle;
+      data.name=profileName.value.trim();
+      data.mail=profileMail.value.trim();
+      data.phone=profilePhone.value.trim();
+      data.goalWeight=goalWeight.value.trim();
+      data.weight=bodyWeight.value.trim() || data.weight;
+      data.profilePublic=profilePublic.value==='true';
+      data.theme=themeSelect.value;
+      data.activeTitle=titleSelect.value || data.activeTitle;
       saveUser(data);
       loadAll();
       toast('Profil sauvegardé ✅');
@@ -1956,15 +1149,16 @@
 
     function loadSettings(){
       const data=getUser();
-      document.getElementById('profileName').value=data.name||'';
-      document.getElementById('profileMail').value=data.mail||'';
-      document.getElementById('profilePhone').value=data.phone||'';
-      document.getElementById('goalWeight').value=data.goalWeight||'';
-      document.getElementById('profilePublic').value=String(data.profilePublic!==false);
-      document.getElementById('bodyWeight').value=data.weight||document.getElementById('bodyWeight').value||'';
-      document.getElementById('themeSelect').value=data.theme||'gold';
+      profileName.value=data.name||'';
+      profileMail.value=data.mail||'';
+      profilePhone.value=data.phone||'';
+      goalWeight.value=data.goalWeight||'';
+      profilePublic.value=String(data.profilePublic!==false);
+      bodyWeight.value=data.weight||bodyWeight.value||'';
+      themeSelect.value=data.theme||'gold';
       loadTitles();
       renderUpdateLog();
+      renderDemoCodes();
     }
 
     function exportData(){
@@ -1979,14 +1173,9 @@
     }
 
     function clearHistory(){
-      if(!confirm("Vider tout l’historique ?")) return;
+      if(!confirm('Vider tout l’historique ?')) return;
       const data=getUser();
-      data.workouts=[];
-      data.xp=0;
-      data.coins=0;
-      data.questClaims={};
-      data.duels=[];
-      data.duelElo=1000;
+      data.workouts=[]; data.xp=0; data.coins=0; data.questClaims={}; data.duels=[]; data.duelElo=1000;
       data.duelStats={wins:0,losses:0,draws:0,streak:0,bestStreak:0};
       data.friends=(data.friends||[]).map(f=>({...f,friendshipPoints:0,coopSessions:0}));
       saveUser(data);
@@ -1994,24 +1183,13 @@
       toast('Historique vidé.');
     }
 
-    function openDrawer(){
-      const d=document.getElementById('sideDrawer');
-      const o=document.getElementById('drawerOverlay');
-      if(d) d.classList.add('open');
-      if(o) o.classList.add('show');
-    }
-
-    function closeDrawer(){
-      const d=document.getElementById('sideDrawer');
-      const o=document.getElementById('drawerOverlay');
-      if(d) d.classList.remove('open');
-      if(o) o.classList.remove('show');
-    }
+    function openDrawer(){ if(sideDrawer) sideDrawer.classList.add('open'); if(drawerOverlay) drawerOverlay.classList.add('show'); }
+    function closeDrawer(){ if(sideDrawer) sideDrawer.classList.remove('open'); if(drawerOverlay) drawerOverlay.classList.remove('show'); }
 
     function saveUpdateNote(){
       const data=getUser();
       const value=(document.getElementById('updateInput')?.value||'').trim();
-      if(!value) return toast("Écris une demande d’update.");
+      if(!value) return toast('Écris une demande d’update.');
       if(!Array.isArray(data.updateNotes)) data.updateNotes=[];
       data.updateNotes.unshift({text:value,date:today()});
       saveUser(data);
@@ -2033,76 +1211,12 @@
       const box=document.getElementById('updateLog');
       if(!box) return;
       const notes=data.updateNotes||[];
-      box.innerHTML = notes.length
-        ? notes.map((n,i)=>`<div class="list-item"><strong>Update ${notes.length-i}</strong><br>${n.text}<br><span class="sub">${n.date||''}</span></div>`).join('')
-        : '<div class="sub">Aucune update enregistrée pour le moment.</div>';
-    }
-
-    function showCelebration(type, primaryText, secondaryText){
-      const modal=document.getElementById('celebrationModal');
-      const emoji=document.getElementById('celebrationEmoji');
-      const title=document.getElementById('celebrationTitle');
-      const sub=document.getElementById('celebrationSub');
-      const badge=document.getElementById('celebrationBadge');
-
-      if(type==='level'){
-        emoji.textContent='🎉';
-        title.textContent='Level Up !';
-      }else{
-        emoji.textContent='🏆';
-        title.textContent='Rank Up !';
-      }
-
-      sub.textContent=primaryText;
-      badge.textContent=secondaryText;
-      modal.classList.add('show');
-      spawnConfetti();
-
-      setTimeout(()=>{
-        if(modal.classList.contains('show')) closeCelebration();
-      }, 3200);
-    }
-
-    function closeCelebration(){
-      const modal=document.getElementById('celebrationModal');
-      modal.classList.remove('show');
-      modal.querySelectorAll('.confetti').forEach(x=>x.remove());
-    }
-
-    function spawnConfetti(){
-      const box=document.querySelector('.celebration-box');
-      if(!box) return;
-      box.querySelectorAll('.confetti').forEach(x=>x.remove());
-      for(let i=0;i<26;i++){
-        const c=document.createElement('div');
-        c.className='confetti';
-        c.style.left=Math.random()*100+'%';
-        c.style.background = ['#ffd54a','#63adff','#9a74ff','#31d17c','#ff6464'][Math.floor(Math.random()*5)];
-        c.style.animationDuration=(2.2 + Math.random()*1.7)+'s';
-        c.style.animationDelay=(Math.random()*.2)+'s';
-        box.appendChild(c);
-      }
-    }
-
-    function handleProgressAnimations(oldLevel, oldRank, newXP){
-      const newLevel=levelFromXP(newXP);
-      const newRank=rankFromXP(newXP);
-
-      if(newLevel>oldLevel){
-        showCelebration('level', `Bravo ! Tu passes du niveau ${oldLevel} au niveau ${newLevel}.`, `Niveau ${newLevel}`);
-      }
-
-      if(newRank!==oldRank){
-        setTimeout(()=>{
-          showCelebration('rank', `Incroyable ! Tu quittes ${oldRank} pour ${newRank}.`, `${newRank}`);
-        }, newLevel>oldLevel ? 900 : 0);
-      }
+      box.innerHTML = notes.length ? notes.map((n,i)=>`<div class="list-item"><strong>Update ${notes.length-i}</strong><br>${n.text}<br><span class="sub">${n.date||''}</span></div>`).join('') : '<div class="sub">Aucune update enregistrée pour le moment.</div>';
     }
 
     function loadAll(){
       const data=getUser();
       if(!data) return;
-
       (data.friends||[]).forEach(ensureFriend);
       if(!data.duelStats) data.duelStats={wins:0,losses:0,draws:0,streak:0,bestStreak:0};
       if(!Array.isArray(data.duels)) data.duels=[];
@@ -2110,9 +1224,8 @@
       if(!data.theme) data.theme='gold';
       if(!data.activeTitle) data.activeTitle='rookie';
       if(!Array.isArray(data.ownedBios)) data.ownedBios=['bio-default'];
-      if(data.fakeFaceIdEnabled==null) data.fakeFaceIdEnabled=true;
+      if(!Array.isArray(data.redeemedCodes)) data.redeemedCodes=[];
       saveUser(data);
-
       loadDashboard();
       loadSettings();
       loadLeaderboard();
@@ -2128,7 +1241,7 @@
       updateWorkoutPreview();
     }
 
-    document.getElementById('avatarInput').addEventListener('change', e=>{
+    avatarInput.addEventListener('change', e=>{
       const file=e.target.files[0];
       if(!file) return;
       const reader=new FileReader();
@@ -2142,21 +1255,13 @@
       reader.readAsDataURL(file);
     });
 
-    document.getElementById('coopFriendSelect').addEventListener('change', updateCoopUI);
-    document.getElementById('duelMyReps').addEventListener('input', previewDuel);
-    document.getElementById('duelFriendReps').addEventListener('input', previewDuel);
+    coopFriendSelect.addEventListener('change', updateCoopUI);
+    duelMyReps.addEventListener('input', previewDuel);
+    duelFriendReps.addEventListener('input', previewDuel);
+    friendModal.addEventListener('click', e=>{ if(e.target===friendModal) closeFriendProfile(); });
+    faceIdModal.addEventListener('click', e=>{ if(e.target===faceIdModal) closeFaceID(); });
+    celebrationModal.addEventListener('click', e=>{ if(e.target===celebrationModal) closeCelebration(); });
 
-    document.getElementById('friendModal').addEventListener('click', e=>{
-      if(e.target===document.getElementById('friendModal')) closeFriendProfile();
-    });
-
-    document.getElementById('faceIdModal').addEventListener('click', e=>{
-      if(e.target===document.getElementById('faceIdModal')) closeFaceID();
-    });
-
-    document.getElementById('celebrationModal').addEventListener('click', e=>{
-      if(e.target===document.getElementById('celebrationModal')) closeCelebration();
-    });
   </script>
 </body>
 </html>
