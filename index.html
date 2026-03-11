@@ -71,10 +71,69 @@
     .celebration-title{font-size:30px;font-weight:900;margin-bottom:6px}
     .celebration-sub{color:var(--muted);font-size:15px}
     .celebration-rank{display:inline-block;margin-top:14px;padding:12px 18px;border-radius:999px;background:linear-gradient(135deg,var(--gold1),var(--gold2));color:#111;font-weight:900}
+
+    .profile-rank-layout{
+      display:grid;
+      grid-template-columns:170px 1fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    .rank-showcase{
+      position:relative;
+      overflow:hidden;
+      border-radius:24px;
+      border:2px solid rgba(255,255,255,.14);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,.08), transparent 35%),
+        linear-gradient(180deg,#101725,#0d1320);
+      box-shadow:0 20px 40px rgba(0,0,0,.35);
+      padding:16px 12px;
+      min-height:100%;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+    }
+    .rank-showcase::before{
+      content:"";
+      position:absolute;
+      inset:-30%;
+      background:radial-gradient(circle, rgba(255,213,74,.13), transparent 55%);
+      pointer-events:none;
+    }
+    .rank-showcase > *{position:relative;z-index:1}
+    .rank-top{font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);font-weight:900;margin-bottom:10px}
+    .rank-emblem{font-size:50px;line-height:1;margin-bottom:10px;filter:drop-shadow(0 0 14px rgba(255,255,255,.12))}
+    .rank-name{font-size:24px;font-weight:900;line-height:1.05;margin-bottom:8px}
+    .rank-sub{font-size:12px;color:var(--muted);line-height:1.35;margin-bottom:12px}
+    .rank-mini{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:12px;font-weight:800}
+    .rank-showcase.bronze{border-color:#8f6738;box-shadow:0 0 0 1px rgba(143,103,56,.18), 0 20px 40px rgba(0,0,0,.35)}
+    .rank-showcase.bronze .rank-name{color:#f0c28c}
+    .rank-showcase.argent{border-color:#9ba7b6}.rank-showcase.argent .rank-name{color:#e5edf7}
+    .rank-showcase.iron{border-color:#7d8b9e}.rank-showcase.iron .rank-name{color:#c9d3df}
+    .rank-showcase.gold{border-color:#d6a300}.rank-showcase.gold .rank-name{color:#ffd95c}
+    .rank-showcase.platinum{border-color:#71e0d7}.rank-showcase.platinum .rank-name{color:#b5fff8}
+    .rank-showcase.champion{border-color:#ff9a3d}.rank-showcase.champion .rank-name{color:#ffc27a}
+    .rank-showcase.master{border-color:#b784ff}.rank-showcase.master .rank-name{color:#e1c7ff}
+    .rank-showcase.legend{border-color:#fff04d;box-shadow:0 0 0 1px rgba(255,240,77,.25), 0 0 30px rgba(255,240,77,.12), 0 20px 40px rgba(0,0,0,.35)}
+    .rank-showcase.legend .rank-name{color:#fff36c}
+    .rank-showcase.admin{border-color:#ff5b8f;box-shadow:0 0 0 1px rgba(255,91,143,.22), 0 0 34px rgba(255,91,143,.14), 0 20px 40px rgba(0,0,0,.35)}
+    .rank-showcase.admin .rank-name{color:#ff9cb8}
+
     @keyframes scanFace{0%{top:12px}100%{top:124px}}
 
-    @media (max-width:1100px){.grid{grid-template-columns:1fr}.mini-grid{grid-template-columns:repeat(2,1fr)}}
-    @media (max-width:760px){.shell{padding:10px}.topbar{display:none}.mobile-topbar{display:flex}.tabs{display:none}.tab-btn{width:100%;min-width:0}.mini-grid{grid-template-columns:1fr}.exercise-top{grid-template-columns:1fr}.row{flex-direction:column}.col{min-width:0}.actions button{width:100%}.avatar{width:72px;height:72px}.title h2{font-size:18px}.toast{left:12px;right:12px;max-width:none}.auth{margin-top:22px;padding:18px}h1{font-size:22px}.panel,.card,.friend-card,.quest-card,.shop-card,.leader-card{padding:14px}.friend-essential{grid-template-columns:1fr}.box .smallv{font-size:15px}.face-scan{width:120px;height:120px}.face-line{animation-duration:1.2s}}
+    @media (max-width:1100px){
+      .grid{grid-template-columns:1fr}
+      .mini-grid{grid-template-columns:repeat(2,1fr)}
+      .profile-rank-layout{grid-template-columns:1fr}
+      .rank-showcase{min-height:auto;padding:14px}
+      .rank-emblem{font-size:42px}
+      .rank-name{font-size:21px}
+    }
+    @media (max-width:760px){
+      .shell{padding:10px}.topbar{display:none}.mobile-topbar{display:flex}.tabs{display:none}.tab-btn{width:100%;min-width:0}.mini-grid{grid-template-columns:1fr}.exercise-top{grid-template-columns:1fr}.row{flex-direction:column}.col{min-width:0}.actions button{width:100%}.avatar{width:72px;height:72px}.title h2{font-size:18px}.toast{left:12px;right:12px;max-width:none}.auth{margin-top:22px;padding:18px}h1{font-size:22px}.panel,.card,.friend-card,.quest-card,.shop-card,.leader-card{padding:14px}.friend-essential{grid-template-columns:1fr}.box .smallv{font-size:15px}.face-scan{width:120px;height:120px}.face-line{animation-duration:1.2s}
+    }
     @media (min-width:761px){.drawer-overlay,.side-drawer,.mobile-topbar{display:none !important}}
   </style>
 </head>
@@ -169,18 +228,29 @@
       <section id="dashboard" class="tab-panel">
         <div class="grid">
           <div class="stack">
-            <div class="panel">
-              <div class="title"><h2>👤 Profil</h2><div id="rankBadge" class="badge">🥉 Bronze</div></div>
-              <div class="avatar-wrap"><img id="dashAvatar" class="avatar" alt="avatar"><div style="flex:1;min-width:0"><div class="sub">Photo de profil</div><div id="dashBio" class="bio-preview bio-default">🏋️ Rookie du grind</div><div class="meta"><span id="dashTitle">Titre : Rookie</span><span id="dashTheme">Thème : Gold</span></div></div></div>
-              <div class="mini-grid" style="margin-top:14px">
-                <div class="mini"><div class="k">Pseudo</div><div class="v" id="dashName">-</div></div>
-                <div class="mini"><div class="k">Niveau</div><div class="v" id="dashLevel">1</div></div>
-                <div class="mini"><div class="k">XP</div><div class="v" id="dashXP">0</div></div>
-                <div class="mini"><div class="k">Pièces</div><div class="v" id="dashCoins">0</div></div>
+            <div class="profile-rank-layout">
+              <div id="rankShowcase" class="rank-showcase bronze">
+                <div class="rank-top">Rank actuel</div>
+                <div id="rankShowcaseEmoji" class="rank-emblem">🥉</div>
+                <div id="rankShowcaseName" class="rank-name">BRONZE</div>
+                <div id="rankShowcaseSub" class="rank-sub">Continue ton grind pour atteindre le rang suivant.</div>
+                <div id="rankShowcaseMini" class="rank-mini">Niveau 1</div>
               </div>
-              <div style="margin-top:14px" class="xpbar"><div id="xpFill" class="xpfill"></div></div>
-              <div class="meta"><span id="xpText">0 / 2000 XP</span><span id="goalText">🎯 Objectif poids : -</span></div>
+
+              <div class="panel">
+                <div class="title"><h2>👤 Profil</h2><div id="rankBadge" class="badge">🥉 Bronze</div></div>
+                <div class="avatar-wrap"><img id="dashAvatar" class="avatar" alt="avatar"><div style="flex:1;min-width:0"><div class="sub">Photo de profil</div><div id="dashBio" class="bio-preview bio-default">🏋️ Rookie du grind</div><div class="meta"><span id="dashTitle">Titre : Rookie</span><span id="dashTheme">Thème : Gold</span></div></div></div>
+                <div class="mini-grid" style="margin-top:14px">
+                  <div class="mini"><div class="k">Pseudo</div><div class="v" id="dashName">-</div></div>
+                  <div class="mini"><div class="k">Niveau</div><div class="v" id="dashLevel">1</div></div>
+                  <div class="mini"><div class="k">XP</div><div class="v" id="dashXP">0</div></div>
+                  <div class="mini"><div class="k">Pièces</div><div class="v" id="dashCoins">0</div></div>
+                </div>
+                <div style="margin-top:14px" class="xpbar"><div id="xpFill" class="xpfill"></div></div>
+                <div class="meta"><span id="xpText">0 / 2000 XP</span><span id="goalText">🎯 Objectif poids : -</span></div>
+              </div>
             </div>
+
             <div class="panel">
               <div class="title"><h2>📈 Résumé</h2><div class="badge">Auto</div></div>
               <div class="mini-grid">
@@ -274,7 +344,6 @@
       <div class="stack"><div class="panel"><div class="title"><h2>✨ V3 propre</h2><div class="badge">Nouveautés</div></div><div class="list-item">📱 Face ID esthétique</div><div class="list-item">🎟️ Codes secrets et code admin</div><div class="list-item">👥 Profils démo et codes amis</div><div class="list-item">🎉 Animation level up</div><div class="list-item">🏆 Animation rank up</div><div class="list-item">📱 Mobile optimisé</div></div><div class="panel" style="border-style:dashed;background:rgba(255,95,95,.05)"><div class="title"><h2>🚨 Zone sensible</h2><div class="badge">Attention</div></div><div class="actions"><button class="btn-d" onclick="deleteAccount()">❌ Supprimer le compte</button><button class="btn-s" onclick="logout()">🔓 Déconnexion</button></div></div></div></div></section>
     </div>
   </div>
-
   <div id="friendModal" class="modal"><div class="modal-box"><div class="title"><h2>👤 Profil ami</h2><button class="btn-s" onclick="closeFriendProfile()">Fermer</button></div><div id="friendProfileContent"></div></div></div>
 
   <div id="faceIdModal" class="modal">
@@ -532,6 +601,41 @@
           <textarea readonly>${demoPayload(p)}</textarea>
         </div>
       `).join('');
+    }
+
+    function renderRankShowcase(){
+      const data=getUser();
+      const rankRaw = data.admin ? 'ADMIN' : rankFromXP(data.xp||0);
+
+      const map = {
+        "🥉 Bronze": { cls:"bronze", emoji:"🥉", name:"BRONZE", sub:"Tu poses les bases. Continue pour monter." },
+        "🥈 Argent": { cls:"argent", emoji:"🥈", name:"ARGENT", sub:"Tu gagnes en régularité et en impact." },
+        "⚙️ Iron": { cls:"iron", emoji:"⚙️", name:"IRON", sub:"Mental solide. Tu commences à imposer ton rythme." },
+        "🥇 Gold": { cls:"gold", emoji:"🥇", name:"GOLD", sub:"Très gros niveau. Le grind devient sérieux." },
+        "💎 Platinum": { cls:"platinum", emoji:"💎", name:"PLATINUM", sub:"Rang rare. Tu te démarques clairement." },
+        "🏆 Champion": { cls:"champion", emoji:"🏆", name:"CHAMPION", sub:"Tu fais partie des gros profils de l'app." },
+        "👑 Master": { cls:"master", emoji:"👑", name:"MASTER", sub:"Très haut niveau. Tu domines presque tout." },
+        "🔱 Legend": { cls:"legend", emoji:"⭐", name:"LEGENDE", sub:"Rang ultime. Tu es au sommet du classement." },
+        "ADMIN": { cls:"admin", emoji:"🛡️", name:"ADMIN", sub:"Profil administrateur avec accès spécial." }
+      };
+
+      const conf = map[rankRaw] || map["🥉 Bronze"];
+
+      const box = document.getElementById('rankShowcase');
+      const emoji = document.getElementById('rankShowcaseEmoji');
+      const name = document.getElementById('rankShowcaseName');
+      const sub = document.getElementById('rankShowcaseSub');
+      const mini = document.getElementById('rankShowcaseMini');
+
+      if(!box || !emoji || !name || !sub || !mini) return;
+
+      box.className = `rank-showcase ${conf.cls}`;
+      emoji.textContent = conf.emoji;
+      name.textContent = conf.name;
+      sub.textContent = conf.sub;
+      mini.textContent = data.admin
+        ? `Accès spécial • ${Math.floor(data.coins||0)} pièces`
+        : `Niveau ${levelFromXP(data.xp||0)}`;
     }
     function generateCode(){
       const data=getUser();
@@ -921,7 +1025,6 @@
         {id:'q20',title:'🔥 Série de feu',desc:'Atteindre 3 de win streak',current:duelStreak,goal:3,xpReward:500,coinReward:80}
       ];
     }
-
     function claimQuest(id){
       const data=getUser();
       const oldXP=data.xp||0;
@@ -977,6 +1080,7 @@
       applyTheme(data.theme||'gold');
       if(mobileRankMini) mobileRankMini.textContent=data.admin ? '🛡 ADMIN' : rankFromXP(data.xp);
       todayBadge.textContent=`📅 ${today()}`;
+      renderRankShowcase();
     }
 
     function loadLeaderboard(){
